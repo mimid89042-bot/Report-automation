@@ -1,0 +1,89 @@
+<!DOCTYPE html>                     <!-- tells the browser its an HTML5 page-->
+<html>                              <!-- begins the page-->
+<head>                              <!--head section-->
+    <title>TWP Calculation</title>  <!-- browser tab name-->
+    <style>                         /*-internal CSS styling */ 
+        body { font-family: Arial; margin: 40px; } 
+        label { display: inline-block; width: 100px; } /* keeps labels aligned */
+        input { margin-bottom: 10px; }                 /* space below inputs */
+        
+         .box { 
+            margin-top: 20px; 
+            padding: 20px; 
+            border: 1px solid #ffffff; 
+            background: #ffffff; 
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<h1>TWP Calculation</h1>   <!-- display heading -->
+
+<!-- FIRST QUESTION: Soil Type-->
+<div id="box">
+    <label>Soil Type:</label>
+    <select id="soilType">
+        <option value="">-- Select Soil Type --</option>
+        <option value="cohesive">Cohesive</option>
+        <option value="granular">Granular</option>
+    </select>
+</div>
+
+<!-- Cohesive Soil Input -->
+<div id="cohesiveInputs" class="box hidden">
+    <label>Cu (kPa):</label>
+    <input type="number" id="cu" step="0.1" required><br>
+    <button id="CheckSoil">Calculate</button>
+</div>
+
+<!-- Granular placeholder -->
+<div id="granularMsg" class="box hidden">
+    <p>Haven’t written code yet.</p>
+</div>
+
+<script>
+// Show appropriate input depending on soil type
+document.getElementById("soilType").addEventListener("change", () => {
+    const soil = document.getElementById("soilType").value;
+    const cohesiveBox = document.getElementById("cohesiveInputs");
+    const granularBox = document.getElementById("granularMsg");
+
+    if (soil === "cohesive") {
+        cohesiveBox.classList.remove("hidden");
+        granularBox.classList.add("hidden");
+    } else if (soil === "granular") {
+        cohesiveBox.classList.add("hidden");
+        granularBox.classList.remove("hidden");
+    } else {
+        cohesiveBox.classList.add("hidden");
+        granularBox.classList.add("hidden");
+    }
+});
+
+// Simple example calculation for cohesive soil
+document.getElementById("CheckSoil").addEventListener("click", () => {
+    const cu = parseFloat(document.getElementById("cu").value);
+    if (isNaN(cu)) {
+        alert("Please enter a valid Cu value.");
+        return;
+    }
+    else if (cu <= 20) {
+        alert("Soil is too soft, use another method");
+        return;
+    }
+    else if (cu >=800) {
+        alert("Soil is too stiff, use another method");
+        return;
+    }
+
+    alert(`Cohesive soil calculation placeholder: Cu = ${cu} kPa`);
+});
+
+</script>
+
+</body>
+</html>
