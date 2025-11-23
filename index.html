@@ -3,29 +3,56 @@
 <head>                              <!--head section-->
     <title>TWP Calculation</title>  <!-- browser tab name-->
     <style>                         /*-internal CSS styling */ 
-        body { font-family: Arial; margin: 40px; } 
-        label { display: inline-block; width: 100px; } /* keeps labels aligned */
+        body { font-family: Arial; margin: 40px; background-color: rgba(235, 246, 255, 0.651);} 
+        label { display: inline-block; width: 250px; } /* keeps labels aligned */
         input { margin-bottom: 10px; }                 /* space below inputs */
         
          .box { 
             margin-top: 20px; 
             padding: 20px; 
-            border: 1px solid #ffffff; 
-            background: #ffffff; 
+            border: 2px solid #ffffff; 
+            background: #edf3ffb6; 
         }
 
         .hidden {
             display: none;
         }
+
+
+
+        /* Flex layout for rows with multiple inputs */
+        .input-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .input-row div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
     </style>
 </head>
 <body>
 
-<h1>TWP Calculation</h1>   <!-- display heading -->
+<h1>TWP Calculation</h1>
 
-<!-- FIRST QUESTION: Soil Type-->
-<div id="box">
-    <label>Soil Type:</label>
+<!-- Subgrade soil type selection -->
+<div class="box">
+    <label>Subgrade Soil Type:</label>
     <select id="soilType">
         <option value="">-- Select Soil Type --</option>
         <option value="cohesive">Cohesive</option>
@@ -33,56 +60,112 @@
     </select>
 </div>
 
-<!-- Cohesive Soil Input -->
+<!-- Cohesive soil input section -->
 <div id="cohesiveInputs" class="box hidden">
-    <label>Cu (kPa):</label>
-    <input type="number" id="cu" step="0.1" required><br>
-    <button id="CheckSoil">Calculate</button>
+    <h3>Design Values for Ground Properties</h3>
+
+    <!-- Subgrade Cu input on its own line -->
+    <div class="input-row">
+        <div>
+            <label> Subgrade </label>
+        </div>
+        <div>
+            <label> C<sub>u</sub> (kPa):</label>
+            <input type="number" id="cu" step="0.1" required>
+        </div>
+    </div>
+
+    <!-- Working Platform row below Subgrade -->
+    <div class="input-row">
+        <div>
+            <label> Working Platform </label>
+        </div>
+        <div>
+            <label>ϕ'<sub>p</sub> (°):</label>
+            <input type="number" id="phi" step="0.1" value="40" required>
+        </div>
+        <div>
+            <label>γ<sub>p</sub> (kN/m³):</label>
+            <input type="number" id="gamma" step="0.1" value="20" required>
+        </div>
+    </div>
+
+
+    <h3>Design values for track width and effective length:</h3>
+
+    <div class="cases-row">  <!-- container for side-by-side layout -->
+        <div class="column">
+            <h4>Case 1 loading:</h4>
+
+            <label>Charactersitic value q<sub>1k</sub> (kPa)</label>
+            <input type="number" id="q1k" step="0.1" required><br>
+
+            <label>W<sub>1d</sub> (m):</label>
+            <input type="number" id="W1d" step="0.1" required><br>
+
+            <label>L<sub>1d</sub> (m):</label>
+            <input type="number" id="L1d" step="0.1" required><br>
+        </div>
+
+        <div class="column">
+            <h4>Case 2 loading:</h4>
+
+            <label>Charactersitic value q (kPa)</label>
+            <input type="number" id="q2k" step="0.1" required><br>
+
+            <label>W<sub>2d</sub> (m):</label>
+            <input type="number" id="W2d" step="0.1" required><br>
+
+            <label>L<sub>2d</sub> (m):</label>
+            <input type="number" id="L2d" step="0.1" required><br>
+        </div>
+    </div>
+
+    <button id="calculateBtn">Submit</button>
 </div>
 
-<!-- Granular placeholder -->
-<div id="granularMsg" class="box hidden">
-    <p>Haven’t written code yet.</p>
-</div>
+
+
+
+
+<div id="bearingresistance" class="box hidden"></div>
+
+
+
+
+
 
 <script>
-// Show appropriate input depending on soil type
+// Show cohesive section if soil type selected
 document.getElementById("soilType").addEventListener("change", () => {
     const soil = document.getElementById("soilType").value;
     const cohesiveBox = document.getElementById("cohesiveInputs");
-    const granularBox = document.getElementById("granularMsg");
 
     if (soil === "cohesive") {
         cohesiveBox.classList.remove("hidden");
-        granularBox.classList.add("hidden");
-    } else if (soil === "granular") {
-        cohesiveBox.classList.add("hidden");
-        granularBox.classList.remove("hidden");
     } else {
         cohesiveBox.classList.add("hidden");
-        granularBox.classList.add("hidden");
     }
 });
 
-// Simple example calculation for cohesive soil
-document.getElementById("CheckSoil").addEventListener("click", () => {
+// Simple validation and alert
+document.getElementById("calculateBtn").addEventListener("click", () => {
     const cu = parseFloat(document.getElementById("cu").value);
     if (isNaN(cu)) {
         alert("Please enter a valid Cu value.");
         return;
     }
-    else if (cu <= 20) {
-        alert("Soil is too soft, use another method");
+    if (cu <= 20) {
+        alert("Subgrade is too soft, use another method.");
         return;
     }
-    else if (cu >=800) {
-        alert("Soil is too stiff, use another method");
+    if (cu >= 80) {
+        alert("Subgrade is too stiff, use another method.");
         return;
     }
 
-    alert(`Cohesive soil calculation placeholder: Cu = ${cu} kPa`);
+    alert(`Cohesive soil values accepted: Cu = ${cu} kPa, γ = ${document.getElementById("gamma").value} kN/m³`);
 });
-
 </script>
 
 </body>
