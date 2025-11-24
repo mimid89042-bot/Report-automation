@@ -10,6 +10,10 @@
         .hidden { display:none; }
         .column { float:left; width:50%; }
         .row:after { content:""; display:table; clear:both; }
+        .cases-container {display: flex;gap: 40px; margin-top: 20px;}
+        .case-column {flex: 1;min-width: 220px;}
+        .case-column label {display: inline-block;width: 120px;margin-bottom: 5px;}
+
     </style>
 </head>
 <body>
@@ -26,25 +30,39 @@
 </div>
 
 <div id="cohesiveInputs" class="box hidden">
-    <h3>Design Values</h3>
-    <label>Subgrade C<sub>u</sub> (kPa):</label>
-    <input type="number" id="cu" step="0.1" required><br>
+    <h3>Design values for ground properties</h3>
+    <div class="input-row">
+        <label>Subgrade</label>
+        <label>C<sub>u</sub> (kPa):</label>
+        <input type="number" id="cu" step="0.1" required>
+    </div>
+    <div class = "input-row">
+        <label>Working platform</label>
+        <label>ϕ'<sub>p</sub> (°):</label>
+        <input type="number" id="phi_p" step="0.1" value="40" required><br>
+        <label></label>
+        <label>γ<sub>p</sub> (kN/m³):</label>
+        <input type="number" id="gamma" step="0.1" value="20" required><br>
+    </div>
 
-    <label>ϕ'<sub>p</sub> (°):</label>
-    <input type="number" id="phi_p" step="0.1" value="40" required><br>
+  <div class="cases-container">
 
-    <label>γ<sub>p</sub> (kN/m³):</label>
-    <input type="number" id="gamma" step="0.1" value="20" required><br>
+    <div class="case-column">
+        <h3>Case 1 loading</h3>
+        <label>q<sub>1k</sub> (kPa):</label><input type="number" id="q1k"><br>
+        <label>W<sub>1d</sub> (m):</label><input type="number" id="W1d"><br>
+        <label>L<sub>1d</sub> (m):</label><input type="number" id="L1d"><br>
+    </div>
 
-    <h3>Case 1</h3>
-    <label>q<sub>1k</sub> (kPa):</label><input type="number" id="q1k"><br>
-    <label>W<sub>1d</sub> (m):</label><input type="number" id="W1d"><br>
-    <label>L<sub>1d</sub> (m):</label><input type="number" id="L1d"><br>
+    <div class="case-column">
+        <h3>Case 2 loading</h3>
+        <label>q<sub>2k</sub> (kPa):</label><input type="number" id="q2k"><br>
+        <label>W<sub>2d</sub> (m):</label><input type="number" id="W2d"><br>
+        <label>L<sub>2d</sub> (m):</label><input type="number" id="L2d"><br>
+    </div>
 
-    <h3>Case 2</h3>
-    <label>q<sub>2k</sub> (kPa):</label><input type="number" id="q2k"><br>
-    <label>W<sub>2d</sub> (m):</label><input type="number" id="W2d"><br>
-    <label>L<sub>2d</sub> (m):</label><input type="number" id="L2d"><br>
+</div>
+
 
     <button id="calculateBtn">Submit</button>
 
