@@ -103,6 +103,9 @@
 <!-- Import JS as module -->
 <script>
 function s_c(W,L) { return 1 + 0.2 * (W/L); }
+
+
+
 function s_gamma(W,L) { return 1 - 0.3 * (W/L); }
 function s_p(W,L) { return 1 + (W/L); }
 function N_gamma_p(phi_p) {
@@ -111,6 +114,20 @@ function N_gamma_p(phi_p) {
     const term1 = 2 * tanTheta;
     const term2 = 1 + Math.exp(Math.PI * tanTheta) * Math.pow(Math.tan(Math.PI / 4 + theta / 2), 2);
     return term1 * term2;}
+
+async function calculateScWithMathcad(W, L) {
+    const response = await fetch('/calculate-sc', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ W, L })
+    });
+    const data = await response.json();
+    return data.s_c;
+}
+
+
+
+
 
 
 document.getElementById("soilType").addEventListener("change", () => {
