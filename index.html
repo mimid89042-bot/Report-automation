@@ -34,7 +34,6 @@
 
 <div id="cohesiveInputs" class="box hidden">
     <h3>Design values for ground properties</h3>
-    <form id="cohesive-inputs">
     <div class="input-row">
         <label>Subgrade</label>
         <label>C<sub>u</sub> (kPa):</label>
@@ -102,7 +101,40 @@
 
 <!-- Import JS as module -->
 <script>
-function s_c(W,L) { return 1 + 0.2 * (W/L); }
+//function s_c(W,L) { return 1 + 0.2 * (W/L); }
+
+//COM AUTOMATION REPLACEMENT
+
+async function getScFromMathcad(W, L) {
+    try {
+        const response = await fetch('/calculate-sc', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ W, L })
+        });
+        const data = await response.json();
+        if(data.s_c !== undefined){
+            return data.s_c;
+        } else {
+            console.error(data.error);
+            return 0;
+        }
+    } catch (err) {
+        console.error(err);
+        return 0;
+    }
+}
+
+async function updateCaseFromMathcad(caseId, W, L) {
+    const scValue = await getScFromMathcad(W, L);
+    document.getElementById(`sc_${caseId}`).textContent = scValue.toFixed(2);
+    // You can still use JS functions for s_gamma and s_p
+    document.getElementById(`sgamma_${caseId}`).textContent = s_gamma(W,L).toFixed(2);
+    document.getElementById(`sp_${caseId}`).textContent = s_p(W,L).toFixed(2);
+}
+
+
+
 
 
 
@@ -149,7 +181,7 @@ function updateCase(caseId, W, L) {
     document.getElementById(`sp_${caseId}`).textContent = s_p(W,L).toFixed(2);
 }
 
-document.getElementById("cohesive-inputs").addEventListener("submit", function(event){
+document.getElementById("cohesive-inputs").addEventListener("submit", async function(event){
     event.preventDefault();
 
     const form = event.target;
@@ -185,6 +217,10 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     // Calculate modularly
     updateCase(1, inputValues.W1d, inputValues.L1d);
     updateCase(2, inputValues.W2d, inputValues.L2d);
+
+      // Update case results from Mathcad
+    await updateCaseFromMathcad(1, W1d, L1d);
+    await updateCaseFromMathcad(2, W2d, L2d);
 
     document.getElementById("results").classList.remove("hidden");
 
