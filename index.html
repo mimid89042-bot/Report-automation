@@ -20,17 +20,19 @@
 
 <h1>TWP Calculation</h1>
 
-<div class="box">
-    <label>Subgrade Soil Type:</label>
-    <select id="soilType">
-        <option value="">-- Select Soil Type --</option>
-        <option value="cohesive">Cohesive</option>
-        <option value="granular">Granular</option>
-    </select>
-</div>
+<form id="cohesive-inputs">
+  <div class="box">
+      <label>Subgrade Soil Type:</label>
+      <select id="soilType" required>
+          <option value="">-- Select Soil Type --</option>
+          <option value="cohesive">Cohesive</option>
+          <option value="granular">Granular</option>
+      </select>
+  </div>
 
 <div id="cohesiveInputs" class="box hidden">
     <h3>Design values for ground properties</h3>
+    <form id="cohesive-inputs">
     <div class="input-row">
         <label>Subgrade</label>
         <label>C<sub>u</sub> (kPa):</label>
@@ -49,26 +51,27 @@
 
     <div class="case-column">
         <h3>Case 1 loading inputs</h3>
-        <label>q<sub>1k</sub> (kPa):</label><input type="number" id="q1k"><br>
-        <label>W<sub>1d</sub> (m):</label><input type="number" id="W1d"><br>
-        <label>L<sub>1d</sub> (m):</label><input type="number" id="L1d"><br>
+        <label>q<sub>1k</sub> (kPa):</label><input type="number" id="q1k" required><br>
+        <label>W<sub>1d</sub> (m):</label><input type="number" id="W1d" required><br>
+        <label>L<sub>1d</sub> (m):</label><input type="number" id="L1d" required><br>
     </div>
 
     <div class="case-column">
         <h3>Case 2 loading inputs</h3>
-        <label>q<sub>2k</sub> (kPa):</label><input type="number" id="q2k"><br>
-        <label>W<sub>2d</sub> (m):</label><input type="number" id="W2d"><br>
-        <label>L<sub>2d</sub> (m):</label><input type="number" id="L2d"><br>
+        <label>q<sub>2k</sub> (kPa):</label><input type="number" id="q2k" required><br>
+        <label>W<sub>2d</sub> (m):</label><input type="number" id="W2d" required><br>
+        <label>L<sub>2d</sub> (m):</label><input type="number" id="L2d" required><br>
     </div>
 
 </div>
 
     <button id="calculateBtn">Submit</button>
+</form>
 </div>
 
 <!--outputs box-->
 <div  class ="box hidden" id="results">
-   <h3>Optional heading for results</h3>
+   <h3>Results</h3>
    <label>N<sub>c</sub> = (2+π) = 5.14</label><br>
    <label>N<sub>γp</sub> = <span id="N_gamma_p_display"></span></label>
 
@@ -118,7 +121,16 @@ function updateCase(caseId, W, L) {
     document.getElementById(`sp_${caseId}`).textContent = s_p(W,L).toFixed(2);
 }
 
-document.getElementById("calculateBtn").addEventListener("click", () => {
+document.getElementById("cohesive-inputs").addEventListener("submit", function(event){
+    event.preventDefault();
+
+    const form = event.target;
+
+       // Check if all required fields are filled
+    if (!form.checkValidity()) {
+        form.reportValidity(); // shows browser tooltip
+        return; // stop execution
+    }
 
     const phi_p = parseFloat(document.getElementById("phi_p").value);
 
@@ -147,7 +159,7 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
     updateCase(2, inputValues.W2d, inputValues.L2d);
 
     document.getElementById("results").classList.remove("hidden");
-    document.getElementById("calculateBtn").classList.add("hidden"); // hide button
+
 
 });
 </script>
