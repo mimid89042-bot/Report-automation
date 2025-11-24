@@ -48,14 +48,14 @@
   <div class="cases-container">
 
     <div class="case-column">
-        <h3>Case 1 loading</h3>
+        <h3>Case 1 loading inputs</h3>
         <label>q<sub>1k</sub> (kPa):</label><input type="number" id="q1k"><br>
         <label>W<sub>1d</sub> (m):</label><input type="number" id="W1d"><br>
         <label>L<sub>1d</sub> (m):</label><input type="number" id="L1d"><br>
     </div>
 
     <div class="case-column">
-        <h3>Case 2 loading</h3>
+        <h3>Case 2 loading inputs</h3>
         <label>q<sub>2k</sub> (kPa):</label><input type="number" id="q2k"><br>
         <label>W<sub>2d</sub> (m):</label><input type="number" id="W2d"><br>
         <label>L<sub>2d</sub> (m):</label><input type="number" id="L2d"><br>
@@ -63,28 +63,40 @@
 
 </div>
 
-
     <button id="calculateBtn">Submit</button>
-
-    <div id="results" class="hidden">
-        <div class="column">
-            <label>s <sub>c1</sub></label><p id="sc_1"></p>
-            <label>s <sub>γ1</sub></label><p id="sgamma_1"></p>
-            <label>s <sub>p1</sub></label><p id="sp_1"></p>
-        </div>
-        <div class="column">
-            <label>s <sub>c2</sub></label><p id="sc_2"></p>
-            <label>s <sub>γ2</sub></label><p id="sgamma_2"></p>
-            <label>s <sub>p2</sub></label><p id="sp_2"></p>
-        </div>
-    </div>
 </div>
+
+<!--outputs box-->
+<div  class ="box hidden" id="results">
+   <h3>Optional heading for results</h3>
+   <label>N<sub>c</sub> = (2+π) = 5.14</label><br>
+   <label>N<sub>γp</sub> = <span id="N_gamma_p_display"></span></label>
+
+   
+   <h4>Case 1 results</h4>
+   <p>s_c: <span id="sc_1"></span></p>
+   <p>s_γ: <span id="sgamma_1"></span></p>
+   <p>s_p: <span id="sp_1"></span></p>
+
+   <h4>Case 2 results</h4>
+   <p>s_c: <span id="sc_2"></span></p>
+   <p>s_γ: <span id="sgamma_2"></span></p>
+   <p>s_p: <span id="sp_2"></span></p>
+</div>
+
+
 
 <!-- Import JS as module -->
 <script>
 function s_c(W,L) { return 1 + 0.2 * (W/L); }
 function s_gamma(W,L) { return 1 - 0.3 * (W/L); }
 function s_p(W,L) { return 1 + (W/L); }
+function N_gamma_p(phi_p) {
+    const theta = phi_p * Math.PI / 180;
+    const tanTheta = Math.tan(theta);
+    const term1 = 2 * tanTheta;
+    const term2 = 1 + Math.exp(Math.PI * tanTheta) * Math.pow(Math.tan(Math.PI / 4 + theta / 2), 2);
+    return term1 * term2;}
 
 
 document.getElementById("soilType").addEventListener("change", () => {
@@ -107,14 +119,17 @@ function updateCase(caseId, W, L) {
 }
 
 document.getElementById("calculateBtn").addEventListener("click", () => {
+
+    const phi_p = parseFloat(document.getElementById("phi_p").value);
+
     // Gather inputs
     const inputValues = {
         cu: parseFloat(document.getElementById("cu").value),
         W1d: parseFloat(document.getElementById("W1d").value),
         L1d: parseFloat(document.getElementById("L1d").value),
         W2d: parseFloat(document.getElementById("W2d").value),
-        L2d: parseFloat(document.getElementById("L2d").value)
-    };
+        L2d: parseFloat(document.getElementById("L2d").value)  
+     };
 
     // Validation
     if (isNaN(inputValues.cu) || inputValues.cu <= 20 || inputValues.cu >= 80) {
@@ -122,11 +137,18 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
         return;
     }
 
+    // Calculate N_gamma_p and display
+    const N_gamma = N_gamma_p(phi_p);
+    document.getElementById("N_gamma_p_display").textContent = N_gamma.toFixed(2);
+
+
     // Calculate modularly
     updateCase(1, inputValues.W1d, inputValues.L1d);
     updateCase(2, inputValues.W2d, inputValues.L2d);
 
     document.getElementById("results").classList.remove("hidden");
+    document.getElementById("calculateBtn").classList.add("hidden"); // hide button
+
 });
 </script>
 
