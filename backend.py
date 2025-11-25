@@ -1,31 +1,34 @@
-import comtypes.client
-import os
+# copied from MathcadPy github
 
-def open_mathcad_file(file_path):
-    if not os.path.exists(file_path):
-        print(f"File does not exist: {file_path}")
-        return None, None
+# Standard Library Imports
+from pathlib import Path
 
-    try:
-        mc_app = comtypes.client.CreateObject("MathcadPrime.Application")
-        mc_app.Visible = True
+# External library Imports
+from MathcadPy import Mathcad
 
-        mc_ws = mc_app.Open(file_path)
-        if mc_ws is None:
-            print("Failed to open worksheet.")
-        else:
-            print(f"Worksheet opened: {file_path}")
+# create an instance of the Mathcad class - this object represents the Mathcad application
+mathcad_app = Mathcad()
 
-        return mc_app, mc_ws
-    except Exception as e:
-        print(f"Error launching Mathcad or opening file: {e}")
-        return None, None
+mathcad_worksheet = mathcad_app.open(Path(r"C:\Users\Amelia\Documents\Calculation-Automation\s_c.mcdx"))
 
-if __name__ == "__main__":
-    file_path = r"C:\Users\Amelia\Documents\Calculation-Automation\s_c.mcdx"
-    app, ws = open_mathcad_file(file_path)
+print(mathcad_worksheet.inputs())
 
-    if app:
-        input("Press Enter to close Mathcad...")
-        # Use 0 = spDiscardChanges (discard all changes when quitting)
-        app.Quit(0)
+print(mathcad_worksheet.outputs())
+
+# print the value of the input before we interact with it - for debugging purposes only
+print(f"Old input value: {mathcad_worksheet.get_input('L')}")
+mathcad_worksheet.set_real_input("L", 2)  # change the value in Mathcad programmatically
+# print the value of the input after we interact with it - for debugging purposes only
+print(f"New input value: {mathcad_worksheet.get_input('L')}")
+
+mathcad_worksheet.set_real_input("W", 4)  # change the value in Mathcad programmatically
+
+# fetch the output value now we have changed the inputs
+value, units, error_code = mathcad_worksheet.get_real_output("s_c")
+if error_code == 0:  # Good practice to check for errors when you retreive a value
+    print(value, units)
+else:
+    raise ValueError
+
+#mathcad_worksheet.save_as(Path.cwd() / "simple_example_output.mcdx")
+mathcad_app.quit()
