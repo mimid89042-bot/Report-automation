@@ -26,12 +26,6 @@ export function updateCase(caseId, W, L) {
     document.getElementById(`sp_${caseId}`).textContent = s_p(W,L).toFixed(2);
 }
 
-// === Show Results Function ===
-export function showResults() {
-    document.getElementById("results").classList.remove("hidden");
-}
-
-
 
 //console.log(N_γp(40)); // Example usage
 //TO TEST FUNCTIONS --> open power shell --> cd "file path" --> uncomment line ^^ with desired function

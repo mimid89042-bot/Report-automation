@@ -1,0 +1,65 @@
+body { 
+    font-family: Arial; 
+    margin: 40px; 
+    background-color: rgba(235,246,255,0.65);
+}
+
+label { 
+    display: inline-block; 
+    width: 250px;
+}
+
+input { 
+    margin-bottom: 10px; 
+}
+
+.box { 
+    margin-top:20px; 
+    padding:20px; 
+    border:2px solid #fff; 
+    background:#edf3ffda;
+}
+
+.hidden { 
+    display:none; 
+}
+
+.cases-container {
+    display: flex;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.case-column {
+    flex: 1;
+    min-width: 220px;
+}
+
+.case-column label {
+    display: inline-block;
+    width: 120px;
+    margin-bottom: 5px;
+}
+
+.results-container {
+    display: flex;
+    gap: 40px;
+}
+
+.case-result {
+    flex: 1;
+}
+
+/* --- Moved inline styles to CSS --- */
+
+.input-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.inline-flex {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
