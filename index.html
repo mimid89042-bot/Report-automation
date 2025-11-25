@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang = "en">
 <head>
     <title>TWP Calculation</title>
+    <meta charset= "utf-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <style>
         body { font-family: Arial; margin: 40px; background-color: rgba(235,246,255,0.65);}
         label { display: inline-block; width: 250px;}
         input { margin-bottom: 10px; }
         .box { margin-top:20px; padding:20px; border:2px solid #fff; background:#edf3ffda;}
         .hidden { display:none; }
-        .column { float:left; width:50%; }
-        .row:after { content:""; display:table; clear:both; }
         .cases-container {display: flex;gap: 40px; margin-top: 20px;}
         .case-column {flex: 1;min-width: 220px;}
         .case-column label {display: inline-block;width: 120px;margin-bottom: 5px;}
@@ -22,64 +22,85 @@
 <h1>TWP Calculation</h1>
 
 <form id="cohesive-inputs">
-  <div class="box">
-      <label>Subgrade Soil Type:</label>
-      <select id="soilType" required>
-          <option value="">-- Select Soil Type --</option>
-          <option value="cohesive">Cohesive</option>
-          <option value="granular">Granular</option>
-      </select>
-  </div>
-
-<div id="cohesiveInputs" class="box hidden">
-    <h3>Design values for ground properties</h3>
-
-    <div class="input-row">
-        <label>Subgrade</label>
-        <label>C<sub>u</sub> (kPa):</label>
-        <input type="number" id="cu" step="0.1" required>
+    <div class="box">
+        <label>Subgrade Soil Type:</label>
+        <select id="soilType" required title = "subgrade soil type required">
+            <option value="">-- Select Soil Type --</option>
+            <option value="cohesive">Cohesive</option>
+            <option value="granular">Granular</option>
+        </select>
     </div>
 
-    <div class="input-row">
-        <label>Working platform</label>
-        <label>ϕ'<sub>p</sub> (°):</label>
-        <input type="number" id="phi_p" step="0.1" value="40" required><br>
+    <div id="cohesiveInputs" class="box hidden">
+        <h3>Design values for ground properties</h3>
 
-        <label></label>
-        <label>γ<sub>p</sub> (kN/m³):</label>
-        <input type="number" id="gamma" step="0.1" value="20" required><br>
+        <div class="input-row">
+            <label>Subgrade</label>
+            <label>C<sub>u</sub> (kPa):
+                <input type="number" id="cu" step="0.1" required>
+            </label>
+        </div>
+
+        <div class="input-row" style="display: flex; gap: 20px; align-items: center;">
+            <label>Working platform:</label>
+
+            <label for="phi_p" style="display: flex; align-items: center; gap: 5px;">
+                ϕ'<sub>p</sub> (°):
+                <input type="number" id="phi_p" step="0.1" value="40" required>
+            </label>
+
+            <label for="gamma" style="display: flex; align-items: center; gap: 5px;">
+                γ<sub>p</sub> (kN/m³):
+                <input type="number" id="gamma" step="0.1" value="20" required>
+            </label>
+        </div>
+
+
+
+        <div class="cases-container">
+        <div class="case-column">
+            <h3>Case 1 loading inputs</h3>
+            <label>q<sub>1k</sub> (kPa):
+                <input type="number" id="q1k" step="0.1" required>
+            </label><br>
+
+            <label>W<sub>1d</sub> (m):
+                <input type="number" id="W1d" step="0.1" required>
+            </label><br>
+
+            <label>L<sub>1d</sub> (m):
+                <input type="number" id="L1d" step="0.1" required>
+            </label><br>
+        </div>
+
+        <div class="case-column">
+            <h3>Case 2 loading inputs</h3>
+            <label>q<sub>2k</sub> (kPa):
+                <input type="number" id="q2k" step="0.1" required>
+            </label><br>
+
+            <label>W<sub>2d</sub> (m):
+                <input type="number" id="W2d" step="0.1" required>
+            </label><br>
+
+            <label>L<sub>2d</sub> (m):
+                <input type="number" id="L2d" step="0.1" required>
+            </label><br>
+        </div>
     </div>
 
-  <div class="cases-container">
 
-    <div class="case-column">
-        <h3>Case 1 loading inputs</h3>
-        <label>q<sub>1k</sub> (kPa):</label><input type="number" id="q1k" step="0.1" required><br>
-        <label>W<sub>1d</sub> (m):</label><input type="number" id="W1d" step="0.1" required><br>
-        <label>L<sub>1d</sub> (m):</label><input type="number" id="L1d" step="0.1" required><br>
+        <button type="submit" id="calculateBtn">Submit</button>
     </div>
-
-    <div class="case-column">
-        <h3>Case 2 loading inputs</h3>
-        <label>q<sub>2k</sub> (kPa):</label><input type="number" id="q2k" step="0.1" required><br>
-        <label>W<sub>2d</sub> (m):</label><input type="number" id="W2d" step="0.1" required><br>
-        <label>L<sub>2d</sub> (m):</label><input type="number" id="L2d" step="0.1" required><br>
-    </div>
-
-</div>
-
-    <button id="calculateBtn">Submit</button>
 </form>
-</div>
 
 <!-- RESULTS BOX -->
-<div class="box hidden" id="change name later">
+<div class="box hidden" id="results">
    <h3>Results</h3>
    <label>N<sub>c</sub> = (2+π) = 5.14</label><br>
    <label>N<sub>γp</sub> = <span id="N_gamma_p_display"></span></label>
 
    <div class="results-container">
-
       <div class="case-result">
          <h3>Case 1 loading results</h3>
          <p>s<sub>c1</sub>: <span id="sc_1"></span></p>
@@ -93,72 +114,50 @@
          <p>s<sub>γ2</sub>: <span id="sgamma_2"></span></p>
          <p>s<sub>p2</sub>: <span id="sp_2"></span></p>
       </div>
-
    </div>
-
-   <label>Check that subgrade cannot provide required bearing resistannce without a working platform</label><br>
-   <label>R<sub>d</sub> = C<sub>ud</sub>N<sub>c</sub>s<sub>c</sub> = <span id = Rc></span></label>
-
-
 </div>
 
 <script>
-
-// Local JS functions
-function s_c(W,L) { return 1 + 0.2 * (W/L); }
-function s_gamma(W,L) { return 1 - 0.3 * (W/L); }
-function s_p(W,L) { return 1 + (W/L); }
+// === Calculations ===
+function s_c(W, L) { return 1 + 0.2 * (W / L); }
+function s_gamma(W, L) { return 1 - 0.3 * (W / L); }
+function s_p(W, L) { return 1 + (W / L); }
 
 function N_gamma_p(phi_p) {
     const theta = phi_p * Math.PI / 180;
     const tanTheta = Math.tan(theta);
     return 2 * tanTheta * (1 + Math.exp(Math.PI * tanTheta) * Math.pow(Math.tan(Math.PI/4 + theta/2), 2));
 }
-function R_d(c_u, N_c, s_c){
-    return c_u*N_c*s_c
-}
 
-// OPTIONAL Mathcad request function (safe)
-async function calculateScWithMathcad(W, L) {
-    try {
-        const response = await fetch('/calculate-sc', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ W, L })
-        });
-        const data = await response.json();
-        return data.s_c;
-    } catch (e) {
-        console.warn("Mathcad not connected, using JS instead.");
-        return s_c(W, L);
-    }
-}
-
-// UI toggle
-document.getElementById("soilType").addEventListener("change", () => {
-    const soil = document.getElementById("soilType").value;
-    document.getElementById("cohesiveInputs").classList.toggle("hidden", soil !== "cohesive");
-});
-
-// Update a case
+// === UI Functions ===
 function updateCase(caseId, W, L) {
     document.getElementById(`sc_${caseId}`).textContent = s_c(W,L).toFixed(2);
     document.getElementById(`sgamma_${caseId}`).textContent = s_gamma(W,L).toFixed(2);
     document.getElementById(`sp_${caseId}`).textContent = s_p(W,L).toFixed(2);
 }
 
-// MAIN SUBMIT HANDLER
-document.getElementById("cohesive-inputs").addEventListener("submit", async function(event){
-    event.preventDefault();
+function showResults() {
+    document.getElementById("results").classList.remove("hidden");
+}
 
-    const form = event.target;
-    if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
+// Soil type toggle
+document.getElementById("soilType").addEventListener("change", () => {
+    const soil = document.getElementById("soilType").value;
+    const cohesiveDiv = document.getElementById("cohesiveInputs");
+    if (soil === "cohesive") {
+        cohesiveDiv.classList.remove("hidden");
+    } else {
+        cohesiveDiv.classList.add("hidden");
     }
+});
+
+// Form submission
+document.getElementById("cohesive-inputs").addEventListener("submit", function(event){
+    event.preventDefault();
+    const form = event.target;
+    if (!form.checkValidity()) { form.reportValidity(); return; }
 
     const phi_p = parseFloat(document.getElementById("phi_p").value);
-
     const inputValues = {
         cu: parseFloat(document.getElementById("cu").value),
         W1d: parseFloat(document.getElementById("W1d").value),
@@ -167,28 +166,19 @@ document.getElementById("cohesive-inputs").addEventListener("submit", async func
         L2d: parseFloat(document.getElementById("L2d").value)
     };
 
-    // Subgrade validation
     if (inputValues.cu <= 20 || inputValues.cu >= 80) {
         alert(inputValues.cu <= 20 ? "Subgrade too soft" : "Subgrade too stiff");
         return;
     }
 
-    // Compute Nγp
     const N_gamma = N_gamma_p(phi_p);
     document.getElementById("N_gamma_p_display").textContent = N_gamma.toFixed(2);
 
-
-    //Compute Nc
-    const Rc = R_c(inputValues.cu, 2 + PI, s_c);
-
-    // Compute local results
     updateCase(1, inputValues.W1d, inputValues.L1d);
     updateCase(2, inputValues.W2d, inputValues.L2d);
 
-    // Show result box
-    document.getElementById("results").classList.remove("hidden");
+    showResults();
 });
-
 </script>
 
 </body>

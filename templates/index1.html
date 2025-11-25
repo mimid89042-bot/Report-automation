@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TWP Calculation</title>
+    <style>
+        body { font-family: Arial; margin: 40px; background-color: rgba(235,246,255,0.65);}
+        label { display: inline-block; width: 250px;}
+        input { margin-bottom: 10px; }
+        .box { margin-top:20px; padding:20px; border:2px solid #fff; background:#edf3ffda;}
+        .hidden { display:none; }
+        .cases-container {display: flex; gap: 40px; margin-top: 20px;}
+        .case-column {flex: 1; min-width: 220px;}
+        .case-column label {display: inline-block; width: 120px;}
+        .results-container {display: flex; gap: 40px;}
+        .case-result {flex: 1;}
+    </style>
+</head>
+<body>
+
+<h1>TWP Calculation</h1>
+
+<form id="cohesive-inputs">
+  <div class="box">
+      <label>Subgrade Soil Type:</label>
+      <select id="soilType" required>
+          <option value="">-- Select Soil Type --</option>
+          <option value="cohesive">Cohesive</option>
+          <option value="granular">Granular</option>
+      </select>
+  </div>
+
+  <div id="cohesiveInputs" class="box hidden">
+    <h3>Design values for ground properties</h3>
+    <div class="input-row">
+        <label>Subgrade</label>
+        <label>C<sub>u</sub> (kPa):</label>
+        <input type="number" id="cu" step="0.1" required>
+    </div>
+    <div class="input-row">
+        <label>Working platform</label>
+        <label>ϕ'<sub>p</sub> (°):</label>
+        <input type="number" id="phi_p" step="0.1" value="40" required><br>
+        <label></label>
+        <label>γ<sub>p</sub> (kN/m³):</label>
+        <input type="number" id="gamma" step="0.1" value="20" required><br>
+    </div>
+
+    <div class="cases-container">
+      <div class="case-column">
+          <h3>Case 1 loading inputs</h3>
+          <label>q<sub>1k</sub> (kPa):</label><input type="number" id="q1k" step="0.1" required><br>
+          <label>W<sub>1d</sub> (m):</label><input type="number" id="W1d" step="0.1" required><br>
+          <label>L<sub>1d</sub> (m):</label><input type="number" id="L1d" step="0.1" required><br>
+      </div>
+      <div class="case-column">
+          <h3>Case 2 loading inputs</h3>
+          <label>q<sub>2k</sub> (kPa):</label><input type="number" id="q2k" step="0.1" required><br>
+          <label>W<sub>2d</sub> (m):</label><input type="number" id="W2d" step="0.1" required><br>
+          <label>L<sub>2d</sub> (m):</label><input type="number" id="L2d" step="0.1" required><br>
+      </div>
+    </div>
+
+    <button>Submit</button>
+  </div>
+</form>
+
+<div class="box hidden" id="results">
+   <h3>Results</h3>
+   <label>N<sub>c</sub> = (2+π) = 5.14</label><br>
+   <label>N<sub>γp</sub> = <span id="N_gamma_p_display"></span></label>
+   <div class="results-container">
+      <div class="case-result">
+         <h3>Case 1 results</h3>
+         <p>s<sub>c1</sub>: <span id="sc_1"></span></p>
+      </div>
+      <div class="case-result">
+         <h3>Case 2 results</h3>
+         <p>s<sub>c2</sub>: <span id="sc_2"></span></p>
+      </div>
+   </div>
+</div>
+
+<script>
+document.getElementById("soilType").addEventListener("change", () => {
+    const soil = document.getElementById("soilType").value;
+    document.getElementById("cohesiveInputs").classList.toggle("hidden", soil !== "cohesive");
+});
+
+// JS fallback (if Mathcad not connected)
+function s_c_js(W,L){ return 1 + 0.2*(W/L); }
+
+async function updateCaseFromMathcad(caseId, W, L){
+    try {
+        const resp = await fetch("/calculate-sc", {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({W,L})
+        });
+        const data = await resp.json();
+        if(data.s_c !== undefined){
+            document.getElementById(`sc_${caseId}`).textContent = data.s_c.toFixed(2);
+        } else {
+            document.getElementById(`sc_${caseId}`).textContent = s_c_js(W,L).toFixed(2);
+        }
+    } catch(e){
+        console.warn("Mathcad fetch failed, using JS fallback.");
+        document.getElementById(`sc_${caseId}`).textContent = s_c_js(W,L).toFixed(2);
+    }
+}
+
+document.getElementById("cohesive-inputs").addEventListener("submit", async function(e){
+    e.preventDefault();
+    const W1 = parseFloat(document.getElementById("W1d").value);
+    const L1 = parseFloat(document.getElementById("L1d").value);
+    const W2 = parseFloat(document.getElementById("W2d").value);
+    const L2 = parseFloat(document.getElementById("L2d").value);
+
+    // Show results
+    await updateCaseFromMathcad(1, W1, L1);
+    await updateCaseFromMathcad(2, W2, L2);
+
+    document.getElementById("results").classList.remove("hidden");
+});
+</script>
+
+</body>
+</html>

@@ -8,7 +8,7 @@ from MathcadPy import Mathcad
 
 
 # create an instance of the Mathcad class - this object represents the Mathcad application
-mathcad_app = Mathcad(visible = False)
+mathcad_app = Mathcad(visible = True)
 
 #open worksheet from path
 mathcad_worksheet = mathcad_app.open(Path(r"C:\Users\Amelia\Documents\Calculation-Automation\s_c.mcdx"))
