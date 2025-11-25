@@ -26,7 +26,7 @@
         <div class="input-row">
             <label for="subgrade">Subgrade:</label>
             <label>C<sub>u</sub> (kPa):
-            <input type="number" id="cu" step="0.1" required>
+            <input type="number" id="cu" step="0.1" required  value = "24">
             </label>
         </div>
 
@@ -50,30 +50,30 @@
         <div class="case-column">
             <h3>Case 1 loading inputs</h3>
             <label>q<sub>1k</sub> (kPa):
-                <input type="number" id="q1k" step="0.1" required>
+                <input type="number" id="q1k" step="0.1" required value = "140">
             </label><br>
 
             <label>W<sub>1d</sub> (m):
-                <input type="number" id="W1d" step="0.1" required>
+                <input type="number" id="W1d" step="0.1" required value = "0.7">
             </label><br>
 
             <label>L<sub>1d</sub> (m):
-                <input type="number" id="L1d" step="0.1" required>
+                <input type="number" id="L1d" step="0.1" required value = "3.6">
             </label><br>
         </div>
 
         <div class="case-column">
             <h3>Case 2 loading inputs</h3>
             <label>q<sub>2k</sub> (kPa):
-                <input type="number" id="q2k" step="0.1" required>
+                <input type="number" id="q2k" step="0.1" required value = "190">
             </label><br>
 
             <label>W<sub>2d</sub> (m):
-                <input type="number" id="W2d" step="0.1" required>
+                <input type="number" id="W2d" step="0.1" required value = "0.7">
             </label><br>
 
             <label>L<sub>2d</sub> (m):
-                <input type="number" id="L2d" step="0.1" required>
+                <input type="number" id="L2d" step="0.1" required value = "3.1">
             </label><br>
         </div>
     </div>
@@ -104,7 +104,16 @@
          <p>s<sub>p2</sub>: <span id="sp_2"></span></p>
       </div>
    </div>
+
+   <h3>Check if TWP is required</h3>
+    <span>Check that subgrade cannot provide required bearing resistance without a working platform</span>
+    
+    <div class="input-row">
+        <p>R<sub>d</sub> = c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> =  <span id="R_d"></span></p>
+    </div>
 </div>
+
+
 
 <script type="module" src="js/main.js"></script>
 

@@ -1,4 +1,7 @@
 // calculations.js
+import { resultsData } from './data.js';
+
+
 
 // === Calculation Functions ===
 export function s_c(W, L) { 
@@ -19,11 +22,27 @@ export function N_gamma_p(phi_p) {
     return 2 * tanTheta * (1 + Math.exp(Math.PI * tanTheta) * Math.pow(Math.tan(Math.PI/4 + theta/2), 2));
 }
 
+export function R_d(c_u, NC, s_c){
+    return c_u * NC * s_c;
+}
+
 // === UI Update Function ===
 export function updateCase(caseId, W, L) {
-    document.getElementById(`sc_${caseId}`).textContent = s_c(W,L).toFixed(2);
-    document.getElementById(`sgamma_${caseId}`).textContent = s_gamma(W,L).toFixed(2);
-    document.getElementById(`sp_${caseId}`).textContent = s_p(W,L).toFixed(2);
+    const sc = s_c(W, L);
+    const sgamma = s_gamma(W, L);
+    const sp = s_p(W, L);
+
+    // Update the DOM
+    document.getElementById(`sc_${caseId}`).textContent = sc.toFixed(2);
+    document.getElementById(`sgamma_${caseId}`).textContent = sgamma.toFixed(2);
+    document.getElementById(`sp_${caseId}`).textContent = sp.toFixed(2);
+
+    // Save in resultsData
+    resultsData.cases[caseId] = {
+        s_c: sc,
+        s_gamma: sgamma,
+        s_p: sp
+    };
 }
 
 
