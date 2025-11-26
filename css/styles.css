@@ -63,3 +63,8 @@ input {
     align-items: center;
     gap: 5px;
 }
+
+.indented {
+    margin-left: 30px;
+}
+

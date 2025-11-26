@@ -85,35 +85,58 @@
 
 <!-- RESULTS BOX -->
 <div class="box hidden" id="results">
-   <h3>Results</h3>
    <label>N<sub>c</sub> = (2+π) = 5.14</label><br>
    <label>N<sub>γp</sub> = <span id="N_gamma_p_display"></span></label>
 
    <div class="results-container">
       <div class="case-result">
          <h3>Case 1 loading results</h3>
-         <p>s<sub>c1</sub>: <span id="sc_1"></span></p>
-         <p>s<sub>γ1</sub>: <span id="sgamma_1"></span></p>
-         <p>s<sub>p1</sub>: <span id="sp_1"></span></p>
+         <p>s<sub>c1</sub> = 1 + 0.2(W<sub>1d</sub>/L<sub>1d</sub>) = <span id="sc_1"></span></p>
+         <p>s<sub>γ1</sub> = 1 - 0.3(W<sub>1d</sub>/L<sub>1d</sub>) = <span id="sgamma_1"></span></p>
+         <p>s<sub>p1</sub> = 1 + (W<sub>1d</sub>/L<sub>1d</sub>) = <span id="sp_1"></span></p>
       </div>
 
       <div class="case-result">
          <h3>Case 2 loading results</h3>
-         <p>s<sub>c2</sub>: <span id="sc_2"></span></p>
-         <p>s<sub>γ2</sub>: <span id="sgamma_2"></span></p>
-         <p>s<sub>p2</sub>: <span id="sp_2"></span></p>
+         <p>s<sub>c2</sub> = 1 + 0.2(W<sub>2d</sub>/L<sub>2d</sub>) = <span id="sc_2"></span></p>
+         <p>s<sub>γ2</sub> = 1 - 0.3(W<sub>2d</sub>/L<sub>2d</sub>) = <span id="sgamma_2"></span></p>
+         <p>s<sub>p2</sub> = 1 + (W<sub>2d</sub>/L<sub>2d</sub>) = <span id="sp_2"></span></p>
       </div>
    </div>
 
    <h3>Check if TWP is required</h3>
-    <span>Check that subgrade cannot provide required bearing resistance without a working platform</span>
+    <span>Check that subgrade cannot provide required bearing resistance without a working platform:</span>
     
-    <div class="input-row">
-        <p>R<sub>d</sub> = c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> =  <span id="R_d"></span></p>
+    <p class = "indented"> R<sub>d</sub> = c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> = 
+        <span id="cu_value"></span> x 
+        <span id = "NC_value" ></span> x 
+        <span id = "sc_min_value"></span>
+        <span id="R_d"></span></p>
+        <br>
+
+    <p>Design loading is calculated for two loading conditions.</p>
+
+     <div class="cases-container">
+    <div class="case-column">
+        <p>Case loading 1:</p>
+        <p>q<sub>1d</sub> = 2.0q<sub>1k</sub> = 2.0 x <span id= "q1k_value"></span> = <span id= "q1d_value"></span> kPa</p>
     </div>
+
+    <div class="case-column">
+        <p>Case loading 2:</p>
+        <p>q<sub>2d</sub> = 1.5q<sub>2k</sub> = 1.5 x <span id= "q2k_value"></span> = <span id= "q2d_value"></span> kPa</p>
+    </div>
+    </div>
+
+    <p id= "twp_decision" class = "indented"></p>
+
+
 </div>
 
-
+<!-- PLATFORM MATERIAL BOX-->
+<div class= "box hidden" id="platformMaterial" >
+    <p Check that platform material is stronger than subgrade:></p>
+</div>
 
 <script type="module" src="js/main.js"></script>
 
