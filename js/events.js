@@ -12,6 +12,26 @@ export function initEventListeners() {
         else hideElement('cohesiveInputs');
     });
 
+    // φ'p select element
+    const phiSelect = document.getElementById("phi_p");
+    const kptSpan = document.getElementById("kptandelta");
+    const phiMap = { 35: 3.1, 40: 5.5, 45: 10.0 };
+
+    function updateKpDelta() {
+        const phi_p = parseFloat(phiSelect.value);
+        kptSpan.textContent = phiMap[phi_p];
+    }
+
+    // Initialize value on page load
+    updateKpDelta();
+
+    // Update whenever selection changes
+    phiSelect.addEventListener("change", updateKpDelta);
+
+    // Other event listeners like form submission...
+}
+
+
     // Form submission
     document.getElementById("cohesive-inputs").addEventListener("submit", function(event){
         event.preventDefault();
@@ -23,12 +43,10 @@ export function initEventListeners() {
         //document.getElementById("phi_p_value").textContent = inputData.phi_p;
         inputData.gamma = parseFloat(document.getElementById("gamma").value);
         //document.getElementById("gamma_value").textContent = inputData.gamma;
-        inputData.W1d = parseFloat(document.getElementById("W1d").value);
-        //document.getElementById("W1d_value").textContent = inputData.W1d;
+        inputData.Wd = parseFloat(document.getElementById("Wd").value);
+        //document.getElementById("Wd_value").textContent = inputData.Wd;
         inputData.L1d = parseFloat(document.getElementById("L1d").value);
         //document.getElementById("L1d_value").textContent = inputData.L1d;
-        inputData.W2d = parseFloat(document.getElementById("W2d").value);
-        //document.getElementById("W2d_value").textContent = inputData.W2d;
         inputData.L2d = parseFloat(document.getElementById("L2d").value);
         //document.getElementById("L2d_value").textContent = inputData.L2d;
         inputData.q1k = parseFloat(document.getElementById("q1k").value);
@@ -46,8 +64,8 @@ export function initEventListeners() {
 
         resultsData.N_gamma_p = N_gamma_p(inputData.phi_p);
 
-        updateCase(1, inputData.W1d, inputData.L1d);
-        updateCase(2, inputData.W2d, inputData.L2d);
+        updateCase(1, inputData.Wd, inputData.L1d);
+        updateCase(2, inputData.Wd, inputData.L2d);
         displayTWPrequired(
             inputData.cu,
             NC,
@@ -63,4 +81,4 @@ export function initEventListeners() {
 
         console.log("Form submitted", inputData, resultsData);
     });
-}
+

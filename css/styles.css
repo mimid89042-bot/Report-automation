@@ -16,8 +16,8 @@ input {
 .box { 
     margin-top:20px; 
     padding:20px; 
-    border:2px solid #fff; 
-    background:#edf3ffda;
+    border:12px solid #fff; 
+    background:#cfbbff;
 }
 
 .hidden { 

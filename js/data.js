@@ -6,9 +6,8 @@ export const inputData = {
     cu: null,
     phi_p: DEFAULT_PHI_P,
     gamma: DEFAULT_GAMMA,
-    W1d: null,
+    Wd: null,
     L1d: null,
-    W2d: null,
     L2d: null
 };
 
