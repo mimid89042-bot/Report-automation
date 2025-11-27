@@ -1,8 +1,9 @@
-import { showElement, hideElement, showResultsBox, updateResultsDisplay, displayTWPrequired } from './dom.js';
-import { inputData, resultsData } from './data.js';
-import { N_gamma_p, updateCase } from './calculations.js';
+import { showElement, hideElement, displayTWPrequired, display_subgradeVplatform } from './dom.js';
+import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
+import { Ngamma, sc, sgamma, sp, Rd, platformBC, q1d2, q2d2 } from './calculations.js';
 import { validateInputs } from './validation.js';
 import { NC } from './constants.js'
+
 
 export function initEventListeners() {
     // Soil type toggle
@@ -11,74 +12,146 @@ export function initEventListeners() {
         if (soil === "cohesive") showElement('cohesiveInputs');
         else hideElement('cohesiveInputs');
     });
-
-    // φ'p select element
-    const phiSelect = document.getElementById("phi_p");
-    const kptSpan = document.getElementById("kptandelta");
-    const phiMap = { 35: 3.1, 40: 5.5, 45: 10.0 };
-
-    function updateKpDelta() {
-        const phi_p = parseFloat(phiSelect.value);
-        kptSpan.textContent = phiMap[phi_p];
-    }
-
-    // Initialize value on page load
-    updateKpDelta();
-
-    // Update whenever selection changes
-    phiSelect.addEventListener("change", updateKpDelta);
-
-    // Other event listeners like form submission...
 }
 
+// Submit button for COHESIVE INPUTS 
+document.getElementById("cohesive-inputs").addEventListener("submit", function(event){
+    event.preventDefault();
+    if (!validateInputs()) return;
 
-    // Form submission
-    document.getElementById("cohesive-inputs").addEventListener("submit", function(event){
-        event.preventDefault();
-        if (!validateInputs()) return;
+    //--------------------------------------------------
+    // 1) Load input values
+    //--------------------------------------------------
+    for (const key in inputData){
+        loadInput(key);
+    }
 
-        inputData.cu = parseFloat(document.getElementById("cu").value);
-        document.getElementById("cu_value").textContent = inputData.cu;
-        inputData.phi_p = parseFloat(document.getElementById("phi_p").value);
-        //document.getElementById("phi_p_value").textContent = inputData.phi_p;
-        inputData.gamma = parseFloat(document.getElementById("gamma").value);
-        //document.getElementById("gamma_value").textContent = inputData.gamma;
-        inputData.Wd = parseFloat(document.getElementById("Wd").value);
-        //document.getElementById("Wd_value").textContent = inputData.Wd;
-        inputData.L1d = parseFloat(document.getElementById("L1d").value);
-        //document.getElementById("L1d_value").textContent = inputData.L1d;
-        inputData.L2d = parseFloat(document.getElementById("L2d").value);
-        //document.getElementById("L2d_value").textContent = inputData.L2d;
-        inputData.q1k = parseFloat(document.getElementById("q1k").value);
-        document.getElementById("q1k_value").textContent = inputData.q1k;
-        inputData.q2k = parseFloat(document.getElementById("q2k").value);
-        document.getElementById("q2k_value").textContent = inputData.q2k;
+    //--------------------------------------------------
+    // 2) Compute first set of calculations
+    // Nc = 2 + pi = 5.14
+    //--------------------------------------------------
 
+    // Calculate Ngamma
+    loadCalculated("Ngamma", Ngamma(inputData.phi))
 
-        resultsData.q1d = 2.0 * inputData.q1k;
-        resultsData.q2d = 1.5 * inputData.q2k;
-        document.getElementById("q1d_value").textContent = resultsData.q1d;
-        document.getElementById("q2d_value").textContent = resultsData.q2d;
+    // Update kpTanδ with user phi input
+    const phiMap = { 35: 3.1, 40: 5.5, 45: 10.0 };
+    loadCalculated("kptandelta", phiMap[inputData.phi]);
 
+    // s_ factors 
+    loadCalculated("sc1", sc(inputData.W, inputData.L1));
+    loadCalculated("sc2", sc(inputData.W, inputData.L2));
+    loadCalculated("sgamma1", sgamma(inputData.W, inputData.L1));
+    loadCalculated("sgamma2", sgamma(inputData.W, inputData.L2));
+    loadCalculated("sp1", sp(inputData.W, inputData.L1));
+    loadCalculated("sp2", sp(inputData.W, inputData.L2));
 
 
-        resultsData.N_gamma_p = N_gamma_p(inputData.phi_p);
+    // R_d
+    loadCalculated("sc_min", Math.min(calculatedData.sc1, calculatedData.sc2));
+    loadCalculated("Rd", Rd(
+        inputData.cu,
+        NC,
+        calculatedData.sc_min
+    ));
 
-        updateCase(1, inputData.Wd, inputData.L1d);
-        updateCase(2, inputData.Wd, inputData.L2d);
-        displayTWPrequired(
-            inputData.cu,
-            NC,
-            resultsData.cases[1].s_c,
-            resultsData.cases[2].s_c,
-            inputData.q1k,
-            inputData.q2k
-        );
+    
+    // Factored loads
+    loadCalculated("q1d", 2.0 * inputData.q1k);
+    loadCalculated("q2d", 1.5 * inputData.q2k);
+    
+    //Reveal platform decision box
+    showElement("cohesivePlatformDecision");
 
-        // Update and show results in the DOM
-        updateResultsDisplay(resultsData);
-        showResultsBox();
+    //--------------------------------------------------
+    // 3) DECISION STEP — Is platform material required?
+    //--------------------------------------------------
+    const platformRequired = (
+        calculatedData.q1d > calculatedData.Rd &&
+        calculatedData.q2d > calculatedData.Rd
+    );
 
-        console.log("Form submitted", inputData, resultsData);
-    });
+    if (!platformRequired) {
+        //--------------------------------------------------
+        //  If platform NOT required 
+        //--------------------------------------------------
 
+        console.log("Platform NOT required");
+        return;   // stop here!
+    }
+
+    //--------------------------------------------------
+    // 4) PLATFORM REQUIRED 
+    //--------------------------------------------------
+
+    displayTWPrequired(
+        calculatedData.q1d,   
+        calculatedData.q2d,   
+        calculatedData.Rd  
+    );
+    
+    console.log("Platform required");
+
+    
+    //--------------------------------------------------
+    // 5) PLATFORM MATERIAL
+    //--------------------------------------------------
+
+    
+    //repeat ids
+    document.getElementById("Ngamma_value2").textContent =
+        Number(calculatedData.Ngamma).toFixed(0);
+    document.getElementById("Rd_value2").textContent =
+        Number(calculatedData.Rd).toFixed(0);
+    document.getElementById("q1k_value2").textContent =
+        Number(inputData.q1k).toFixed(0);
+    document.getElementById("q2k_value2").textContent =
+        Number(inputData.q2k).toFixed(0);
+
+
+
+    
+    loadCalculated("sgamma_min", Math.min(calculatedData.sgamma1, calculatedData.sgamma2));
+    loadCalculated("platformBC", platformBC(inputData.gamma, 
+        inputData.W, calculatedData.Ngamma, calculatedData.sgamma_min));
+
+    display_subgradeVplatform(
+        calculatedData.platformBC,   
+        calculatedData.Rd, 
+    )
+
+
+
+    const platformStronger = (
+        calculatedData.platformBC > calculatedData.Rd
+    );
+
+    if (!platformStronger) {
+        //--------------------------------------------------
+        //  If platform NOT stronger than subgrade
+        //--------------------------------------------------
+
+        console.log("Platform NOT stronger than subgrade");
+        return;   // stop here!
+    }
+
+    display_subgradeVplatform(
+        calculatedData.platformBC, 
+        calculatedData.Rd,
+    )
+
+    console.log("Platform stronger than sugrade");
+
+
+    
+    //--------------------------------------------------
+    // 6) PLATFORM MATERIAL BEARING TRESISTANCE
+    //--------------------------------------------------
+
+    loadCalculated("q1d2", q1d2(inputData.q1k));
+    loadCalculated("q2d2", q2d2(inputData.q2k));
+
+
+
+
+});
