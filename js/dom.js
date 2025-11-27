@@ -64,7 +64,7 @@ export function display_bearingResistance(platformBC, q1d2, q2d2){
     
     if (q1d2 < platformBC && q2d2 < platformBC) {
         text += 'therefore chosen platform material can provide the required bearing resistance';
-        //showElement("INSERT");
+        showElement("thickness");
     } else { text += 'therefore chosen platform material canNOT provide the required bearing resistance';
     }
     bearingResistance.innerHTML = text;

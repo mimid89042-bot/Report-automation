@@ -1,7 +1,7 @@
 body { 
     font-family: Arial; 
     margin: 40px; 
-    background-color: rgba(219, 238, 255, 0.651);
+    background-color: rgba(240, 204, 232, 0.651);
 }
 
 label { 
@@ -16,8 +16,8 @@ input {
 .box { 
     margin-top:20px; 
     padding:20px; 
-    border:2px solid #fff; 
-    background:hsla(261, 44%, 86%, 0.425);
+    border: 3px solid #fff; 
+    background:hsla(0, 0%, 100%, 0.425);
 }
 
 .hidden { 

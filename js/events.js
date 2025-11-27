@@ -1,9 +1,7 @@
 import { showElement, hideElement, displayTWPrequired, display_subgradeVplatform, display_bearingResistance } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
-import { Ngamma, sc, sgamma, sp, Rd, platformBC, q1d2, q2d2 } from './calculations.js';
+import { Ngamma, sc, sgamma, sp, Rd, platformBC, q1d2, q2d2, D } from './calculations.js';
 import { validateInputs } from './validation.js';
-import { NC } from './constants.js'
-
 
 export function initEventListeners() {
     // Soil type toggle
@@ -51,7 +49,6 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     loadCalculated("sc_min", Math.min(calculatedData.sc1, calculatedData.sc2));
     loadCalculated("Rd", Rd(
         inputData.cu,
-        NC,
         calculatedData.sc_min
     ));
 
@@ -66,6 +63,13 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     //--------------------------------------------------
     // 3) DECISION STEP — Is platform material required?
     //--------------------------------------------------
+
+    displayTWPrequired(
+        calculatedData.q1d,   
+        calculatedData.q2d,   
+        calculatedData.Rd  
+    );
+
     const platformRequired = (
         calculatedData.q1d > calculatedData.Rd &&
         calculatedData.q2d > calculatedData.Rd
@@ -83,12 +87,6 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     //--------------------------------------------------
     // 4) PLATFORM REQUIRED 
     //--------------------------------------------------
-
-    displayTWPrequired(
-        calculatedData.q1d,   
-        calculatedData.q2d,   
-        calculatedData.Rd  
-    );
     
     console.log("Platform required");
 
@@ -119,7 +117,6 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     )
 
 
-
     const platformStronger = (
         calculatedData.platformBC > calculatedData.Rd
     );
@@ -132,11 +129,6 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
         console.log("Platform NOT stronger than subgrade");
         return;   // stop here!
     }
-
-    display_subgradeVplatform(
-        calculatedData.platformBC, 
-        calculatedData.Rd,
-    )
 
     console.log("Platform stronger than sugrade");
 
@@ -158,6 +150,12 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
         calculatedData.platformBC > calculatedData.q1d2 && calculatedData.platformBC > calculatedData.q2d2
     );
 
+    display_bearingResistance(
+        calculatedData.platformBC, 
+        calculatedData.q1d2,
+        calculatedData.q2d2
+    )
+
     if (!bearingResistance) {
         //--------------------------------------------------
         //  If platform NOT able to provide bearing resistance
@@ -166,12 +164,6 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
         console.log("Platform material NOT able to provide required bearing resistance");
         return;   
     }
-
-    display_bearingResistance(
-        calculatedData.platformBC, 
-        calculatedData.q1d2,
-        calculatedData.q2d2
-    )
 
     console.log("Platform material able to provide bearing resistance");
 

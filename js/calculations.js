@@ -22,8 +22,8 @@ export function sp(W, L) {
     return 1 + (W / L); 
 }
 
-export function Rd(c_u, NC, s_c){
-    return c_u * NC * s_c;
+export function Rd(c_u, s_c){
+    return c_u * (2+ Math.PI) * s_c;
 }
 
 export function platformBC(gamma, W, Ngamma, sgamma){
@@ -36,6 +36,10 @@ export function q1d2(q1){
 
 export function q2d2(q2){
     return 1.2 * q2;
+}
+
+export function D(W, qd, cu, sc, gamma, kptandelta, sp){
+    return (W *(qd - cu * (2 + Math.PI) * sc) / (gamma * kptandelta * sp)) ^ 0.5;
 }
 
 
