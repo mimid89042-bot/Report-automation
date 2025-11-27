@@ -8,8 +8,8 @@ export function hideElement(id) {
     if (el) el.classList.add('hidden');
 }
 
-// // updates R_d value and qd values
-export function displayTWPrequired(q1d, q2d, Rd) {
+
+export function display_platformRequired(q1d, q2d, Rd) {
     //TWP decision with comparisons
     let text = "";
     if (q1d > Rd) {
@@ -29,7 +29,7 @@ export function displayTWPrequired(q1d, q2d, Rd) {
         text += 'therefore a working platform is required for plant support';
         //make platformMaterial box visible
         showElement("platformMaterial");
-    } else { text += 'therefore a working platform is NOT required for plant support';
+    } else { text += '<span class="warning">therefore a working platform is NOT required for plant support</span>';
 
     }
     twpDecision.innerHTML = text; // use innerHTML to allow <br>
@@ -39,10 +39,10 @@ export function display_subgradeVplatform(platformBC, Rd){
     let text = "Now 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ</sub> ";
     if(platformBC > Rd){
         text += '> c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> and platform is stronger than subgrade';
-        showElement("subgradeVplatform");
     }else {
-        text += '< c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> and platform is NOT stronger than subgrade';
+        text += '<span style="color:red; font-weight:bold;"><c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> and platform is NOT stronger than subgrade</span>';
     }
+    showElement("subgradeVplatform");
     subgradeVplatform.innerHTML = text;
 }
 
@@ -64,9 +64,10 @@ export function display_bearingResistance(platformBC, q1d2, q2d2){
     
     if (q1d2 < platformBC && q2d2 < platformBC) {
         text += 'therefore chosen platform material can provide the required bearing resistance';
-        showElement("thickness");
-    } else { text += 'therefore chosen platform material canNOT provide the required bearing resistance';
+    } else { 
+        text += '<span style="color:red; font-weight:bold;">therefore chosen platform material canNOT provide the required bearing resistance</span>';
     }
+    showElement("thickness");
     bearingResistance.innerHTML = text;
 }
 

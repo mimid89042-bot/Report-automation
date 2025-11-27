@@ -1,8 +1,6 @@
 // calculations.js
 import { calculatedData } from './data.js';
 
-
-
 // === Calculation Functions ===
 export function Ngamma(phi) {
     const theta = phi * Math.PI / 180;
@@ -38,8 +36,12 @@ export function q2d2(q2){
     return 1.2 * q2;
 }
 
-export function D(W, qd, cu, sc, gamma, kptandelta, sp){
-    return (W *(qd - cu * (2 + Math.PI) * sc) / (gamma * kptandelta * sp)) ^ 0.5;
+export function subgradeBC(cu, sc){
+    return cu * (2 + Math.PI) * sc;
+}
+
+export function D(W, qd, subgradeBC, gamma, kptandelta, sp){
+    return (W *(qd - subgradeBC) / (gamma * kptandelta * sp)) ** 0.5;
 }
 
 

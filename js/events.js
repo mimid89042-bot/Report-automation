@@ -1,6 +1,6 @@
-import { showElement, hideElement, displayTWPrequired, display_subgradeVplatform, display_bearingResistance } from './dom.js';
+import { showElement, hideElement, display_platformRequired, display_subgradeVplatform, display_bearingResistance } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
-import { Ngamma, sc, sgamma, sp, Rd, platformBC, q1d2, q2d2, D } from './calculations.js';
+import { Ngamma, sc, sgamma, sp, Rd, platformBC, q1d2, q2d2, subgradeBC, D } from './calculations.js';
 import { validateInputs } from './validation.js';
 
 export function initEventListeners() {
@@ -61,10 +61,10 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     showElement("cohesivePlatformDecision");
 
     //--------------------------------------------------
-    // 3) DECISION STEP — Is platform material required?
+    // 3) DECISION STEP — Is platform required
     //--------------------------------------------------
 
-    displayTWPrequired(
+    display_platformRequired(
         calculatedData.q1d,   
         calculatedData.q2d,   
         calculatedData.Rd  
@@ -125,12 +125,10 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
         //--------------------------------------------------
         //  If platform NOT stronger than subgrade
         //--------------------------------------------------
-
         console.log("Platform NOT stronger than subgrade");
-        return;   // stop here!
+    }else{
+        console.log("Platform stronger than sugrade");
     }
-
-    console.log("Platform stronger than sugrade");
 
 
     
@@ -143,8 +141,6 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
 
     document.getElementById("platformBC_value2").textContent =
         Number(calculatedData.platformBC).toFixed(0);
-
-    
 
     const bearingResistance = (
         calculatedData.platformBC > calculatedData.q1d2 && calculatedData.platformBC > calculatedData.q2d2
@@ -162,12 +158,54 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
         //--------------------------------------------------
 
         console.log("Platform material NOT able to provide required bearing resistance");
-        return;   
+    } else{
+        console.log("Platform material able to provide bearing resistance");
     }
 
-    console.log("Platform material able to provide bearing resistance");
+    //--------------------------------------------------
+    // 7) THICKNESS OF PLATFORM
+    //--------------------------------------------------
 
+    const W = inputData.W;
+    const q1d = calculatedData.q1d;
+    const q2d = calculatedData.q2d;
+    const cu = inputData.cu;
+    const sc1 = calculatedData.sc1;
+    const sc2 = calculatedData.sc2;
+    const gamma = inputData.gamma;
+    const kptandelta = calculatedData.kptandelta;
+    const sp1 = calculatedData.sp1;
+    const sp2 = calculatedData.sp2;
 
+    loadCalculated("subgradeBC1", subgradeBC(cu, sc1));
+    loadCalculated("subgradeBC2", subgradeBC(cu, sc2));
 
+    loadCalculated("D1", D(W, q1d, calculatedData.subgradeBC1, gamma, kptandelta, sp1));
+    loadCalculated("D2", D(W, q2d, calculatedData.subgradeBC2, gamma, kptandelta, sp2));
+
+    loadCalculated("q1d2", q1d2(q1d));
+    loadCalculated("q2d2", q2d2(q2d));
+
+    //repeat ids for thickness printing
+    document.getElementById("W_value2").textContent =
+        W;
+    document.getElementById("W_value3").textContent =
+        W;
+    document.getElementById("q1k_value3").textContent =
+        inputData.q1k.toFixed(0);
+    document.getElementById("q2k_value3").textContent =
+        inputData.q2k.toFixed(0);
+    document.getElementById("gamma_value2").textContent =
+        gamma.toFixed(0);
+    document.getElementById("gamma_value3").textContent =
+        gamma.toFixed(0);
+    document.getElementById("kptandelta_value2").textContent =
+        kptandelta
+    document.getElementById("kptandelta_value3").textContent =
+        kptandelta;
+    document.getElementById("sp1_value2").textContent =
+        sp1.toFixed(2);
+    document.getElementById("sp2_value2").textContent =
+        sp2.toFixed(2);
 
 });

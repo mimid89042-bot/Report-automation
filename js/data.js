@@ -33,6 +33,8 @@ export const calculatedData = {
     platformBC: null,
     q1d2: null,
     q2d2: null,
+    subgradeBC1: null,
+    subgradeBC2: null,
     D1: null,
     D2: null,
     Tult: null,

@@ -15,3 +15,4 @@ export function validateInputs() {
     // Other validations can go here
     return true;
 }
+

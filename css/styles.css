@@ -68,3 +68,12 @@ input {
     margin-left: 30px;
 }
 
+/* put in css/styles.css */
+.warning {
+  color: #b00000;       /* red */
+  font-weight: 700;
+}
+.notice {
+  color: #333;
+}
+.hidden { display: none !important; } /* keep your hidden util */
