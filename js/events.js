@@ -176,15 +176,19 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     const kptandelta = calculatedData.kptandelta;
     const sp1 = calculatedData.sp1;
     const sp2 = calculatedData.sp2;
+    const q1k = inputData.q1k;
+    const q2k = inputData.q2k;
 
     loadCalculated("subgradeBC1", subgradeBC(cu, sc1));
     loadCalculated("subgradeBC2", subgradeBC(cu, sc2));
 
-    loadCalculated("D1", D(W, q1d, calculatedData.subgradeBC1, gamma, kptandelta, sp1));
-    loadCalculated("D2", D(W, q2d, calculatedData.subgradeBC2, gamma, kptandelta, sp2));
+    loadCalculated("q1d2", q1d2(q1k));
+    loadCalculated("q2d2", q2d2(q2k));
 
-    loadCalculated("q1d2", q1d2(q1d));
-    loadCalculated("q2d2", q2d2(q2d));
+    console.log("inputs:", W, calculatedData.q1d2, calculatedData.subgradeBC1, gamma, kptandelta, sp1);
+    
+    loadCalculated("D1", D(W, calculatedData.q1d2, calculatedData.subgradeBC1, gamma, kptandelta, sp1));
+    loadCalculated("D2", D(W, calculatedData.q2d2, calculatedData.subgradeBC2, gamma, kptandelta, sp2));
 
     //repeat ids for thickness printing
     document.getElementById("W_value2").textContent =
