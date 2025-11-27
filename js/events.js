@@ -1,4 +1,4 @@
-import { showElement, hideElement, displayTWPrequired, display_subgradeVplatform } from './dom.js';
+import { showElement, hideElement, displayTWPrequired, display_subgradeVplatform, display_bearingResistance } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
 import { Ngamma, sc, sgamma, sp, Rd, platformBC, q1d2, q2d2 } from './calculations.js';
 import { validateInputs } from './validation.js';
@@ -108,8 +108,6 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     document.getElementById("q2k_value2").textContent =
         Number(inputData.q2k).toFixed(0);
 
-
-
     
     loadCalculated("sgamma_min", Math.min(calculatedData.sgamma1, calculatedData.sgamma2));
     loadCalculated("platformBC", platformBC(inputData.gamma, 
@@ -145,11 +143,37 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
 
     
     //--------------------------------------------------
-    // 6) PLATFORM MATERIAL BEARING TRESISTANCE
+    // 6) PLATFORM MATERIAL BEARING RESISTANCE
     //--------------------------------------------------
 
     loadCalculated("q1d2", q1d2(inputData.q1k));
     loadCalculated("q2d2", q2d2(inputData.q2k));
+
+    document.getElementById("platformBC_value2").textContent =
+        Number(calculatedData.platformBC).toFixed(0);
+
+    
+
+    const bearingResistance = (
+        calculatedData.platformBC > calculatedData.q1d2 && calculatedData.platformBC > calculatedData.q2d2
+    );
+
+    if (!bearingResistance) {
+        //--------------------------------------------------
+        //  If platform NOT able to provide bearing resistance
+        //--------------------------------------------------
+
+        console.log("Platform material NOT able to provide required bearing resistance");
+        return;   
+    }
+
+    display_bearingResistance(
+        calculatedData.platformBC, 
+        calculatedData.q1d2,
+        calculatedData.q2d2
+    )
+
+    console.log("Platform material able to provide bearing resistance");
 
 
 

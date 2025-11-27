@@ -11,28 +11,28 @@ export function hideElement(id) {
 // // updates R_d value and qd values
 export function displayTWPrequired(q1d, q2d, Rd) {
     //TWP decision with comparisons
-    let decisionText = "";
+    let text = "";
     if (q1d > Rd) {
-        decisionText += 'Now &nbsp;&nbsp; q<sub>1d</sub> > R<sub>d</sub> <br>';
+        text += 'Now &nbsp;&nbsp; q<sub>1d</sub> > R<sub>d</sub> <br>';
     } else {
-        decisionText += 'Now &nbsp;&nbsp;&nbsp; q<sub>1d</sub> < R<sub>d</sub> <br>';
+        text += 'Now &nbsp;&nbsp;&nbsp; q<sub>1d</sub> < R<sub>d</sub> <br>';
     }
 
     if (q2d > Rd) {
-        decisionText += 'and &nbsp;&nbsp;&nbsp; q<sub>2d</sub> > R<sub>d</sub> <br>';
+        text += 'and &nbsp;&nbsp;&nbsp; q<sub>2d</sub> > R<sub>d</sub> <br>';
     } else {
-        decisionText += 'and &nbsp;&nbsp;&nbsp; q<sub>2d</sub> < R<sub>d</sub> <br>';
+        text += 'and &nbsp;&nbsp;&nbsp; q<sub>2d</sub> < R<sub>d</sub> <br>';
     }
 
     
     if (q1d > Rd && q2d > Rd) {
-        decisionText += 'therefore a working platform is required for plant support';
+        text += 'therefore a working platform is required for plant support';
         //make platformMaterial box visible
         showElement("platformMaterial");
-    } else { decisionText += 'therefore a working platform is NOT required for plant support';
+    } else { text += 'therefore a working platform is NOT required for plant support';
 
     }
-    twpDecision.innerHTML = decisionText; // use innerHTML to allow <br>
+    twpDecision.innerHTML = text; // use innerHTML to allow <br>
 }
 
 export function display_subgradeVplatform(platformBC, Rd){
@@ -44,6 +44,30 @@ export function display_subgradeVplatform(platformBC, Rd){
         text += '< c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> and platform is NOT stronger than subgrade';
     }
     subgradeVplatform.innerHTML = text;
+}
+
+
+export function display_bearingResistance(platformBC, q1d2, q2d2){
+    let text = "Now ";
+    if (q1d2 < platformBC) {
+        text += '&nbsp;&nbsp; q<sub>1d</sub> < 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ</sub> <br>';
+    } else {
+        text += '&nbsp;&nbsp;  q<sub>1d</sub> > 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ</sub> <br>';
+    }
+
+    if (q2d2 < platformBC) {
+        text += 'and &nbsp;&nbsp;&nbsp; q<sub>2d</sub> < 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ</sub> <br>';
+    } else {
+        text += 'and &nbsp;&nbsp;&nbsp;  q<sub>2d</sub> > 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ</sub> <br>';
+    }
+
+    
+    if (q1d2 < platformBC && q2d2 < platformBC) {
+        text += 'therefore chosen platform material can provide the required bearing resistance';
+        //showElement("INSERT");
+    } else { text += 'therefore chosen platform material canNOT provide the required bearing resistance';
+    }
+    bearingResistance.innerHTML = text;
 }
 
 
