@@ -95,18 +95,14 @@
             <option value="yes">Yes</option>
             <option value="no">No</option>
         </select>
-    </div>
-
-
-    <div id="geogridInputs" class="hidden">
-        <h3>Geogrid tensile strength</h3>
-        <div class="input-row">
-            <label for="Tult">
-                T<sub>ult</sub> (kN/m):
-                <input type="number" id="Tult" step="0.1">
-            </label>
-        </div>
     </div> <br>
+
+    <div class="input-row hidden" id="geogridInputs">
+        <label for="Tult" class="inline-flex">
+            T<sub>ult</sub> (kN/m):
+            <input type="number" id="Tult" step="0.1" required>
+        </label>
+    </div>
 
 
         <button type="submit" id="calculateBtn">Submit</button>
