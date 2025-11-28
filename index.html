@@ -26,7 +26,7 @@
         <div class="input-row">
             <label for="subgrade">Subgrade</label>
             <label>C<sub>u</sub> (kPa):
-            <input type="number" id="cu" step="0.1" required  value = "24">
+            <input type="number" id="cu" step="0.1" required >
             </label>
         </div>
 
@@ -46,7 +46,7 @@
 
             <label for="gamma" class="inline-flex">
                 γ<sub>p</sub> (kN/m³):
-                <input type="number" id="gamma" step="0.1" value="20" required>
+                <input type="number" id="gamma" step="0.1" value= "20" required>
             </label>
         </div> <br>
 
@@ -55,7 +55,7 @@
         <div class="input-row">
             <label for="width" class = "inline-flex">
                 <label>W<sub>d</sub> (m):
-                <input type="number" id="W" step="0.1" required value = "0.7">
+                <input type="number" id="W" step="0.1" required>
             </label>
             </label>
         </div>
@@ -66,25 +66,47 @@
         <div class="case-column">
             <p>Case 1 loading inputs</p>
             <label>q<sub>1k</sub> (kPa):
-                <input type="number" id="q1k" step="0.1" required value = "140">
+                <input type="number" id="q1k" step="0.1" required>
             </label><br>
 
             <label>L<sub>1d</sub> (m):
-                <input type="number" id="L1" step="0.1" required value = "3.6">
+                <input type="number" id="L1" step="0.1" required>
             </label><br>
         </div>
 
         <div class="case-column">
             <p>Case 2 loading inputs</p>
             <label>q<sub>2k</sub> (kPa):
-                <input type="number" id="q2k" step="0.1" required value = "190">
+                <input type="number" id="q2k" step="0.1" required>
             </label><br>
 
             <label>L<sub>2d</sub> (m):
-                <input type="number" id="L2" step="0.1" required value = "3.1">
+                <input type="number" id="L2" step="0.1" required>
             </label><br>
         </div>
     </div>
+
+<!-- Tensile strength option-->
+
+    <div class="input-column">
+        <h3>Use a geogrid?</h3>
+        <select id="geogrid" required>
+            <option value="">-- Select --</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+    </div>
+
+
+    <div id="geogridInputs" class="hidden">
+        <h3>Geogrid tensile strength</h3>
+        <div class="input-row">
+            <label for="Tult">
+                T<sub>ult</sub> (kN/m):
+                <input type="number" id="Tult" step="0.1">
+            </label>
+        </div>
+    </div> <br>
 
 
         <button type="submit" id="calculateBtn">Submit</button>
@@ -113,7 +135,7 @@
       </div>
    </div>
 
-   <h3>Check if TWP is required</h3>
+   <h3>Check if a working platform is required</h3>
     <span>Check that subgrade cannot provide required bearing resistance without a working platform:</span>
     
     <p class = "indented"> R<sub>d</sub> = c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> = 
@@ -144,15 +166,15 @@
 
 <!-- PLATFORM MATERIAL BOX-->
 <div class= "box hidden" id="platformMaterial" >
-    <p> Check that platform material is stronger than subgrade:</p>
+    <h3> Check that platform material is stronger than subgrade:</h3>
     <p class ="indented">0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ</sub>
         =  0.5 x <span id="gamma_value"></span> x <span id="W_value"></span> x <span id="Ngamma_value2"></span> x <span id="sgamma_min_value"></span>
         = <span id="platformBC_value"></span> kPa
     </p>
     <P class ="indented">  c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> = <span id="Rd_value2"></span> kPa</P>
     <p id = "subgradeVplatform" ></p> <br>
-    <p> Check that platform material can provide required bearing resistance when placed at a 
-        thickness sufficient to ensure that the subgrade does not materially affect bearing capacity:</p>
+    <h3> Check that platform material can provide required bearing resistance when placed at a 
+        thickness sufficient to ensure that the subgrade does not materially affect bearing capacity:</h3>
     <p class="indented">
         q<sub>1d</sub> = 1.6q<sub>1k</sub> 
         = 1.6 x <span id="q1k_value2"></span>
@@ -171,8 +193,9 @@
 
 </div>
 
+<!-- THICKNESS BOX-->
 <div class="box hidden" id="thickness">
-    <p>Calculate the thickness of platform:</p>
+    <h3>Calculate the thickness of platform:</h3>
     <div class="cases-container">
    <div class="case-column">
     <p>Case loading 1:</p>
@@ -185,7 +208,7 @@
         ([1.6 × <span id="q1k_value3"></span>] - <span id="subgradeBC1_value"></span>)) / 
         (<span id="gamma_value2"></span> × <span id="kptandelta_value2"></span> × <span id="sp1_value2"></span>)
         <sup>0.5</sup>
-        = <span id="D1_value"></span>
+        = <span id="D1_value"></span> m
     </p>
 </div>
 
@@ -200,11 +223,17 @@
         ([1.2 × <span id="q2k_value3"></span>] - <span id="subgradeBC2_value"></span>)) / 
         (<span id="gamma_value3"></span> × <span id="kptandelta_value3"></span> × <span id="sp2_value2"></span>)
         <sup>0.5</sup>
-        = <span id="D2_value"></span>
+        = <span id="D2_value"></span> m
     </p>
 </div>
 
-    </div>
+<!-- GEOGRID THICKNESS BOX-->
+<div class = "box hidden" id = "geogrid">
+    <h3> Calculate thickness with geogrid: </h3>
+
+</div>
+
+
 </div>
 
 <script type="module" src="js/main.js"></script>

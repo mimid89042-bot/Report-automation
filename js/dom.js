@@ -70,5 +70,3 @@ export function display_bearingResistance(platformBC, q1d2, q2d2){
     showElement("thickness");
     bearingResistance.innerHTML = text;
 }
-
-

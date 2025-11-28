@@ -1,7 +1,7 @@
 body { 
     font-family: Arial; 
     margin: 40px; 
-    background-color: rgba(240, 204, 232, 0.651);
+    background-color: rgba(154, 177, 155, 0.651);
 }
 
 label { 
@@ -77,3 +77,15 @@ input {
   color: #333;
 }
 .hidden { display: none !important; } /* keep your hidden util */
+
+@media print {
+    button {
+        display: none; /* hide all buttons */
+    }
+
+    /* Optional: hide other elements you don’t want to print */
+    .hidden {
+        display: none !important;
+    }
+}
+

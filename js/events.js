@@ -10,6 +10,18 @@ export function initEventListeners() {
         if (soil === "cohesive") showElement('cohesiveInputs');
         else hideElement('cohesiveInputs');
     });
+
+    // -----------------------------
+    // GEO-GRID YES / NO TOGGLE
+    // -----------------------------
+    document.getElementById("geogrid").addEventListener("change", () => {
+        const val = document.getElementById("geogrid").value;
+
+        if (val == "yes"){
+            showElement("geogridInputs"); 
+        }
+
+    });
 }
 
 // Submit button for COHESIVE INPUTS 
@@ -211,5 +223,13 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
         sp1.toFixed(2);
     document.getElementById("sp2_value2").textContent =
         sp2.toFixed(2);
+
+
+    //--------------------------------------------------
+    // 8) THICKNESS OF PLATFORM WITH GEOGRID
+    //--------------------------------------------------      
+    
+    
+
 
 });

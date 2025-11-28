@@ -11,7 +11,8 @@ export const inputData = {
     L1: null,
     L2: null,
     q1k: null,
-    q2k: null
+    q2k: null,
+    Tult: null
 };
 
 //any value that is attained (in order of page 28)
