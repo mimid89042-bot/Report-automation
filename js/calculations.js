@@ -44,6 +44,9 @@ export function D(W, qd, subgradeBC, gamma, kptandelta, sp){
     return (W *(qd - subgradeBC) / (gamma * kptandelta * sp)) ** 0.5;
 }
 
+export function georgridD(W, qd, subgradeBC, gamma, kptandelta, sp){
+    return (W *(qd - subgradeBC - 2*T/w) / (gamma * kptandelta * sp)) ** 0.5;
+}
 
 //console.log(N_γp(40)); // Example usage
 //TO TEST FUNCTIONS --> open power shell --> cd "file path" --> uncomment line ^^ with desired function

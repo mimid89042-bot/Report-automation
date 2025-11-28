@@ -19,6 +19,8 @@ export function initEventListeners() {
 
         if (val == "yes"){
             showElement("geogridInputs"); 
+        }else{
+            hideElement("geogridInputs");
         }
 
     });
@@ -202,6 +204,9 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     loadCalculated("D1", D(W, calculatedData.q1d2, calculatedData.subgradeBC1, gamma, kptandelta, sp1));
     loadCalculated("D2", D(W, calculatedData.q2d2, calculatedData.subgradeBC2, gamma, kptandelta, sp2));
 
+    document.getElementById("Dlarger").textContent =
+        Math.max(calculatedData.D1, calculatedData.D2).toFixed(2);
+
     //repeat ids for thickness printing
     document.getElementById("W_value2").textContent =
         W;
@@ -227,9 +232,26 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
 
     //--------------------------------------------------
     // 8) THICKNESS OF PLATFORM WITH GEOGRID
-    //--------------------------------------------------      
-    
-    
+    //--------------------------------------------------   
+
+    const geogridChoice = document.getElementById("geogrid").value;
+
+    if (geogridChoice == "yes") {
+        showElement("geogridBox");
+
+        loadInput("Tult");
+        const Tult = inputData.Tult;
+        loadCalculated("Td", Tult / 2);
+        const Td = calculatedData.Td;      
+
+    }else{
+        hideElement("geogridBox");
+    }
+
+
+
+
+
 
 
 });

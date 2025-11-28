@@ -26,7 +26,7 @@
         <div class="input-row">
             <label for="subgrade">Subgrade</label>
             <label>C<sub>u</sub> (kPa):
-            <input type="number" id="cu" step="0.1" required >
+            <input type="number" id="cu" step="0.1" required value = "24">
             </label>
         </div>
 
@@ -55,7 +55,7 @@
         <div class="input-row">
             <label for="width" class = "inline-flex">
                 <label>W<sub>d</sub> (m):
-                <input type="number" id="W" step="0.1" required>
+                <input type="number" id="W" step="0.1" required value = "0.7">
             </label>
             </label>
         </div>
@@ -66,22 +66,22 @@
         <div class="case-column">
             <p>Case 1 loading inputs</p>
             <label>q<sub>1k</sub> (kPa):
-                <input type="number" id="q1k" step="0.1" required>
+                <input type="number" id="q1k" step="0.1" required value = "140">
             </label><br>
 
             <label>L<sub>1d</sub> (m):
-                <input type="number" id="L1" step="0.1" required>
+                <input type="number" id="L1" step="0.1" required value = "3.6">
             </label><br>
         </div>
 
         <div class="case-column">
             <p>Case 2 loading inputs</p>
             <label>q<sub>2k</sub> (kPa):
-                <input type="number" id="q2k" step="0.1" required>
+                <input type="number" id="q2k" step="0.1" required value = "190">
             </label><br>
 
             <label>L<sub>2d</sub> (m):
-                <input type="number" id="L2" step="0.1" required>
+                <input type="number" id="L2" step="0.1" required value = "3.1">
             </label><br>
         </div>
     </div>
@@ -100,7 +100,7 @@
     <div class="input-row hidden" id="geogridInputs">
         <label for="Tult" class="inline-flex">
             T<sub>ult</sub> (kN/m):
-            <input type="number" id="Tult" step="0.1" required>
+            <input type="number" id="Tult" step="0.1">
         </label>
     </div>
 
@@ -184,7 +184,7 @@
 
         0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ</sub>
         = <span id="platformBC_value2"></span> kPa
-    </p>
+    </p> <br>
     <p id = "bearingResistance" ></p> 
 
 </div>
@@ -193,40 +193,45 @@
 <div class="box hidden" id="thickness">
     <h3>Calculate the thickness of platform:</h3>
     <div class="cases-container">
-   <div class="case-column">
-    <p>Case loading 1:</p>
-    <p>D<sub>1</sub> = {W<sub>d</sub> [q<sub>1d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>
-        / γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p1</sub>]}<sup>0.5</sup></p>
-    <p>Where q<sub>1d</sub> = 1.6 × q<sub>1k</sub></p>
-    <p>
-        D<sub>1</sub> = 
-        (<span id="W_value2"></span> × 
-        ([1.6 × <span id="q1k_value3"></span>] - <span id="subgradeBC1_value"></span>)) / 
-        (<span id="gamma_value2"></span> × <span id="kptandelta_value2"></span> × <span id="sp1_value2"></span>)
-        <sup>0.5</sup>
-        = <span id="D1_value"></span> m
-    </p>
-</div>
+        <div class="case-column">
+            <p>Case loading 1:</p>
+            <p>D<sub>1</sub> = {W<sub>d</sub> [q<sub>1d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>
+                / γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p1</sub>]}<sup>0.5</sup></p>
+            <p>Where q<sub>1d</sub> = 1.6 × q<sub>1k</sub></p>
+            <p>
+                D<sub>1</sub> = 
+                (<span id="W_value2"></span> × 
+                ([1.6 × <span id="q1k_value3"></span>] - <span id="subgradeBC1_value"></span>)) / 
+                (<span id="gamma_value2"></span> × <span id="kptandelta_value2"></span> × <span id="sp1_value2"></span>)
+                <sup>0.5</sup>
+                = <span id="D1_value"></span> m
+            </p>
+        </div>
 
-<div class="case-column">
-    <p>Case loading 2:</p>
-    <p>D<sub>2</sub> = {W<sub>d</sub> [q<sub>2d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>
-        / γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p2</sub>]}<sup>0.5</sup></p>
-    <p>Where q<sub>2d</sub> = 1.2 × q<sub>2k</sub></p>
-    <p>
-        D<sub>2</sub> = 
-        (<span id="W_value3"></span> × 
-        ([1.2 × <span id="q2k_value3"></span>] - <span id="subgradeBC2_value"></span>)) / 
-        (<span id="gamma_value3"></span> × <span id="kptandelta_value3"></span> × <span id="sp2_value2"></span>)
-        <sup>0.5</sup>
-        = <span id="D2_value"></span> m
-    </p>
+    <div class="case-column">
+        <p>Case loading 2:</p>
+        <p>D<sub>2</sub> = {W<sub>d</sub> [q<sub>2d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>
+            / γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p2</sub>]}<sup>0.5</sup></p>
+        <p>Where q<sub>2d</sub> = 1.2 × q<sub>2k</sub></p>
+        <p>
+            D<sub>2</sub> = 
+            (<span id="W_value3"></span> × 
+            ([1.2 × <span id="q2k_value3"></span>] - <span id="subgradeBC2_value"></span>)) / 
+            (<span id="gamma_value3"></span> × <span id="kptandelta_value3"></span> × <span id="sp2_value2"></span>)
+            <sup>0.5</sup>
+            = <span id="D2_value"></span> m
+        </p>
+    </div>
+    </div>
+
+    <p>The larger of the two, <span id = "Dlarger"></span>, should be adopted as the design value</p>
 </div>
 
 <!-- GEOGRID THICKNESS BOX-->
-<div class = "box hidden" id = "geogrid">
+<div class = "box hidden" id = "geogridBox">
     <h3> Calculate thickness with geogrid: </h3>
-
+    <p>Geogrid with T<sub>ult</sub> = <span id = "Tult_value"></span> nK/m to be used.</p>
+    <p>T<sub>d</sub> = T<sub>ult</sub> / 2 = <span id = "Td_value"></span> nK/m </p>
 </div>
 
 

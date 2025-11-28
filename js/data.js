@@ -12,7 +12,7 @@ export const inputData = {
     L2: null,
     q1k: null,
     q2k: null,
-    Tult: null
+    Tult: 30
 };
 
 //any value that is attained (in order of page 28)
@@ -38,7 +38,6 @@ export const calculatedData = {
     subgradeBC2: null,
     D1: null,
     D2: null,
-    Tult: null,
     Td: null
 };
 
