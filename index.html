@@ -86,7 +86,7 @@
         </div>
     </div>
 
-<!-- Tensile strength option-->
+<!-- GEOGRID OPTION-->
 
     <div class="input-column">
         <h3>Use a geogrid?</h3>
@@ -232,8 +232,41 @@
     <h3> Calculate thickness with geogrid: </h3>
     <p>Geogrid with T<sub>ult</sub> = <span id = "Tult_value"></span> nK/m to be used.</p>
     <p>T<sub>d</sub> = T<sub>ult</sub> / 2 = <span id = "Td_value"></span> nK/m </p>
+    <div class="cases-container">
+        <div class = 'case-column'>
+            <p>Case 1 loading:</p>
+            <p>D<sub>1</sub> = {W<sub>d</sub> [q<sub>1d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>
+            - (2T<sub>d</sub> /W<sub>d</sub>)]
+            / [γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p1</sub>]}<sup>0.5</sup></p>
+            <p>where q<sub>1d</sub> =  1.6q<sub>1k</sub></p>
+            <p>
+                D<sub>1</sub> = 
+                (<span id="W_value4"></span> × 
+                ([1.6 × <span id= "q1k_value4"></span>] - <span id="subgradeBC1_value2"></span>)) / 
+                (<span id="gamma_value4"></span> × <span id="kptandelta_value4"></span> × <span id="sp1_value3"></span>)
+                <sup>0.5</sup>
+                = <span id="D1_value2"></span> m
+            </p>
+        </div>
+            <div class = 'case-column'>
+            <p>Case 2 loading:</p>
+            <p>D<sub>2</sub> = {W<sub>d</sub> [q<sub>2d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>
+            - (2T<sub>d</sub> /W<sub>d</sub>)]
+            / [γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p2</sub>]}<sup>0.5</sup></p>
+            <p>where q<sub>2d</sub> =  1.2q<sub>2k</sub></p>
+            <p>
+                D<sub>2</sub> = 
+                (<span id="W_value5"></span> × 
+                ([1.2 × <span id= "q2k_value4"></span>] - <span id="subgradeBC2_value2"></span>)) / 
+                (<span id="gamma_value5"></span> × <span id="kptandelta_value5"></span> × <span id="sp2_value3"></span>)
+                <sup>0.5</sup>
+                = <span id="D2_value2"></span> m
+            </p>
+        </div>
+    </div>
+    <p>Larger value of D<sub>1</sub> and D<sub>2</sub> should be used for design purposes and minimum acceptable cover to the reinforcement should be 0.3. 
+    Appropriate cover to the reinforcement is therefore </p>
 </div>
-
 
 </div>
 

@@ -48,6 +48,10 @@ export function georgridD(W, qd, subgradeBC, gamma, kptandelta, sp){
     return (W *(qd - subgradeBC - 2*T/w) / (gamma * kptandelta * sp)) ** 0.5;
 }
 
+export function finalRd(cu, sc, D, W, gamma, kptandelta, sp){
+    return cu * (2 + Math.PI) * sc + D^2 / W * gamma * kptandelta * sp;
+}
+
 //console.log(N_γp(40)); // Example usage
 //TO TEST FUNCTIONS --> open power shell --> cd "file path" --> uncomment line ^^ with desired function
 //and input --> node calculations.js --> should return value in console

@@ -8,6 +8,11 @@ export function hideElement(id) {
     if (el) el.classList.add('hidden');
 }
 
+export function updateValue(selector, value) {
+    document.querySelectorAll(selector).forEach(el => {
+        el.textContent = value;
+    });
+}
 
 export function display_platformRequired(q1d, q2d, Rd) {
     //TWP decision with comparisons

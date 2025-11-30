@@ -1,5 +1,6 @@
 // data.js
 import { DEFAULT_PHI, DEFAULT_GAMMA } from './constants.js';
+import { updateValue } from './dom.js';
 
 // Store user inputs and calculated values
 export const inputData = {
@@ -53,8 +54,8 @@ export function loadInput(id) {
     const value = parseFloat(el.value) || 0;
     inputData[id] = value;
 
-    const span = document.getElementById(`${id}_value`);
-    if (span) span.textContent = value;
+    // Update all spans that represent this input
+    updateValue(`.${id}_value`, value);
 
     return value;
 }
@@ -64,24 +65,5 @@ export function loadCalculated(key, value) {
     // Store in calculatedData
     calculatedData[key] = value;
 
-    // Update corresponding <span> if it exists
-    const span = document.getElementById(`${key}_value`);
-    if (span) span.textContent = value.toFixed(2); // optional formatting
-
-    return value;
+   updateValue('.${id}_value', value);
 }
-
-// export function loadInput(id) {
-//     // Get the numeric value from the input field
-//     const value = parseFloat(document.getElementById(id).value);
-
-//     // Store the value inside inputData using the provided key
-//     inputData[id] = value;
-
-//     // Update the corresponding <span> (id="xxx_value") if it exists
-//     const span = document.getElementById(`${id}_value`);
-//     if (span) span.textContent = value;
-
-//     return value;
-// }
-

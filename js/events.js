@@ -1,6 +1,6 @@
-import { showElement, hideElement, display_platformRequired, display_subgradeVplatform, display_bearingResistance } from './dom.js';
+import { showElement, hideElement, updateValue, display_platformRequired, display_subgradeVplatform, display_bearingResistance } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
-import { Ngamma, sc, sgamma, sp, Rd, platformBC, q1d2, q2d2, subgradeBC, D } from './calculations.js';
+import { Ngamma, sc, sgamma, sp, Rd, platformBC, q1d2, q2d2, subgradeBC, D, georgridD, finalRd } from './calculations.js';
 import { validateInputs } from './validation.js';
 
 export function initEventListeners() {
@@ -239,19 +239,52 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     if (geogridChoice == "yes") {
         showElement("geogridBox");
 
-        loadInput("Tult");
-        const Tult = inputData.Tult;
-        loadCalculated("Td", Tult / 2);
-        const Td = calculatedData.Td;      
-
     }else{
         hideElement("geogridBox");
     }
 
+    loadInput("Tult");
+    const Tult = inputData.Tult;
+    loadCalculated("Td", Tult / 2);
+    const Td = calculatedData.Td;    
 
+    const subgradeBC1 = calculatedData.subgradeBC1;
+    const subgradeBC2 = calculatedData.subgradeBC2;
 
+    const geogridD1 = georgridD(W, q1d, subgradeBC1, gamma, kptandelta, sp1);
+    const geogridD2 = georgridD(W, q2d, subgradeBC2, gamma, kptandelta, sp2);
+    
+    // //repeat ids
+    document.getElementById("W_value4").textContent =
+         W;
+    document.getElementById("W_value5").textContent =
+        W;
+    document.getElementById("q2k_value4").textContent =
+        inputData.q2k;
+    document.getElementById("q1k_value4").textContent =
+        inputData.q1k;
+    document.getElementById("gamma_value4").textContent =
+        gamma;
+    document.getElementById("gamma_value5").textContent =
+        gamma;
+    document.getElementById("kptandelta_value4").textContent =
+        kptandelta
+    document.getElementById("kptandelta_value5").textContent =
+        kptandelta;
+    document.getElementById("sp1_value3").textContent =
+        sp1.toFixed(2);
+    document.getElementById("sp2_value3").textContent =
+        sp2.toFixed(2);
+    document.getElementBwhatyId("subgradeBC1_value2").textContent =
+        subgradeBC1.toFixed(2);
+    document.getElementById("subgradeBC2_value2").textContent =
+        subgradeBC2.toFixed(2);
+    document.getElementById("D1_value2").textContent =
+        geogridD1.toFixed(2);
+    document.getElementById("D2_value2").textContent =
+        geogridD2.toFixed(2);
 
-
-
-
+     console.log("geogridD1:", geogridD1);
+console.log("geogridD2:", geogridD2);
+   
 });
