@@ -1,7 +1,7 @@
 body { 
     font-family: Arial; 
     margin: 40px; 
-    background-color: rgba(154, 161, 177, 0.651);
+    background-color: rgba(203, 210, 224, 0.651);
 }
 
 label { 
@@ -77,6 +77,11 @@ input {
   color: #333;
 }
 .hidden { display: none !important; } /* keep your hidden util */
+
+.underline {
+    text-decoration: underline;
+}
+
 
 @media print {
     button {

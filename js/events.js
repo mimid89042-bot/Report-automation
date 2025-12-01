@@ -1,6 +1,6 @@
 import { showElement, hideElement, display_platformRequired, 
         display_subgradeVplatform, display_bearingResistance,
-        display_geogridGreaterThanPointThree } from './dom.js';
+         } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
 import { Ngamma, sc, sgamma, sp, RdNoGeoGrid, platformBC, 
         q1dA, q2dA, q1dB, q2dB, q1dC, q2dC, subgradeBC, DNoGeogrid, DWithGeogrid, finalRd } from './calculations.js';
@@ -62,11 +62,8 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
 
 
     // R_d no geogrod
-    loadCalculated("sc_min", Math.min(calculatedData.sc1, calculatedData.sc2));
-    loadCalculated("RdNoGeoGrid", RdNoGeoGrid(
-        inputData.cu,
-        calculatedData.sc_min
-    ));
+    loadCalculated("Rd1NoGeoGrid", RdNoGeoGrid(inputData.cu, calculatedData.sc1));
+    loadCalculated("Rd2NoGeoGrid", RdNoGeoGrid(inputData.cu, calculatedData.sc2));
 
     
     // Factored loads
@@ -87,12 +84,13 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     display_platformRequired(
         calculatedData.q1dA,   
         calculatedData.q2dA,   
-        calculatedData.RdNoGeoGrid  
+        calculatedData.Rd1NoGeoGrid,
+        calculatedData.Rd2NoGeoGrid  
     );
 
     const platformRequired = (
-        calculatedData.q1dA > calculatedData.RdNoGeoGrid &&
-        calculatedData.q2dA > calculatedData.RdNoGeoGrid
+        calculatedData.q1dA > calculatedData.Rd1NoGeoGrid &&
+        calculatedData.q2dA > calculatedData.Rd1NoGeoGrid
     );
 
     if (!platformRequired) {
@@ -115,19 +113,23 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     // 5) PLATFORM MATERIAL
     //--------------------------------------------------
 
-    
-    loadCalculated("sgamma_min", Math.min(calculatedData.sgamma1, calculatedData.sgamma2));
-    loadCalculated("platformBC", platformBC(inputData.gamma, 
-        inputData.W, calculatedData.Ngamma, calculatedData.sgamma_min));
+    loadCalculated("platformBC1", platformBC(inputData.gamma, 
+        inputData.W, calculatedData.Ngamma, calculatedData.sgamma1));
+    loadCalculated("platformBC2", platformBC(inputData.gamma, 
+        inputData.W, calculatedData.Ngamma, calculatedData.sgamma2));
+
 
     display_subgradeVplatform(
-        calculatedData.platformBC,   
-        calculatedData.RdNoGeoGrid, 
+        calculatedData.platformBC1,   
+        calculatedData.platformBC2,   
+        calculatedData.Rd1NoGeoGrid,
+        calculatedData.Rd2NoGeoGrid, 
     )
 
 
     const platformStronger = (
-        calculatedData.platformBC > calculatedData.RdNoGeoGrid
+        calculatedData.platformBC1 > calculatedData.Rd1NoGeoGrid &&
+        calculatedData.platformBC2 > calculatedData.Rd2NoGeoGrid
     );
 
     if (!platformStronger) {
@@ -152,11 +154,12 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     //     Number(calculatedData.platformBC).toFixed(0);
 
     const bearingResistance = (
-        calculatedData.platformBC > calculatedData.q1d2 && calculatedData.platformBC > calculatedData.q2d2
+        calculatedData.platformBC1 > calculatedData.q1dB && calculatedData.platformBC2 > calculatedData.q2dB
     );
 
     display_bearingResistance(
-        calculatedData.platformBC, 
+        calculatedData.platformBC1, 
+        calculatedData.platformBC2, 
         calculatedData.q1dB,
         calculatedData.q2dB
     )
@@ -206,9 +209,6 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
             calculatedData.kptandelta, calculatedData.sp2));
         loadCalculated("DlargerWithGeorgrid", Math.max(calculatedData.D1WithGeogrid,
             calculatedData.D2WithGeogrid).toFixed(2));
-
-
-        display_geogridGreaterThanPointThree(calculatedData.DlargerWithGeorgrid);
 
     }else{
         hideElement("geogridBox");
