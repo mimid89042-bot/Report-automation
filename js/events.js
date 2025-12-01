@@ -1,6 +1,9 @@
-import { showElement, hideElement, updateValue, display_platformRequired, display_subgradeVplatform, display_bearingResistance } from './dom.js';
+import { showElement, hideElement, display_platformRequired, 
+        display_subgradeVplatform, display_bearingResistance,
+        display_geogridGreaterThanPointThree } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
-import { Ngamma, sc, sgamma, sp, Rd, platformBC, q1d2, q2d2, subgradeBC, D, georgridD, finalRd } from './calculations.js';
+import { Ngamma, sc, sgamma, sp, RdNoGeoGrid, platformBC, 
+        q1dA, q2dA, q1dB, q2dB, q1dC, q2dC, subgradeBC, DNoGeogrid, DWithGeogrid, finalRd } from './calculations.js';
 import { validateInputs } from './validation.js';
 
 export function initEventListeners() {
@@ -40,7 +43,6 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
 
     //--------------------------------------------------
     // 2) Compute first set of calculations
-    // Nc = 2 + pi = 5.14
     //--------------------------------------------------
 
     // Calculate Ngamma
@@ -59,17 +61,21 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     loadCalculated("sp2", sp(inputData.W, inputData.L2));
 
 
-    // R_d
+    // R_d no geogrod
     loadCalculated("sc_min", Math.min(calculatedData.sc1, calculatedData.sc2));
-    loadCalculated("Rd", Rd(
+    loadCalculated("RdNoGeoGrid", RdNoGeoGrid(
         inputData.cu,
         calculatedData.sc_min
     ));
 
     
     // Factored loads
-    loadCalculated("q1d", 2.0 * inputData.q1k);
-    loadCalculated("q2d", 1.5 * inputData.q2k);
+    loadCalculated("q1dA", q1dA(inputData.q1k));
+    loadCalculated("q2dA", q2dA(inputData.q2k));
+    loadCalculated("q1dB", q1dB(inputData.q1k));
+    loadCalculated("q2dB", q2dB(inputData.q2k));
+    loadCalculated("q1dC", q1dC(inputData.q1k));
+    loadCalculated("q2dC", q2dC(inputData.q2k));
     
     //Reveal platform decision box
     showElement("cohesivePlatformDecision");
@@ -79,14 +85,14 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     //--------------------------------------------------
 
     display_platformRequired(
-        calculatedData.q1d,   
-        calculatedData.q2d,   
-        calculatedData.Rd  
+        calculatedData.q1dA,   
+        calculatedData.q2dA,   
+        calculatedData.RdNoGeoGrid  
     );
 
     const platformRequired = (
-        calculatedData.q1d > calculatedData.Rd &&
-        calculatedData.q2d > calculatedData.Rd
+        calculatedData.q1dA > calculatedData.RdNoGeoGrid &&
+        calculatedData.q2dA > calculatedData.RdNoGeoGrid
     );
 
     if (!platformRequired) {
@@ -110,29 +116,18 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     //--------------------------------------------------
 
     
-    //repeat ids
-    document.getElementById("Ngamma_value2").textContent =
-        Number(calculatedData.Ngamma).toFixed(0);
-    document.getElementById("Rd_value2").textContent =
-        Number(calculatedData.Rd).toFixed(0);
-    document.getElementById("q1k_value2").textContent =
-        Number(inputData.q1k).toFixed(0);
-    document.getElementById("q2k_value2").textContent =
-        Number(inputData.q2k).toFixed(0);
-
-    
     loadCalculated("sgamma_min", Math.min(calculatedData.sgamma1, calculatedData.sgamma2));
     loadCalculated("platformBC", platformBC(inputData.gamma, 
         inputData.W, calculatedData.Ngamma, calculatedData.sgamma_min));
 
     display_subgradeVplatform(
         calculatedData.platformBC,   
-        calculatedData.Rd, 
+        calculatedData.RdNoGeoGrid, 
     )
 
 
     const platformStronger = (
-        calculatedData.platformBC > calculatedData.Rd
+        calculatedData.platformBC > calculatedData.RdNoGeoGrid
     );
 
     if (!platformStronger) {
@@ -150,11 +145,11 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     // 6) PLATFORM MATERIAL BEARING RESISTANCE
     //--------------------------------------------------
 
-    loadCalculated("q1d2", q1d2(inputData.q1k));
-    loadCalculated("q2d2", q2d2(inputData.q2k));
+    loadCalculated("q1dB", q1dB(inputData.q1k));
+    loadCalculated("q2dB", q2dB(inputData.q2k));
 
-    document.getElementById("platformBC_value2").textContent =
-        Number(calculatedData.platformBC).toFixed(0);
+    // document.getElementById("platformBC_value2").textContent =
+    //     Number(calculatedData.platformBC).toFixed(0);
 
     const bearingResistance = (
         calculatedData.platformBC > calculatedData.q1d2 && calculatedData.platformBC > calculatedData.q2d2
@@ -162,8 +157,8 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
 
     display_bearingResistance(
         calculatedData.platformBC, 
-        calculatedData.q1d2,
-        calculatedData.q2d2
+        calculatedData.q1dB,
+        calculatedData.q2dB
     )
 
     if (!bearingResistance) {
@@ -180,55 +175,17 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     // 7) THICKNESS OF PLATFORM
     //--------------------------------------------------
 
-    const W = inputData.W;
-    const q1d = calculatedData.q1d;
-    const q2d = calculatedData.q2d;
-    const cu = inputData.cu;
-    const sc1 = calculatedData.sc1;
-    const sc2 = calculatedData.sc2;
-    const gamma = inputData.gamma;
-    const kptandelta = calculatedData.kptandelta;
-    const sp1 = calculatedData.sp1;
-    const sp2 = calculatedData.sp2;
-    const q1k = inputData.q1k;
-    const q2k = inputData.q2k;
+    loadCalculated("subgradeBC1", subgradeBC(inputData.cu, calculatedData.sc1));
+    loadCalculated("subgradeBC2", subgradeBC(inputData.cu, calculatedData.sc2));
 
-    loadCalculated("subgradeBC1", subgradeBC(cu, sc1));
-    loadCalculated("subgradeBC2", subgradeBC(cu, sc2));
-
-    loadCalculated("q1d2", q1d2(q1k));
-    loadCalculated("q2d2", q2d2(q2k));
-
-    console.log("inputs:", W, calculatedData.q1d2, calculatedData.subgradeBC1, gamma, kptandelta, sp1);
+    loadCalculated("q1dB", q1dB(inputData.q1k));
+    loadCalculated("q2dB", q2dB(inputData.q2k));
     
-    loadCalculated("D1", D(W, calculatedData.q1d2, calculatedData.subgradeBC1, gamma, kptandelta, sp1));
-    loadCalculated("D2", D(W, calculatedData.q2d2, calculatedData.subgradeBC2, gamma, kptandelta, sp2));
+    loadCalculated("D1NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q1dB, calculatedData.subgradeBC1, inputData.gamma, calculatedData.kptandelta, calculatedData.sp1));
+    loadCalculated("D2NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q2dB, calculatedData.subgradeBC2, inputData.gamma, calculatedData.kptandelta, calculatedData.sp2));
 
-    document.getElementById("Dlarger").textContent =
-        Math.max(calculatedData.D1, calculatedData.D2).toFixed(2);
-
-    //repeat ids for thickness printing
-    document.getElementById("W_value2").textContent =
-        W;
-    document.getElementById("W_value3").textContent =
-        W;
-    document.getElementById("q1k_value3").textContent =
-        inputData.q1k.toFixed(0);
-    document.getElementById("q2k_value3").textContent =
-        inputData.q2k.toFixed(0);
-    document.getElementById("gamma_value2").textContent =
-        gamma.toFixed(0);
-    document.getElementById("gamma_value3").textContent =
-        gamma.toFixed(0);
-    document.getElementById("kptandelta_value2").textContent =
-        kptandelta
-    document.getElementById("kptandelta_value3").textContent =
-        kptandelta;
-    document.getElementById("sp1_value2").textContent =
-        sp1.toFixed(2);
-    document.getElementById("sp2_value2").textContent =
-        sp2.toFixed(2);
-
+    
+    loadCalculated("DlargerNoGeorgrid", Math.max(calculatedData.D1NoGeogrid, calculatedData.D2NoGeogrid));
 
     //--------------------------------------------------
     // 8) THICKNESS OF PLATFORM WITH GEOGRID
@@ -239,52 +196,21 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     if (geogridChoice == "yes") {
         showElement("geogridBox");
 
+        loadCalculated("Td", inputData.Tult / 2);
+
+        loadCalculated("D1WithGeogrid", DWithGeogrid(inputData.W, calculatedData.q1dB, 
+            calculatedData.subgradeBC1, calculatedData.Td, inputData.gamma, 
+            calculatedData.kptandelta, calculatedData.sp1));
+        loadCalculated("D2WithGeogrid", DWithGeogrid(inputData.W, calculatedData.q2dB, 
+            calculatedData.subgradeBC2, calculatedData.Td, inputData.gamma, 
+            calculatedData.kptandelta, calculatedData.sp2));
+        loadCalculated("DlargerWithGeorgrid", Math.max(calculatedData.D1WithGeogrid,
+            calculatedData.D2WithGeogrid).toFixed(2));
+
+
+        display_geogridGreaterThanPointThree(calculatedData.DlargerWithGeorgrid);
+
     }else{
         hideElement("geogridBox");
     }
-
-    loadInput("Tult");
-    const Tult = inputData.Tult;
-    loadCalculated("Td", Tult / 2);
-    const Td = calculatedData.Td;    
-
-    const subgradeBC1 = calculatedData.subgradeBC1;
-    const subgradeBC2 = calculatedData.subgradeBC2;
-
-    const geogridD1 = georgridD(W, q1d, subgradeBC1, gamma, kptandelta, sp1);
-    const geogridD2 = georgridD(W, q2d, subgradeBC2, gamma, kptandelta, sp2);
-    
-    // //repeat ids
-    document.getElementById("W_value4").textContent =
-         W;
-    document.getElementById("W_value5").textContent =
-        W;
-    document.getElementById("q2k_value4").textContent =
-        inputData.q2k;
-    document.getElementById("q1k_value4").textContent =
-        inputData.q1k;
-    document.getElementById("gamma_value4").textContent =
-        gamma;
-    document.getElementById("gamma_value5").textContent =
-        gamma;
-    document.getElementById("kptandelta_value4").textContent =
-        kptandelta
-    document.getElementById("kptandelta_value5").textContent =
-        kptandelta;
-    document.getElementById("sp1_value3").textContent =
-        sp1.toFixed(2);
-    document.getElementById("sp2_value3").textContent =
-        sp2.toFixed(2);
-    document.getElementBwhatyId("subgradeBC1_value2").textContent =
-        subgradeBC1.toFixed(2);
-    document.getElementById("subgradeBC2_value2").textContent =
-        subgradeBC2.toFixed(2);
-    document.getElementById("D1_value2").textContent =
-        geogridD1.toFixed(2);
-    document.getElementById("D2_value2").textContent =
-        geogridD2.toFixed(2);
-
-     console.log("geogridD1:", geogridD1);
-console.log("geogridD2:", geogridD2);
-   
 });

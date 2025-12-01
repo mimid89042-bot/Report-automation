@@ -102,7 +102,7 @@
             T<sub>ult</sub> (kN/m):
             <input type="number" id="Tult" step="0.1">
         </label>
-    </div>
+    </div> </br>
 
 
         <button type="submit" id="calculateBtn">Submit</button>
@@ -112,22 +112,22 @@
 <!-- PLATFORM REQUIRED BOX -->
 <div class="box hidden" id="cohesivePlatformDecision">
    <p>N<sub>c</sub> = (2+π) = 5.14</p>
-   <p>N<sub>γp</sub> = <span id="Ngamma_value"></span></p>
-   <p>K<sub>p</sub>tanδ = <span id="kptandelta_value"></span></p>
+   <p>N<sub>γp</sub> = <span class="Ngamma_value"></span></p>
+   <p>K<sub>p</sub>tanδ = <span class="kptandelta_value"></span></p>
 
    <div class="results-container">
       <div class="case-result">
          <h3>Case 1 loading results</h3>
-         <p>s<sub>c1</sub> = 1 + 0.2(W/L<sub>1d</sub>) = <span id="sc1_value"></span></p>
-         <p>s<sub>γ1</sub> = 1 - 0.3(W/L<sub>1d</sub>) = <span id="sgamma1_value"></span></p>
-         <p>s<sub>p1</sub> = 1 + (W/L<sub>1d</sub>) = <span id="sp1_value"></span></p>
+         <p>s<sub>c1</sub> = 1 + 0.2(W/L<sub>1d</sub>) = <span class="sc1_value"></span></p>
+         <p>s<sub>γ1</sub> = 1 - 0.3(W/L<sub>1d</sub>) = <span class="sgamma1_value"></span></p>
+         <p>s<sub>p1</sub> = 1 + (W/L<sub>1d</sub>) = <span class="sp1_value"></span></p>
       </div>
 
       <div class="case-result">
          <h3>Case 2 loading results</h3>
-         <p>s<sub>c2</sub> = 1 + 0.2(W/L<sub>2d</sub>) = <span id="sc2_value"></span></p>
-         <p>s<sub>γ2</sub> = 1 - 0.3(W/L<sub>2d</sub>) = <span id="sgamma2_value"></span></p>
-         <p>s<sub>p2</sub> = 1 + (W/L<sub>2d</sub>) = <span id="sp2_value"></span></p>
+         <p>s<sub>c2</sub> = 1 + 0.2(W/L<sub>2d</sub>) = <span class="sc2_value"></span></p>
+         <p>s<sub>γ2</sub> = 1 - 0.3(W/L<sub>2d</sub>) = <span class="sgamma2_value"></span></p>
+         <p>s<sub>p2</sub> = 1 + (W/L<sub>2d</sub>) = <span class="sp2_value"></span></p>
       </div>
    </div>
 
@@ -135,10 +135,10 @@
     <span>Check that subgrade cannot provide required bearing resistance without a working platform:</span>
     
     <p class = "indented"> R<sub>d</sub> = c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> = 
-        <span id="cu_value"></span> x 
+        <span class="cu_value"></span> x 
         5.14 x 
-        <span id = "sc_min_value"></span> =
-        <span id="Rd_value"></span> kPa</p>
+        <span class = "sc_min_value"></span> =
+        <span class="RdNoGeoGrid_value"></span> kPa</p>
         <br>
 
     <p>Design loading is calculated for two loading conditions.</p>
@@ -146,12 +146,12 @@
      <div class="cases-container">
     <div class="case-column">
         <p>Case loading 1:</p>
-        <p>q<sub>1d</sub> = 2.0q<sub>1k</sub> = 2.0 x <span id= "q1k_value"></span> = <span id= "q1d_value"></span> kPa</p>
+        <p>q<sub>1d</sub> = 2.0q<sub>1k</sub> = 2.0 x <span class= "q1k_value"></span> = <span class= "q1dA_value"></span> kPa</p>
     </div>
 
     <div class="case-column">
         <p>Case loading 2:</p>
-        <p>q<sub>2d</sub> = 1.5q<sub>2k</sub> = 1.5 x <span id= "q2k_value"></span> = <span id= "q2d_value"></span> kPa</p>
+        <p>q<sub>2d</sub> = 1.5q<sub>2k</sub> = 1.5 x <span class= "q2k_value"></span> = <span class= "q2dA_value"></span> kPa</p>
     </div>
     </div>
 
@@ -164,26 +164,26 @@
 <div class= "box hidden" id="platformMaterial" >
     <h3> Check that platform material is stronger than subgrade:</h3>
     <p class ="indented">0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ</sub>
-        =  0.5 x <span id="gamma_value"></span> x <span id="W_value"></span> x <span id="Ngamma_value2"></span> x <span id="sgamma_min_value"></span>
-        = <span id="platformBC_value"></span> kPa
+        =  0.5 x <span class="gamma_value"></span> x <span class="W_value"></span> x <span class="Ngamma_value"></span> x <span class="sgamma_min_value"></span>
+        = <span class="platformBC_value"></span> kPa
     </p>
-    <P class ="indented">  c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> = <span id="Rd_value2"></span> kPa</P>
+    <P class ="indented">  c<sub>u</sub>N<sub>c</sub>s<sub>c</sub> = <span class="RdNoGeoGrid_value"></span> kPa</P>
     <p id = "subgradeVplatform" ></p> <br>
     <h3> Check that platform material can provide required bearing resistance when placed at a 
         thickness sufficient to ensure that the subgrade does not materially affect bearing capacity:</h3>
     <p class="indented">
         q<sub>1d</sub> = 1.6q<sub>1k</sub> 
-        = 1.6 x <span id="q1k_value2"></span>
-        = <span id="q1d2_value"></span> kPa
+        = 1.6 x <span class="q1k_value"></span>
+        = <span class="q1dB_value"></span> kPa
         <br><br>
 
         q<sub>2d</sub> = 1.2q<sub>2k</sub> 
-        = 1.2 x <span id="q2k_value2"></span>
-        = <span id="q2d2_value"></span> kPa
+        = 1.2 x <span class="q2k_value"></span>
+        = <span class="q2dB_value"></span> kPa
         <br><br>
 
         0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ</sub>
-        = <span id="platformBC_value2"></span> kPa
+        = <span class="platformBC_value"></span> kPa
     </p> <br>
     <p id = "bearingResistance" ></p> 
 
@@ -200,11 +200,11 @@
             <p>Where q<sub>1d</sub> = 1.6 × q<sub>1k</sub></p>
             <p>
                 D<sub>1</sub> = 
-                (<span id="W_value2"></span> × 
-                ([1.6 × <span id="q1k_value3"></span>] - <span id="subgradeBC1_value"></span>)) / 
-                (<span id="gamma_value2"></span> × <span id="kptandelta_value2"></span> × <span id="sp1_value2"></span>)
+                (<span class="W_value"></span> × 
+                ([1.6 × <span class="q1k_value"></span>] - <span class="subgradeBC1_value"></span>)) / 
+                (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>)
                 <sup>0.5</sup>
-                = <span id="D1_value"></span> m
+                = <span class="D1NoGeogrid_value"></span> m
             </p>
         </div>
 
@@ -215,23 +215,23 @@
         <p>Where q<sub>2d</sub> = 1.2 × q<sub>2k</sub></p>
         <p>
             D<sub>2</sub> = 
-            (<span id="W_value3"></span> × 
-            ([1.2 × <span id="q2k_value3"></span>] - <span id="subgradeBC2_value"></span>)) / 
-            (<span id="gamma_value3"></span> × <span id="kptandelta_value3"></span> × <span id="sp2_value2"></span>)
+            (<span class="W_value"></span> × 
+            ([1.2 × <span class="q2k_value"></span>] - <span class="subgradeBC2_value"></span>)) / 
+            (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>)
             <sup>0.5</sup>
-            = <span id="D2_value"></span> m
+            = <span class="D2NoGeogrid_value"></span> m
         </p>
     </div>
     </div>
 
-    <p>The larger of the two, <span id = "Dlarger"></span>, should be adopted as the design value</p>
+    <p>The larger of the two, <span class = "DlargerNoGeorgrid_value"></span> m, should be adopted as the design value</p>
 </div>
 
 <!-- GEOGRID THICKNESS BOX-->
 <div class = "box hidden" id = "geogridBox">
     <h3> Calculate thickness with geogrid: </h3>
-    <p>Geogrid with T<sub>ult</sub> = <span id = "Tult_value"></span> nK/m to be used.</p>
-    <p>T<sub>d</sub> = T<sub>ult</sub> / 2 = <span id = "Td_value"></span> nK/m </p>
+    <p>Geogrid with T<sub>ult</sub> = <span class = "Tult_value"></span> nK/m to be used.</p>
+    <p>T<sub>d</sub> = T<sub>ult</sub> / 2 = <span class = "Td_value"></span> nK/m </p>
     <div class="cases-container">
         <div class = 'case-column'>
             <p>Case 1 loading:</p>
@@ -241,11 +241,11 @@
             <p>where q<sub>1d</sub> =  1.6q<sub>1k</sub></p>
             <p>
                 D<sub>1</sub> = 
-                (<span id="W_value4"></span> × 
-                ([1.6 × <span id= "q1k_value4"></span>] - <span id="subgradeBC1_value2"></span>)) / 
-                (<span id="gamma_value4"></span> × <span id="kptandelta_value4"></span> × <span id="sp1_value3"></span>)
+                (<span class="W_value"></span> × 
+                ([1.6 × <span class= "q1k_value"></span>] - <span class="subgradeBC1_value"></span>)) / 
+                (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>)
                 <sup>0.5</sup>
-                = <span id="D1_value2"></span> m
+                = <span class ="D1WithGeogrid_value"></span> m
             </p>
         </div>
             <div class = 'case-column'>
@@ -256,16 +256,24 @@
             <p>where q<sub>2d</sub> =  1.2q<sub>2k</sub></p>
             <p>
                 D<sub>2</sub> = 
-                (<span id="W_value5"></span> × 
-                ([1.2 × <span id= "q2k_value4"></span>] - <span id="subgradeBC2_value2"></span>)) / 
-                (<span id="gamma_value5"></span> × <span id="kptandelta_value5"></span> × <span id="sp2_value3"></span>)
+                (<span class="W_value"></span> × 
+                ([1.2 × <span class= "q2k_value"></span>] - <span class="subgradeBC2_value"></span>)) / 
+                (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>)
                 <sup>0.5</sup>
-                = <span id="D2_value2"></span> m
+                = <span class="D2WithGeogrid_value"></span> m
             </p>
         </div>
     </div>
-    <p>Larger value of D<sub>1</sub> and D<sub>2</sub> should be used for design purposes and minimum acceptable cover to the reinforcement should be 0.3. 
-    Appropriate cover to the reinforcement is therefore </p>
+    <p>Larger value of D<sub>1</sub> and D<sub>2</sub> should be used for design purposes and minimum acceptable cover to the reinforcement should be 0.3 m. 
+    </p>
+    <p id = "pointThree" ></p> </br>
+    <p> Design thickness of platform should satisfy the following conditions:</p>
+    <p>if effect of reinforcement is ignore, both q<sub>1d</sub> and q<sub>2d</sub>
+        are &lt R<sub>d</sub> where: </p>
+
+
+
+    <p> Without geosynthetic reinforcement D = <span class = "DlargerNoGeorgrid_value"></span> m is required </p>
 </div>
 
 </div>

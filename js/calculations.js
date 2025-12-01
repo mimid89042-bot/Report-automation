@@ -20,7 +20,7 @@ export function sp(W, L) {
     return 1 + (W / L); 
 }
 
-export function Rd(c_u, s_c){
+export function RdNoGeoGrid(c_u, s_c){
     return c_u * (2+ Math.PI) * s_c;
 }
 
@@ -28,24 +28,40 @@ export function platformBC(gamma, W, Ngamma, sgamma){
     return 0.5 * gamma * W * Ngamma * sgamma;
 }
 
-export function q1d2(q1){
-    return 1.6 * q1;
+export function q1dA(q1k){
+    return 2.0 * q1k;
 }
 
-export function q2d2(q2){
-    return 1.2 * q2;
+export function q2dA(q2k){
+    return 1.5 * q2k;
+}
+
+export function q1dB(q1k){
+    return 1.6 * q1k;
+}
+
+export function q2dB(q2k){
+    return 1.2 * q2k;
+}
+
+export function q1dC(q1k){
+    return 1.25 * q1k;
+}
+
+export function q2dC(q2k){
+    return 1.05 * q2k;
 }
 
 export function subgradeBC(cu, sc){
     return cu * (2 + Math.PI) * sc;
 }
 
-export function D(W, qd, subgradeBC, gamma, kptandelta, sp){
-    return (W *(qd - subgradeBC) / (gamma * kptandelta * sp)) ** 0.5;
+export function DNoGeogrid(W, qdA, subgradeBC, gamma, kptandelta, sp){
+    return (W *(qdA - subgradeBC) / (gamma * kptandelta * sp)) ** 0.5;
 }
 
-export function georgridD(W, qd, subgradeBC, gamma, kptandelta, sp){
-    return (W *(qd - subgradeBC - 2*T/w) / (gamma * kptandelta * sp)) ** 0.5;
+export function DWithGeogrid(W, qdB, subgradeBC, T, gamma, kptandelta, sp){
+    return (W *(qdB - subgradeBC - 2*T/W) / (gamma * kptandelta * sp)) ** 0.5;
 }
 
 export function finalRd(cu, sc, D, W, gamma, kptandelta, sp){

@@ -1,6 +1,5 @@
 // data.js
 import { DEFAULT_PHI, DEFAULT_GAMMA } from './constants.js';
-import { updateValue } from './dom.js';
 
 // Store user inputs and calculated values
 export const inputData = {
@@ -28,17 +27,25 @@ export const calculatedData = {
     sp1: null,
     sp2: null,
     sc_min: null,
-    Rd: null,
-    q1d: null,
-    q2d: null,
+    RdNoGeoGrid: null,
+    q1dA: null,
+    q2dA: null,
+    q1dB: null,
+    q2dB: null,
+    q1dC: null,
+    q2dC: null,
     sgamma_min: null,
     platformBC: null,
     q1d2: null,
     q2d2: null,
     subgradeBC1: null,
     subgradeBC2: null,
-    D1: null,
-    D2: null,
+    D1NoGeogrid: null,
+    D2NoGeogrid: null,
+    DlargerNoGeorgrid: null,
+    D1WithGeogrid: null,
+    D2WithGeogrid: null,
+    DlargerWithGeorgrid: null,
     Td: null
 };
 
@@ -54,8 +61,8 @@ export function loadInput(id) {
     const value = parseFloat(el.value) || 0;
     inputData[id] = value;
 
-    // Update all spans that represent this input
-    updateValue(`.${id}_value`, value);
+    // Update all spans with class `${id}_value`
+    updateElementsByClass(`${id}_value`, value, 2);
 
     return value;
 }
@@ -65,5 +72,20 @@ export function loadCalculated(key, value) {
     // Store in calculatedData
     calculatedData[key] = value;
 
-   updateValue('.${id}_value', value);
+    // Update all spans with class `${id}_value`
+    updateElementsByClass(`${key}_value`, value, 2);
+
+    return value;
+}
+
+
+export function updateElementsByClass(className, value, decimals = 2) {
+    const elements = document.querySelectorAll(`.${className}`);
+    elements.forEach(el => {
+        if(typeof value === 'number') {
+            el.textContent = value.toFixed(decimals);
+        } else {
+            el.textContent = value;
+        }
+    });
 }
