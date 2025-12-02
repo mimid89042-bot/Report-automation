@@ -45,7 +45,10 @@ export const calculatedData = {
     DlargerNoGeorgrid: null,
     D1WithGeogrid: null,
     D2WithGeogrid: null,
-    DlargerWithGeorgrid: null,
+    D1NoGeogridC: null,
+    D2NoGeogridC: null,
+    D1largerWithGeorgrid: null,
+    D2largerWithGeorgrid: null,
     Td: null
 };
 

@@ -57,17 +57,17 @@ export function subgradeBC(cu, sc){
 }
 
 export function DNoGeogrid(W, qdA, subgradeBC, gamma, kptandelta, sp){
-    return (W *(qdA - subgradeBC) / (gamma * kptandelta * sp)) ** 0.5;
+    return (W *Math.max(0,(qdA - subgradeBC)) / (gamma * kptandelta * sp)) ** 0.5;
 }
 
 export function DWithGeogrid(W, qdB, subgradeBC, T, gamma, kptandelta, sp){
-    return (W *(qdB - subgradeBC - 2*T/W) / (gamma * kptandelta * sp)) ** 0.5;
+    return (W * Math.max(0,(qdB - subgradeBC - 2*T/W)) / (gamma * kptandelta * sp)) ** 0.5;
 }
 
 export function finalRd(cu, sc, D, W, gamma, kptandelta, sp){
     return cu * (2 + Math.PI) * sc + D^2 / W * gamma * kptandelta * sp;
 }
 
-//console.log(N_γp(40)); // Example usage
+//console.log(DNoGeogrid(2.4, 1.6*180, (2+Math.PI)* 40*1.14, 20, 109, 1.71)); // Example usage
 //TO TEST FUNCTIONS --> open power shell --> cd "file path" --> uncomment line ^^ with desired function
 //and input --> node calculations.js --> should return value in console

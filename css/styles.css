@@ -1,7 +1,7 @@
 body { 
     font-family: Arial; 
     margin: 40px; 
-    background-color: rgba(203, 210, 224, 0.651);
+    background-color: rgba(233, 243, 255, 0.651);
 }
 
 label { 
@@ -41,16 +41,6 @@ input {
     margin-bottom: 5px;
 }
 
-.results-container {
-    display: flex;
-    gap: 40px;
-}
-
-.case-result {
-    flex: 1;
-}
-
-/* --- Moved inline styles to CSS --- */
 
 .input-row {
     display: flex;
@@ -68,14 +58,7 @@ input {
     margin-left: 30px;
 }
 
-/* put in css/styles.css */
-.warning {
-  color: #b00000;       /* red */
-  font-weight: 700;
-}
-.notice {
-  color: #333;
-}
+
 .hidden { display: none !important; } /* keep your hidden util */
 
 .underline {
@@ -83,14 +66,52 @@ input {
 }
 
 
+
+/* Force browser PDF to match screen layout */
 @media print {
-    button {
-        display: none; /* hide all buttons */
+    body {
+        font-size: 17pt; /* corrected from 17t */
+        line-height: 1.4;
     }
 
-    /* Optional: hide other elements you don’t want to print */
-    .hidden {
+    h1 {
+        font-size: 10pt;
+    }
+
+    h3 {
+        font-size: 8pt;
+    }
+
+    p, span, div {
+        font-size: 7pt; /* ensures all normal text scales */
+    }
+
+    /* Hide inputs and buttons you don't want printed */
+    input, textarea, select, button {
+         font-size: 7pt; 
+    }
+
+    /* Optional: remove borders or backgrounds that mess with layout */
+    .box {
+        border: none;
+        background: none;
+        padding: 0;
+    }
+
+        /* Hide all buttons */
+    button {
         display: none !important;
     }
-}
 
+    @media print {
+    select {
+        font-size: 7pt;       /* match paragraph text */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: none;           /* remove borders for print */
+        background: none;       /* remove any background */
+    }
+}
+    
+}

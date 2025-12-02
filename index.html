@@ -8,9 +8,9 @@
 </head>
 <body>
 
-<h1>TWP Calculation</h1>
+<h1>BRE_Platform Calculation</h1>
 
-<form id="cohesive-inputs">
+<form id="subgrade-selection">
     <div class="box">
         <label for="soilType">Subgrade Soil Type:</label>
         <select id="soilType" required title="subgrade soil type required">
@@ -70,7 +70,7 @@
             </label><br>
 
             <label>L<sub>1d</sub> (m):
-                <input type="number" id="L1" step="0.1" required value = "3.6">
+                <input type="number" id="L1" step="0.01" required value = "3.6">
             </label><br>
         </div>
 
@@ -81,7 +81,7 @@
             </label><br>
 
             <label>L<sub>2d</sub> (m):
-                <input type="number" id="L2" step="0.1" required value = "3.1">
+                <input type="number" id="L2" step="0.01" required value = "3.1">
             </label><br>
         </div>
     </div>
@@ -254,11 +254,11 @@
     <div class="cases-container">
         <div class = 'case-column'>
             <p class= "underline">Case 1 loading:</p>
+            <!--First formula-->
             <p>D<sub>1</sub> = {W<sub>d</sub> [q<sub>1d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>
             - (2T<sub>d</sub> /W<sub>d</sub>)]
             / [γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p1</sub>]}<sup>0.5</sup></p>
             <p>where q<sub>1d</sub> =  1.6q<sub>1k</sub></p>
-            <!--First formula-->
             <p>
                 D<sub>1</sub> = 
                 {<span class="W_value"></span>  
@@ -275,14 +275,17 @@
             <p>
                 D<sub>1</sub> = 
                 (<span class="W_value"></span> × 
-                ([1.6 × <span class="q1k_value"></span>] - <span class="subgradeBC1_value"></span>)) / 
+                ([1.25 × <span class="q1k_value"></span>] - <span class="subgradeBC1_value"></span>)) / 
                 (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>)
                 <sup>0.5</sup>
-                = <span class="D1NoGeogrid_value"></span> m
-            </p>
+                = <span class="D1NoGeogridC_value"></span> m
+            </p> <br><br>
+            <!--Max D1-->
+            <p class = "indented">Max D1  =  <span class ="D1largerWithGeorgrid_value"></span> m</p>
         </div>
             <div class = 'case-column'>
             <p class="underline">Case 2 loading:</p>
+            <!--First formula-->
             <p>D<sub>2</sub> = {W<sub>d</sub> [q<sub>2d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>
             - (2T<sub>d</sub> /W<sub>d</sub>)]
             / [γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p2</sub>]}<sup>0.5</sup></p>
@@ -295,10 +298,34 @@
                 [<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>]}
                 <sup>0.5</sup>
                 = <span class ="D2WithGeogrid_value"></span> m
-            </p>
+            </p><br>
+              <!--Second formula-->
+            <p>D<sub>2</sub> (ignoring geogrid) = {W<sub>d</sub> [q<sub>2d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>
+                / γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p2</sub>]}<sup>0.5</sup></p>
+            <p>Where q<sub>2d</sub> = 1.05 × q<sub>2k</sub></p>
+            <p>
+                D<sub>2</sub> = 
+                (<span class="W_value"></span> × 
+                ([1.05 × <span class="q2k_value"></span>] - <span class="subgradeBC2_value"></span>)) / 
+                (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>)
+                <sup>0.5</sup>
+                = <span class="D2NoGeogridC_value"></span> m    
+            </p> <br><br>
+            <!--Max D1=2-->
+            <p class = "indented">Max D2  =  <span class ="D2largerWithGeorgrid_value"></span> m</p>
         </div>
     </div>
+
 </div>
+<div class="box hidden" id="userParagraphSection">
+    <h3>Enter your summary paragraph:</h3>
+    <textarea id="userParagraphInput" placeholder="Type your paragraph here..." style="width:100%; min-height:120px;"></textarea>
+    <br>
+    <!-- <button id="submitParagraphBtn" type="button">Insert Paragraph</button>
+    <h3>Preview:</h3>
+    <div id="userParagraphDisplay" style="white-space: pre-wrap; border: 1px solid #ccc; padding: 10px; min-height: 80px;"></div> --> 
+</div>
+
 
 </div>
 

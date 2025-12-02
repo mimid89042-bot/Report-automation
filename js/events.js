@@ -185,6 +185,7 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     loadCalculated("q2dB", q2dB(inputData.q2k));
     
     loadCalculated("D1NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q1dB, calculatedData.subgradeBC1, inputData.gamma, calculatedData.kptandelta, calculatedData.sp1));
+    console.log( DNoGeogrid(inputData.W, calculatedData.q1dB, calculatedData.subgradeBC1, inputData.gamma, calculatedData.kptandelta, calculatedData.sp1)); // Example usage
     loadCalculated("D2NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q2dB, calculatedData.subgradeBC2, inputData.gamma, calculatedData.kptandelta, calculatedData.sp2));
 
     
@@ -198,19 +199,43 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
 
     if (geogridChoice == "yes") {
         showElement("geogridBox");
+        showElement("userParagraphSection");
 
+        // Load tensile strength
         loadCalculated("Td", inputData.Tult / 2);
 
+        // Fist formula - with geogrid
         loadCalculated("D1WithGeogrid", DWithGeogrid(inputData.W, calculatedData.q1dB, 
             calculatedData.subgradeBC1, calculatedData.Td, inputData.gamma, 
             calculatedData.kptandelta, calculatedData.sp1));
         loadCalculated("D2WithGeogrid", DWithGeogrid(inputData.W, calculatedData.q2dB, 
             calculatedData.subgradeBC2, calculatedData.Td, inputData.gamma, 
             calculatedData.kptandelta, calculatedData.sp2));
-        loadCalculated("DlargerWithGeorgrid", Math.max(calculatedData.D1WithGeogrid,
-            calculatedData.D2WithGeogrid).toFixed(2));
+
+        // Second formula - ignoring geogrid
+        loadCalculated("D1NoGeogridC", DNoGeogrid(inputData.W, calculatedData.q1dC, 
+            calculatedData.subgradeBC1, inputData.gamma, calculatedData.kptandelta, 
+            calculatedData.sp1));
+        loadCalculated("D2NoGeogridC", DNoGeogrid(inputData.W, calculatedData.q2dC, 
+            calculatedData.subgradeBC2, inputData.gamma, calculatedData.kptandelta, 
+            calculatedData.sp2));
+
+        // Max D of first and second formula
+        loadCalculated("D1largerWithGeorgrid", Math.max(calculatedData.D1WithGeogrid,
+            calculatedData.D1NoGeogridC).toFixed(2));
+        loadCalculated("D2largerWithGeorgrid", Math.max(calculatedData.D2WithGeogrid,
+            calculatedData.D2NoGeogridC).toFixed(2));
 
     }else{
         hideElement("geogridBox");
     }
 });
+
+
+// const inputBox = document.getElementById("userParagraphInput");
+// const displayDiv = document.getElementById("userParagraphDisplay");
+// const submitSummaryBtn = document.getElementById("submitParagraphBtn");
+
+// submitSummaryBtn.addEventListener("click", () => {
+//     displayDiv.textContent = inputBox.value; // copy text to display div
+// });

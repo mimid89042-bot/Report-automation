@@ -25,11 +25,12 @@ export function display_platformRequired(q1dA, q2dA, Rd1, Rd2) {
     }
 
     
-    if (q1dA > Rd1 && q2dA > Rd2) {
-        text += 'therefore a working platform is required for plant support';
-        //make platformMaterial box visible
-        showElement("platformMaterial");
-    } else { text += 'therefore a working platform is NOT required for plant support';
+    if (q1dA < Rd1 && q2dA < Rd2) {
+        text += 'therefore a working platform is NOT required for plant support';
+    } else { 
+           text += 'therefore a working platform is required for plant support';
+            //make platformMaterial box visible
+            showElement("platformMaterial");
 
     }
     twpDecision.innerHTML = text; // use innerHTML to allow <br>
@@ -49,10 +50,10 @@ export function display_subgradeVplatform(platformBC1, platformBC2, Rd1, Rd2){
         text += 'and 0.5γ<sub>p</sub>W<sub>d</sub>N<sub>γp</sub>s<sub>γ2</sub> > c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub> <br>';
     }
 
-    if(platformBC1 > Rd1 && platformBC2 > Rd2){
-        text += " therefore platform is stronger than subgrade"
+    if(platformBC1 < Rd1 && platformBC2 < Rd2){
+        text += " therefore platform is NOT stronger than subgrade"
     }else{
-        text+= " therefore platform is NOT stronger than subgrade<";
+        text+= " therefore platform is stronger than subgrade<";
     }
 
     showElement("subgradeVplatform");
@@ -75,21 +76,12 @@ export function display_bearingResistance(platformBC1, platformBC2, q1dB, q2dB){
     }
 
     
-    if (q1dB < platformBC1 && q2dB < platformBC2) {
-        text += 'therefore chosen platform material can provide the required bearing resistance';
-    } else { 
+    if (q1dB > platformBC1 && q2dB > platformBC2) {
         text += 'therefore chosen platform material canNOT provide the required bearing resistance';
+    } else { 
+        text += 'therefore chosen platform material cannot provide the required bearing resistance';
     }
     showElement("thickness");
     bearingResistance.innerHTML = text;
 }
 
-// export function display_geogridGreaterThanPointThree(DlargerWithGeorgrid){
-//     let text = "";
-//     if(DlargerWithGeorgrid > 0.3){
-//         text += 'Appropriate value with the gesoynthetic reinforcement is therefore D = ' + DlargerWithGeorgrid + ' m';
-//     } else {
-//         text += 'Thickness is unsuitable as is < 0.3 m';
-//     }
-//     pointThree.innerHTML = text;
-// }
