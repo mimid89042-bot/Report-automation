@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang = "en">
 <head>
-    <title>TWP Calculation</title>
+    <title>BRE Calculation</title>
     <meta charset= "utf-8">
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
@@ -104,13 +104,13 @@
 </form>
 <!-- INPUTS ENDS-->
 
-<!-- CUSTOM ALERT -->
-<!-- 
-        <div class="alert">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        This is an alert box.
-        </div>
- -->
+<!-- CU ALERT -->
+
+
+<div id="cuAlert" class="alert hidden">
+    Subgrade strength is outside of BRE recommended parameters (between 20 and 80 kPa). Another method is recommended
+</div>
+
 
 
 
@@ -247,15 +247,27 @@
         <br>
     </div>
     </div>
-    <!--INPUT BOX FOR NO GEOGRID THICKNESS-->
-    <label for ="thicknessNoGeogridUserInput">Selected thickness (m):</label>
-    <input type="number" id = "thicknessNoGeogridUserInput" step = "0.01">
+    <form id = "noGeogridForm">
+        <div class = "container">
+            <div class = "cell">
+                <label for ="thicknessNoGeogridUserInput">
+                    Selected thickness without geogrid (m):
+                </label>
+                <input type="number" id = "thicknessNoGeogridUserInput" step = "0.01" required>
+            </div>
+        </div>
 
-    <div id="thicknessWarning" class = "hidden">
-        <p id="thicknessWarningText"></p>
-        <button id = "closeWarning">OK</button>
-    </div>
+        <button type="submit">Submit</button>
+    </form>
+
 </div>
+
+<!-- DISMISSABLE ALERT -->
+<div id="thicknessNoGeogridAlert" class="alert hidden">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    Selected thickness is smaller than calculated thickness, please confirm by closing message
+</div>
+
 
 <!-- GEOGRID THICKNESS BOX-->
 <div class = "box hidden" id = "geogridBox">

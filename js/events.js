@@ -5,7 +5,9 @@ import { inputData, calculatedData, loadInput, loadCalculated } from './data.js'
 import { Ngamma, sc, sgamma, sp, RdNoGeoGrid, platformBC, 
         q1dA, q2dA, q1dB, q2dB, q1dC, q2dC, subgradeBC, 
         DNoGeogrid, DWithGeogrid } from './calculations.js';
-import { validateInputs } from './validation.js';
+import { validateCu, validateNOGeorgridThickness,
+        validateWITHGeorgridThickness
+        } from './validation.js';
 
 export function initEventListeners() {
     // Soil type toggle
@@ -41,9 +43,10 @@ export function initEventListeners() {
 document.getElementById("cohesive-inputs").addEventListener("submit", function(event){
     event.preventDefault();
 
-    // Print dismissive alert for cu value
-    if (!validateInputs()){
-        alert("blahsdhfj");
+    // Print alert for cu value
+    if (!validateCu()){
+        document.getElementById("cuAlert").classList.remove("hidden");
+        return;
     } 
 
     //--------------------------------------------------
@@ -196,11 +199,28 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     loadCalculated("q1dB", q1dB(inputData.q1k));
     loadCalculated("q2dB", q2dB(inputData.q2k));
     
-    loadCalculated("D1NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q1dB, calculatedData.subgradeBC1, inputData.gamma, calculatedData.kptandelta, calculatedData.sp1));
-    loadCalculated("D2NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q2dB, calculatedData.subgradeBC2, inputData.gamma, calculatedData.kptandelta, calculatedData.sp2));
+    loadCalculated("D1NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q1dB, 
+        calculatedData.subgradeBC1, inputData.gamma, calculatedData.kptandelta, calculatedData.sp1));
+    loadCalculated("D2NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q2dB, 
+        calculatedData.subgradeBC2, inputData.gamma, calculatedData.kptandelta, calculatedData.sp2));
 
     
     loadCalculated("DlargerNoGeorgrid", Math.max(calculatedData.D1NoGeogrid, calculatedData.D2NoGeogrid));
+
+
+      //ALERT FOR THICKNESS
+    document.getElementById("noGeogridForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // prevent page reload
+
+        const thicknessInput = document.getElementById("thicknessNoGeogridUserInput").value;
+        if (!validateNOGeorgridThickness(calculatedData.DlargerNoGeorgrid)){
+            document.getElementById("thicknessNoGeogridAlert").classList.remove("hidden");
+            console.log("Thickness is not good user should confirm");
+        }
+
+        console.log("Thickness is OK");
+    });
+
 
     //--------------------------------------------------
     // 8) THICKNESS OF PLATFORM WITH GEOGRID
@@ -237,32 +257,11 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
         loadCalculated("D2largerWithGeorgrid", Math.max(calculatedData.D2WithGeogrid,
             calculatedData.D2NoGeogridC).toFixed(2));
 
+        // Max of D1 and D2 with geogrid
+        loadCalculated("DlargerWithGeorgrid", Math.max(calculatedData.D1largerWithGeorgrid,
+            calculatedData.D2largerWithGeorgrid).toFixed(2));
+
     }else{
         hideElement("geogridBox");
     }
-});
-
-
-//thickess warningsssss
-const MIN_VALUE = Math.max(calculatedData.D1NoGeogrid, calculatedData.D2NoGeogrid);
-const thicknessInput = document.getElementById("thicknessNoGeogridUserInput");
-const warningBox = document.getElementById("thicknessWarning");
-const warningText = document.getElementById("thicknessWarningText");
-const closeBtn = document.getElementById("closeWarning");
-
-thicknessInput.addEventListener("input", () => {
-    const val = parseFloat(thicknessInput.value);
-
-    if (!isNaN(val) && val < MIN_VALUE) {
-        warningText.textContent = `Warning: Thickness is very low (min ${MIN_VALUE.toFixed(2)} m)`;
-        warningBox.classList.remove("hidden");
-    } else {
-        // only hide if user corrects the value above minimum
-        warningBox.classList.add("hidden");
-    }
-});
-
-closeBtn.addEventListener("click", () => {
-    // user can hide the warning manually
-    warningBox.classList.add("hidden");
 });
