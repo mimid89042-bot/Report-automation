@@ -8,9 +8,10 @@
 </head>
 <body>
 
-<h1>BRE_Platform Calculation</h1>
+<h1>BRE Calculation</h1>
 
-<form id="subgrade-selection">
+<!-- INPUTS -->
+<form id="cohesive-inputs">
     <div class="box">
         <label for="soilType">Subgrade Soil Type:</label>
         <select id="soilType" required title="subgrade soil type required">
@@ -19,54 +20,41 @@
             <option value="granular">Granular</option>
         </select>
     </div>
+<!-- MANUAL BOXES-->
 
     <div id="cohesiveInputs" class="box hidden">
         <h3>Design values for ground properties</h3>
 
-        <div class="input-row">
-            <label for="subgrade">Subgrade</label>
-            <label>C<sub>u</sub> (kPa):
-            <input type="number" id="cu" step="0.1" required value = "24">
-            </label>
-        </div>
+        <div class="container">
+            <div class="cell">
+                <label for="subgrade">Subgrade &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp  </label>
+                <label>C<sub>u</sub> (kPa):</label>
+                <input type="number" id="cu" step="0.01" required value = "24">
+            </div>
 
-
-        <div class="input-row">
-            <label for="platform">Working platform</label>
-
-            <label for="phi" class="inline-flex">
-                ϕ'<sub>p</sub> (°):
-                <select id="phi" required>
-                    <option value="35">35</option>
-                    <option value="40" selected>40</option>
-                    <option value="45">45</option>
-                </select>
-            </label>
-
-
-            <label for="gamma" class="inline-flex">
-                γ<sub>p</sub> (kN/m³):
-                <input type="number" id="gamma" step="0.1" value= "20" required>
-            </label>
-        </div> <br>
+            <div class="cell">
+                <label for="phi">Working platform  &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp</label>
+                <label>ϕ'<sub>p</sub> (°):</label>
+                <input type="number" id="phi" step="0.01" required value = "40">
+                <label for="gamma">  </label>
+                <label>&nbsp &nbsp γ<sub>p</sub> (kN/m³):</label>
+                <input type="number" id="gamma" step="0.01" required value = "20">
+            </div>
+       </div>
 
         <h3>Design values for track width and effective length</h3>
 
-        <div class="input-row">
-            <label for="width" class = "inline-flex">
-                <label>W<sub>d</sub> (m):
-                <input type="number" id="W" step="0.1" required value = "0.7">
-            </label>
-            </label>
+        <div class="cell">
+            <label>W<sub>d</sub> (m): </label>
+            <input type = "number" id = "W"  step="0.01" required value = "0.7">
         </div>
-
 
 
         <div class="cases-container">
         <div class="case-column">
             <p class= "underline">Case 1 loading inputs</p>
             <label>q<sub>1k</sub> (kPa):
-                <input type="number" id="q1k" step="0.1" required value = "140">
+                <input type="number" id="q1k" step="0.01" required value = "140">
             </label><br>
 
             <label>L<sub>1d</sub> (m):
@@ -77,7 +65,7 @@
         <div class="case-column">
             <p class= "underline">Case 2 loading inputs</p>
             <label>q<sub>2k</sub> (kPa):
-                <input type="number" id="q2k" step="0.1" required value = "190">
+                <input type="number" id="q2k" step="0.01" required value = "190">
             </label><br>
 
             <label>L<sub>2d</sub> (m):
@@ -95,19 +83,37 @@
             <option value="yes">Yes</option>
             <option value="no">No</option>
         </select>
-    </div> <br>
+    </div>
 
-    <div class="input-row hidden" id="geogridInputs">
-        <label for="Tult" class="inline-flex">
-            T<sub>ult</sub> (kN/m):
-            <input type="number" id="Tult" step="0.1">
-        </label>
-    </div> </br>
+    <div class = "container hidden" id = "geogridInputs">
+        <div class="cell">
+            <label>T<sub>allowable</sub> (kN/m):</label>
+            <input type="number" id="Tallowable" step="0.01">
+        </div>
+        <div class="cell">
+            <label>n: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp </label>
+            <input type="number" id="n" step="0.01">
+        </div>
+    </div>
+
+    <br>
+    <button type="submit" id="calculateBtn">Submit</button>
 
 
-        <button type="submit" id="calculateBtn">Submit</button>
     </div>
 </form>
+<!-- INPUTS ENDS-->
+
+<!-- CUSTOM ALERT -->
+<!-- 
+        <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        This is an alert box.
+        </div>
+ -->
+
+
+
 
 <!-- PLATFORM REQUIRED BOX -->
 <div class="box hidden" id="cohesivePlatformDecision">
@@ -115,15 +121,15 @@
    <p>N<sub>γp</sub> = <span class="Ngamma_value"></span></p>
    <p>K<sub>p</sub>tanδ = <span class="kptandelta_value"></span></p>
 
-   <div class="results-container">
-      <div class="case-result">
+   <div class="cases-container">
+      <div class="case-column">
          <h3>Case 1 loading results</h3>
          <p>s<sub>c1</sub> = 1 + 0.2(W/L<sub>1d</sub>) = <span class="sc1_value"></span></p>
          <p>s<sub>γ1</sub> = 1 - 0.3(W/L<sub>1d</sub>) = <span class="sgamma1_value"></span></p>
          <p>s<sub>p1</sub> = 1 + (W/L<sub>1d</sub>) = <span class="sp1_value"></span></p>
       </div>
 
-      <div class="case-result">
+      <div class="case-column">
          <h3>Case 2 loading results</h3>
          <p>s<sub>c2</sub> = 1 + 0.2(W/L<sub>2d</sub>) = <span class="sc2_value"></span></p>
          <p>s<sub>γ2</sub> = 1 - 0.3(W/L<sub>2d</sub>) = <span class="sgamma2_value"></span></p>
@@ -243,7 +249,12 @@
     </div>
     <!--INPUT BOX FOR NO GEOGRID THICKNESS-->
     <label for ="thicknessNoGeogridUserInput">Selected thickness (m):</label>
-    <input type="text" id = "thicknessNoGeogridUserInput">
+    <input type="number" id = "thicknessNoGeogridUserInput" step = "0.01">
+
+    <div id="thicknessWarning" class = "hidden">
+        <p id="thicknessWarningText"></p>
+        <button id = "closeWarning">OK</button>
+    </div>
 </div>
 
 <!-- GEOGRID THICKNESS BOX-->

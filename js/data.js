@@ -12,7 +12,8 @@ export const inputData = {
     L2: null,
     q1k: null,
     q2k: null,
-    Tult: 30
+    Tallowable: null,
+    n: null
 };
 
 //any value that is attained (in order of page 28)
@@ -82,6 +83,7 @@ export function loadCalculated(key, value) {
 }
 
 
+// HELPER FUNCTION for loadInput and loadCalculated
 export function updateElementsByClass(className, value, decimals = 2) {
     const elements = document.querySelectorAll(`.${className}`);
     elements.forEach(el => {

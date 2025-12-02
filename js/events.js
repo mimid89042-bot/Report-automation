@@ -3,7 +3,8 @@ import { showElement, hideElement, display_platformRequired,
          } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
 import { Ngamma, sc, sgamma, sp, RdNoGeoGrid, platformBC, 
-        q1dA, q2dA, q1dB, q2dB, q1dC, q2dC, subgradeBC, DNoGeogrid, DWithGeogrid, finalRd } from './calculations.js';
+        q1dA, q2dA, q1dB, q2dB, q1dC, q2dC, subgradeBC, 
+        DNoGeogrid, DWithGeogrid } from './calculations.js';
 import { validateInputs } from './validation.js';
 
 export function initEventListeners() {
@@ -18,21 +19,32 @@ export function initEventListeners() {
     // GEO-GRID YES / NO TOGGLE
     // -----------------------------
     document.getElementById("geogrid").addEventListener("change", () => {
-        const val = document.getElementById("geogrid").value;
-
-        if (val == "yes"){
+    const geogridSelect = document.getElementById("geogrid");
+    const tAllowableInput = document.getElementById("Tallowable");
+    const nInput = document.getElementById("n");
+        if (geogridSelect.value == "yes"){
             showElement("geogridInputs"); 
+            tAllowableInput.required = true;
+            nInput.required = true;
         }else{
             hideElement("geogridInputs");
+            tAllowableInput.required = false;
+            nInput.required = false;
         }
 
     });
+
 }
+
 
 // Submit button for COHESIVE INPUTS 
 document.getElementById("cohesive-inputs").addEventListener("submit", function(event){
     event.preventDefault();
-    if (!validateInputs()) return;
+
+    // Print dismissive alert for cu value
+    if (!validateInputs()){
+        alert("blahsdhfj");
+    } 
 
     //--------------------------------------------------
     // 1) Load input values
@@ -185,7 +197,6 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     loadCalculated("q2dB", q2dB(inputData.q2k));
     
     loadCalculated("D1NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q1dB, calculatedData.subgradeBC1, inputData.gamma, calculatedData.kptandelta, calculatedData.sp1));
-    console.log( DNoGeogrid(inputData.W, calculatedData.q1dB, calculatedData.subgradeBC1, inputData.gamma, calculatedData.kptandelta, calculatedData.sp1)); // Example usage
     loadCalculated("D2NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q2dB, calculatedData.subgradeBC2, inputData.gamma, calculatedData.kptandelta, calculatedData.sp2));
 
     
@@ -202,7 +213,7 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
         showElement("userParagraphSection");
 
         // Load tensile strength
-        loadCalculated("Td", inputData.Tult / 2);
+        loadCalculated("Td", inputData.Tallowable * inputData.n);
 
         // Fist formula - with geogrid
         loadCalculated("D1WithGeogrid", DWithGeogrid(inputData.W, calculatedData.q1dB, 
@@ -232,10 +243,26 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
 });
 
 
-// const inputBox = document.getElementById("userParagraphInput");
-// const displayDiv = document.getElementById("userParagraphDisplay");
-// const submitSummaryBtn = document.getElementById("submitParagraphBtn");
+//thickess warningsssss
+const MIN_VALUE = Math.max(calculatedData.D1NoGeogrid, calculatedData.D2NoGeogrid);
+const thicknessInput = document.getElementById("thicknessNoGeogridUserInput");
+const warningBox = document.getElementById("thicknessWarning");
+const warningText = document.getElementById("thicknessWarningText");
+const closeBtn = document.getElementById("closeWarning");
 
-// submitSummaryBtn.addEventListener("click", () => {
-//     displayDiv.textContent = inputBox.value; // copy text to display div
-// });
+thicknessInput.addEventListener("input", () => {
+    const val = parseFloat(thicknessInput.value);
+
+    if (!isNaN(val) && val < MIN_VALUE) {
+        warningText.textContent = `Warning: Thickness is very low (min ${MIN_VALUE.toFixed(2)} m)`;
+        warningBox.classList.remove("hidden");
+    } else {
+        // only hide if user corrects the value above minimum
+        warningBox.classList.add("hidden");
+    }
+});
+
+closeBtn.addEventListener("click", () => {
+    // user can hide the warning manually
+    warningBox.classList.add("hidden");
+});

@@ -1,3 +1,23 @@
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.cell {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.cell label {
+  width: auto; /* override global label width */
+}
+
+
+
 body { 
     font-family: Arial; 
     margin: 40px; 
@@ -20,19 +40,19 @@ input {
     background:hsla(0, 0%, 100%, 0.425);
 }
 
-.hidden { 
-    display:none; 
+.hidden {
+    display: none !important;
 }
 
 .cases-container {
     display: flex;
-    gap: 40px;
+    gap: 250px;
     margin-top: 20px;
 }
 
 .case-column {
-    flex: 1;
-    min-width: 220px;
+    flex: none;
+    width: 200x;
 }
 
 .case-column label {
@@ -40,12 +60,22 @@ input {
     width: 120px;
     margin-bottom: 5px;
 }
+.inline-input input {
+    display: inline-block;
+    width: 120px; /* or whatever width you want */
+}
 
 
 .input-row {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
+}
+
+.input-column {
+    display: block;      /* ensures each column is its own row */
+    width: 100%;         /* optional, forces full width */
+    margin-bottom: 12px; /* spacing between them */
 }
 
 .inline-flex {
@@ -59,12 +89,45 @@ input {
 }
 
 
-.hidden { display: none !important; } /* keep your hidden util */
-
 .underline {
     text-decoration: underline;
 }
 
+#customAlert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 2px solid #ff0000;
+  padding: 20px;
+  z-index: 1000;
+}
+
+/* The alert message box */
+.alert {
+  padding: 20px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
 
 
 /* Force browser PDF to match screen layout */
