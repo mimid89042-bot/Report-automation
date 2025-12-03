@@ -1,3 +1,6 @@
+import {validateNOGeorgridThickness} from './validation.js'
+import { calculatedData } from './data.js';
+
 export function showElement(id) {
     const el = document.getElementById(id);
     if (el) el.classList.remove('hidden');
@@ -85,3 +88,13 @@ export function display_bearingResistance(platformBC1, platformBC2, q1dB, q2dB){
     bearingResistance.innerHTML = text;
 }
 
+export function updateSummaryVisibility() {
+    const summary = document.getElementById("userParagraphSection");
+    const alertOpen = !document.getElementById("thicknessNoGeogridAlert").classList.contains("hidden");
+
+    if (alertOpen) {
+        summary.classList.add("hidden");   // hide summary when alert is OPEN
+    } else {
+        summary.classList.remove("hidden"); // show summary when alert CLOSED
+    }
+}

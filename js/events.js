@@ -1,5 +1,5 @@
 import { showElement, hideElement, display_platformRequired, 
-        display_subgradeVplatform, display_bearingResistance,
+        display_subgradeVplatform, display_bearingResistance,updateSummaryVisibility
          } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
 import { Ngamma, sc, sgamma, sp, RdNoGeoGrid, platformBC, 
@@ -209,17 +209,20 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
 
 
       //ALERT FOR THICKNESS
-    document.getElementById("noGeogridForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // prevent page reload
+   document.getElementById("noGeogridForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-        const thicknessInput = document.getElementById("thicknessNoGeogridUserInput").value;
-        if (!validateNOGeorgridThickness(calculatedData.DlargerNoGeorgrid)){
-            document.getElementById("thicknessNoGeogridAlert").classList.remove("hidden");
-            console.log("Thickness is not good user should confirm");
-        }
+    if (!validateNOGeorgridThickness(calculatedData.DlargerNoGeorgrid)) {
+        document.getElementById("thicknessNoGeogridAlert").classList.remove("hidden");
+        console.log("Thickness too small");
+    } else {
+        document.getElementById("thicknessNoGeogridAlert").classList.add("hidden");
+        console.log("Thickness OK");
+    }
 
-        console.log("Thickness is OK");
-    });
+    updateSummaryVisibility();   // <-- IMPORTANT
+});
+
 
 
     //--------------------------------------------------
@@ -230,7 +233,6 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
 
     if (geogridChoice == "yes") {
         showElement("geogridBox");
-        showElement("userParagraphSection");
 
         // Load tensile strength
         loadCalculated("Td", inputData.Tallowable * inputData.n);

@@ -264,7 +264,10 @@
 
 <!-- DISMISSABLE ALERT -->
 <div id="thicknessNoGeogridAlert" class="alert hidden">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <span class="closebtn" onclick="
+    this.parentElement.classList.add('hidden');
+    updateSummaryVisibility();
+    ">&times;</span>
     Selected thickness is smaller than calculated thickness, please confirm by closing message
 </div>
 
@@ -340,6 +343,8 @@
     </div>
 
 </div>
+
+<!--SUMMARY SECTION-->
 <div class="box hidden" id="userParagraphSection">
     <h3>Enter your summary paragraph:</h3>
     <textarea id="userParagraphInput" placeholder="Type your paragraph here..." style="width:100%; min-height:120px;"></textarea>
