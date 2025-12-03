@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-
+<div class = "report-container">
 <h1>BRE Calculation</h1>
 
 <!-- INPUTS -->
@@ -88,11 +88,11 @@
     <div class = "container hidden" id = "geogridInputs">
         <div class="cell">
             <label>T<sub>allowable</sub> (kN/m):</label>
-            <input type="number" id="Tallowable" step="0.01">
+            <input type="number" id="Tallowable" step="0.01" value = "15">
         </div>
         <div class="cell">
             <label>n: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp </label>
-            <input type="number" id="n" step="0.01">
+            <input type="number" id="n" step="0.01" value = "2">
         </div>
     </div>
 
@@ -258,6 +258,8 @@
         </div>
 
         <button type="submit">Submit</button>
+
+        
     </form>
 
 </div>
@@ -266,7 +268,8 @@
 <div id="thicknessNoGeogridAlert" class="alert hidden">
     <span class="closebtn" onclick="
     this.parentElement.classList.add('hidden');
-    updateSummaryVisibility();
+    updateSummaryVisibilityNoGeogrid();
+
     ">&times;</span>
     Selected thickness is smaller than calculated thickness, please confirm by closing message
 </div>
@@ -342,7 +345,32 @@
         </div>
     </div>
 
+        <form id = "withGeogridForm">
+        <div class = "container">
+            <div class = "cell">
+                <label for ="thicknessWithGeogridUserInput">
+                    Selected thickness without geogrid (m):
+                </label>
+                <input type="number" id = "thicknessWithGeogridUserInput" step = "0.01" required>
+            </div>
+        </div>
+
+        <button type="submit">Submit</button>
+
+        
+    </form>
+
 </div>
+
+<!-- DISMISSABLE ALERT -->
+<div id="thicknessWITHGeogridAlert" class="alert hidden">
+    <span class="closebtn" onclick="
+    this.parentElement.classList.add('hidden');
+    updateSummaryVisibilityWithGeogrid();
+    ">&times;</span>
+    Selected thickness is smaller than calculated thickness, please confirm by closing message
+</div>
+
 
 <!--SUMMARY SECTION-->
 <div class="box hidden" id="userParagraphSection">
@@ -354,6 +382,8 @@
     <div id="userParagraphDisplay" style="white-space: pre-wrap; border: 1px solid #ccc; padding: 10px; min-height: 80px;"></div> --> 
 </div>
 
+
+</div>
 
 </div>
 

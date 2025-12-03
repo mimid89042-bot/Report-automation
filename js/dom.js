@@ -88,15 +88,35 @@ export function display_bearingResistance(platformBC1, platformBC2, q1dB, q2dB){
     bearingResistance.innerHTML = text;
 }
 
-export function updateSummaryVisibility() {
+export function updateSummaryVisibilityNoGeogrid() {
     const summary = document.getElementById("userParagraphSection");
-    const alertOpen = !document.getElementById("thicknessNoGeogridAlert").classList.contains("hidden");
+    const alertHidden = document.getElementById("thicknessNoGeogridAlert").classList.contains("hidden");
+    const noGeogrid = document.getElementById("geogrid").value;
+    const geogridBox = document.getElementById("geogridBox");
 
-    if (alertOpen) {
-        summary.classList.add("hidden");   // hide summary when alert is OPEN
+    if (alertHidden && (noGeogrid == "no")) {
+        summary.classList.remove("hidden") ;// show summary when alert CLOSED
+
+    } else if (alertHidden &&(noGeogrid == "yes")){
+        geogridBox.classList.remove("hidden") ;// show summary when alert CLOSED
     } else {
-        summary.classList.remove("hidden"); // show summary when alert CLOSED
+        summary.classList.add("hidden") ;// hide summary when alert OPEN
+
     }
 }
 
-window.updateSummaryVisibility = updateSummaryVisibility;
+export function updateSummaryVisibilityWithGeogrid(){
+    const summary = document.getElementById("userParagraphSection");
+    const alertHidden = document.getElementById("thicknessWITHGeogridAlert").classList.contains("hidden");
+    const noGeogrid = document.getElementById("geogrid").value;
+
+    if (alertHidden && (noGeogrid == "yes")) {
+        summary.classList.remove("hidden") ;// show summary when alert CLOSED
+    } else  {
+        summary.classList.add("hidden") ;// hide summary when alert OPEN
+
+    }
+}
+
+window.updateSummaryVisibilityNoGeogrid = updateSummaryVisibilityNoGeogrid;
+window.updateSummaryVisibilityWithGeogrid = updateSummaryVisibilityWithGeogrid;

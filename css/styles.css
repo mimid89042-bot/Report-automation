@@ -46,13 +46,13 @@ input {
 
 .cases-container {
     display: flex;
-    gap: 250px;
+    gap: 150px;
     margin-top: 20px;
 }
 
 .case-column {
     flex: none;
-    width: 200x;
+    width: 200px;
 }
 
 .case-column label {
@@ -118,7 +118,14 @@ input {
   color: black;
 }
 
+.report-container {
+    border: 2px solid black;  /* visible border */
+    padding: 10px;
+    margin: 0;
+}
 
+
+/* Force browser PDF to match screen layout */
 /* Force browser PDF to match screen layout */
 @media print {
     body {
@@ -127,49 +134,54 @@ input {
     }
 
     h1 {
-        font-size: 10pt;
+        font-size: 14pt;
     }
 
     h3 {
-        font-size: 8pt;
+        font-size: 12pt;
     }
 
     p, span, div {
-        font-size: 7pt; /* ensures all normal text scales */
+        font-size: 8pt; /* ensures all normal text scales */
     }
 
     /* Hide inputs and buttons you don't want printed */
-    input, textarea, select, button {
-         font-size: 7pt; 
+    input, textarea, button {
+        font-size: 8pt;
     }
 
-    /* Optional: remove borders or backgrounds that mess with layout */
-    .box {
-        border: none;
-        background: none;
-        padding: 0;
-    }
-
-        /* Hide all buttons */
+    /* Hide all buttons */
     button {
         display: none !important;
     }
 
-    /* hide all the alert buttons */
-    
-    #thicknessNoGeogridAlert {
+    /* Hide all alert boxes */
+    #thicknessNoGeogridAlert,
+    #thicknessWITHGeogridAlert {
         display: none;
     }
 
-    @media print {
-    select {
-        font-size: 7pt;       /* match paragraph text */
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        border: none;           /* remove borders for print */
-        background: none;       /* remove any background */
+    @page {
+        margin: 5mm;
     }
+    /* Style select boxes for printing */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: none;
+    padding: 2px 4px;       /* smaller padding */
+    font-size: 8pt;
+    font-family: Arial, sans-serif;
+    line-height: normal;     /* prevent extra height */
+    height: 18px;            /* or whatever fixed height you want */
+    box-sizing: border-box;  /* include padding & border in height */
 }
-    
+
+       .report-container {
+        border: 2px solid black;  /* ensures border is printed */
+        padding: 10px;
+        margin: 0;  /* optional, remove margin to fit page */
+        page-break-inside: avoid;
+    }
 }

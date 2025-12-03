@@ -1,5 +1,5 @@
 import { showElement, hideElement, display_platformRequired, 
-        display_subgradeVplatform, display_bearingResistance,updateSummaryVisibility
+        display_subgradeVplatform, display_bearingResistance,updateSummaryVisibilityNoGeogrid
          } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
 import { Ngamma, sc, sgamma, sp, RdNoGeoGrid, platformBC, 
@@ -210,18 +210,18 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
 
       //ALERT FOR THICKNESS
    document.getElementById("noGeogridForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+        event.preventDefault();
 
-    if (!validateNOGeorgridThickness(calculatedData.DlargerNoGeorgrid)) {
-        document.getElementById("thicknessNoGeogridAlert").classList.remove("hidden");
-        console.log("Thickness too small");
-    } else {
-        document.getElementById("thicknessNoGeogridAlert").classList.add("hidden");
-        console.log("Thickness OK");
-    }
+        if (!validateNOGeorgridThickness(calculatedData.DlargerNoGeorgrid)) {
+            document.getElementById("thicknessNoGeogridAlert").classList.remove("hidden");
+            console.log("Thickness too small");
+        } else {
+            document.getElementById("thicknessNoGeogridAlert").classList.add("hidden");
+            console.log("Thickness OK");
+        }
 
-    updateSummaryVisibility();   // <-- IMPORTANT
-});
+        updateSummaryVisibilityNoGeogrid();   // <-- IMPORTANT
+    });
 
 
 
@@ -232,7 +232,7 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     const geogridChoice = document.getElementById("geogrid").value;
 
     if (geogridChoice == "yes") {
-        showElement("geogridBox");
+        // showElement("geogridBox");
 
         // Load tensile strength
         loadCalculated("Td", inputData.Tallowable * inputData.n);
@@ -262,6 +262,23 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
         // Max of D1 and D2 with geogrid
         loadCalculated("DlargerWithGeorgrid", Math.max(calculatedData.D1largerWithGeorgrid,
             calculatedData.D2largerWithGeorgrid).toFixed(2));
+
+
+        //INPUT FORM HANDLING
+        document.getElementById("withGeogridForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            if (!validateWITHGeorgridThickness(calculatedData.DlargerWithGeorgrid)) {
+                document.getElementById("thicknessWITHGeogridAlert").classList.remove("hidden");
+                console.log("Thickness too small");
+            } else {
+                document.getElementById("thicknessWITHGeogridAlert").classList.add("hidden");
+                console.log("Thickness OK");
+            }
+
+            updateSummaryVisibilityWithGeogrid();   // <-- IMPORTANT
+        });
+  
 
     }else{
         hideElement("geogridBox");
