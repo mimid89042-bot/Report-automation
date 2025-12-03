@@ -2,7 +2,7 @@ import { showElement, hideElement, display_platformRequired,
         display_subgradeVplatform, display_bearingResistance,updateSummaryVisibilityNoGeogrid
          } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
-import { Ngamma, sc, sgamma, sp, RdNoGeoGrid, platformBC, 
+import { Ngamma, kptandelta, sc, sgamma, sp, RdNoGeoGrid, platformBC, 
         q1dA, q2dA, q1dB, q2dB, q1dC, q2dC, subgradeBC, 
         DNoGeogrid, DWithGeogrid } from './calculations.js';
 import { validateCu, validateNOGeorgridThickness,
@@ -64,8 +64,7 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     loadCalculated("Ngamma", Ngamma(inputData.phi))
 
     // Update kpTanδ with user phi input
-    const phiMap = { 35: 3.1, 40: 5.5, 45: 10.0 };
-    loadCalculated("kptandelta", phiMap[inputData.phi]);
+    loadCalculated("kptandelta", kptandelta(inputData.phi));
 
     // s_ factors 
     loadCalculated("sc1", sc(inputData.W, inputData.L1));

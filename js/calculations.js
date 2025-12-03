@@ -8,6 +8,11 @@ export function Ngamma(phi) {
     return 2 * tanTheta * (1 + Math.exp(Math.PI * tanTheta) * Math.pow(Math.tan(Math.PI/4 + theta/2), 2));
 }
 
+export function kptandelta(phi){
+    const powerArg = -0.5061 + 0.01095 * phi + 5.03 * 10 ** -4 * phi ** 2
+    return 10 ** powerArg;
+}
+
 export function sc(W, L) { 
     return 1 + 0.2 * (W / L); 
 }
