@@ -98,3 +98,5 @@ export function updateSummaryVisibility() {
         summary.classList.remove("hidden"); // show summary when alert CLOSED
     }
 }
+
+window.updateSummaryVisibility = updateSummaryVisibility;
