@@ -9,45 +9,123 @@ import { validateCu, validateNOGeorgridThickness,
         validateWITHGeorgridThickness
         } from './validation.js';
 
+        
+// Sets up all event listeners to monitor user input and update the page dynamically
 export function initEventListeners() {
-    // Soil type toggle
-    document.getElementById("soilType").addEventListener("change", () => {
+    // Cohesive inputs
+    document.getElementById("soil-selection-form").addEventListener("change", () => {
         const soil = document.getElementById("soilType").value;
-        if (soil === "cohesive") showElement('cohesiveInputs');
-        else hideElement('cohesiveInputs');
+        if (soil === "cohesive"){
+            showElement('cohesive-inputs');
+            showElement("geogrid-inputs"); 
+
+            addCohesiveInputListeners();
+        } 
+        else {
+            hideElement('cohesive-inputs');
+            hideElement('geogrid-inputs');
+        }
     });
 
-    // -----------------------------
-    // GEO-GRID YES / NO TOGGLE
-    // -----------------------------
-    document.getElementById("geogrid").addEventListener("change", () => {
+
+    // Geogrid yes/no handler
     const geogridSelect = document.getElementById("geogrid");
-    const tAllowableInput = document.getElementById("Tallowable");
-    const nInput = document.getElementById("n");
-        if (geogridSelect.value == "yes"){
-            showElement("geogridInputs"); 
-            tAllowableInput.required = true;
+    geogridSelect.addEventListener("change", () => {
+        const tAllowableInput = document.getElementById("Tallowable");
+        const nInput = document.getElementById("n");
+
+        if (geogridSelect.value === "yes") {
+            showElement("geogridValues");    // show Tallowable & n inputs
+            tAllowableInput.required = true;  // make inputs required
             nInput.required = true;
-        }else{
-            hideElement("geogridInputs");
-            tAllowableInput.required = false;
+            // If geogrid is selected add listeners
+            if (tAllowableInput && nInput) {
+                [tAllowableInput, nInput].forEach(input => {
+                    input.addEventListener("input", runCalculations);
+                    input.addEventListener("change", runCalculations);
+                });
+            }
+        } else {
+            hideElement("geogridValues");    // hide inputs if "no" or empty
+            tAllowableInput.required = false; // remove required
             nInput.required = false;
         }
 
     });
 
+
+
+    // Cu input handling
+    const cuInput = document.getElementById("cu");
+    cuInput.addEventListener("input", () => {
+        if (!validateCu()) {
+            document.getElementById("cuAlert").classList.remove("hidden");
+           hideElement("cohesivePlatformDecision");
+           hideElement("platformMaterial");
+           hideElement("thickness");
+           hideElement("geogridBox");
+           hideElement("userParagraphSection");
+
+
+        } else {
+            document.getElementById("cuAlert").classList.add("hidden");
+        }
+    });
+}
+
+// All inputs are filled in check for cohesive
+function allRequiredInputsFilled() {
+    const requiredIds = ["cu", "phi", "gamma", "W", "q1k", "q2k", "L1d", "L2d", "geogrid"]; // add any required input IDs
+    for (let id of requiredIds) {
+        const el = document.getElementById(id);
+        if (!el || el.value === "") return false;
+    }
+
+    // If geogrid is yes, Tallowable and n are required
+    const geogridSelect = document.getElementById("geogrid");
+    if (geogridSelect.value === "yes") {
+        const tAllowable = document.getElementById("Tallowable");
+        const n = document.getElementById("n");
+        if (!tAllowable.value || !n.value) return false;
+    }
+
+    return true; // all required inputs are filled
 }
 
 
-// Submit button for COHESIVE INPUTS 
-document.getElementById("cohesive-inputs").addEventListener("submit", function(event){
-    event.preventDefault();
 
-    // Print alert for cu value
+// Function to add listeners to cohesive inputs
+function addCohesiveInputListeners() {
+    const cohesiveForm = document.getElementById("cohesive-inputs");
+    if (!cohesiveForm || cohesiveForm.dataset.listenersAdded) return; // prevent duplicates
+
+    const inputs = cohesiveForm.querySelectorAll("input, select");
+    inputs.forEach(input => {
+        input.addEventListener("input", runCalculations);
+        input.addEventListener("change", runCalculations);
+    });
+
+    cohesiveForm.dataset.listenersAdded = "true"; // mark listeners as added
+}
+
+
+function runCalculations(){
+      // Print alert for cu value
     if (!validateCu()){
-        document.getElementById("cuAlert").classList.remove("hidden");
         return;
     } 
+
+    if (!allRequiredInputsFilled()) {
+        // Hide boxes until all inputs are present
+           hideElement("cohesivePlatformDecision");
+           hideElement("platformMaterial");
+           hideElement("thickness");
+           hideElement("geogridBox");
+           hideElement("userParagraphSection");
+        return;
+    }else {
+        showElement("cohesivePlatformDecision");
+    }
 
     //--------------------------------------------------
     // 1) Load input values
@@ -282,4 +360,13 @@ document.getElementById("cohesive-inputs").addEventListener("submit", function(e
     }else{
         hideElement("geogridBox");
     }
-});
+}
+
+
+
+// Submit button for COHESIVE INPUTS 
+// document.getElementById("soil-selection").addEventListener("submit", function(event){
+//     event.preventDefault();
+
+  
+// });

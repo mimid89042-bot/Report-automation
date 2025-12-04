@@ -1,43 +1,48 @@
 <!DOCTYPE html>
 <html lang = "en">
 <head>
-    <title>BRE Calculation</title>
+    <title>AOS TWP Design</title>
     <meta charset= "utf-8">
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<!-- REPORT HEADER PAGE 1-->
+<!-- REPORT HEADER PAGE 1 -->
 <div class="report-header">
-    <!-- Left column -->
-    <div class="header-column">
-        <label for="projectNo">Project No:</label>
-        <input type="text" id="projectNo" placeholder="Enter project number"><br>
 
-        <label for="designer">Designer:</label>
-        <input type="text" id="designer" placeholder="Enter designer name">
+    <!-- Left column: Project No & Designer -->
+    <div class="header-column left-column">
+        <div class="input-row">
+            <label for="projectNo">Project No&nbsp;&nbsp; :</label>
+            <input id="projectNo" type="text" placeholder="Enter project number">
+        </div>
+        <div class="input-row">
+            <label for="designer">Designer&nbsp;&nbsp;&nbsp;&nbsp; :</label>
+            <input id="designer" type="text" placeholder="Enter designer name">
+        </div>
     </div>
 
-    <!-- Center column -->
+    <!-- Center column: Logo -->
     <div class="header-column center-column">
-        <img src="logo.png" alt="Logo" class="logo">
+        <img src="images/AOS_logo.png" alt="Logo" class="logo">
     </div>
 
-    <!-- Right column -->
+    <!-- Right column: Date & Page -->
     <div class="header-column right-column">
-        <label for="reportDate">Date:</label>
-        <input type="date" id="reportDate"><br>
-
+        <div class="input-row">
+            <label for="reportDate">Date:</label>
+            <input id="reportDate" type="date">
+        </div>
         <span>Page 1 of 2</span>
     </div>
+
 </div>
 
 
 <div class = "report-container">
-<h1>BRE Calculation</h1>
-
-<!-- INPUTS -->
-<form id="cohesive-inputs">
+<h1>Temporary Working Platform Design (BRE 470)</h1>
+<!-- FORM 1: Soil Selection -->
+<form id="soil-selection-form">
     <div class="box">
         <label for="soilType">Subgrade Soil Type:</label>
         <select id="soilType" required title="subgrade soil type required">
@@ -46,62 +51,60 @@
             <option value="granular">Granular</option>
         </select>
     </div>
-<!-- MANUAL BOXES-->
+</form>
 
-    <div id="cohesiveInputs" class="box hidden">
-        <h3>Design values for ground properties</h3>
+<!-- FORM 2: Cohesive Inputs -->
+<form id="cohesive-inputs" class="box hidden">
+    <h3>Design values for soil properties</h3>
 
-        <div class="container">
-            <div class="cell">
-                <label for="subgrade">Subgrade &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp  </label>
-                <label>C<sub>u</sub> (kPa):</label>
-                <input type="number" id="cu" step="0.01" required value = "24">
-            </div>
-
-            <div class="cell">
-                <label for="phi">Working platform  &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp</label>
-                <label>ϕ'<sub>p</sub> (°):</label>
-                <input type="number" id="phi" step="0.01" required value = "40">
-                <label for="gamma">  </label>
-                <label>&nbsp &nbsp γ<sub>p</sub> (kN/m³):</label>
-                <input type="number" id="gamma" step="0.01" required value = "20">
-            </div>
-       </div>
-
-        <h3>Design values for track width and effective length</h3>
+    <div class="container">
+        <div class="cell">
+            <label for="subgrade">Subgrade undrained shear strength, Cu (kPa): </label>
+            <label>C<sub>u</sub> (kPa):</label>
+            <input type="number" id="cu" step="0.01" required value="24">
+        </div>
 
         <div class="cell">
-            <label>W<sub>d</sub> (m): </label>
-            <input type = "number" id = "W"  step="0.01" required value = "0.7">
-        </div>
-
-
-        <div class="cases-container">
-        <div class="case-column">
-            <p class= "underline">Case 1 loading inputs</p>
-            <label>q<sub>1k</sub> (kPa):
-                <input type="number" id="q1k" step="0.01" required value = "140">
-            </label><br>
-
-            <label>L<sub>1d</sub> (m):
-                <input type="number" id="L1" step="0.01" required value = "3.6">
-            </label><br>
-        </div>
-
-        <div class="case-column">
-            <p class= "underline">Case 2 loading inputs</p>
-            <label>q<sub>2k</sub> (kPa):
-                <input type="number" id="q2k" step="0.01" required value = "190">
-            </label><br>
-
-            <label>L<sub>2d</sub> (m):
-                <input type="number" id="L2" step="0.01" required value = "3.1">
-            </label><br>
+            <label for="phi">Working platform</label>
+            <label>ϕ'<sub>p</sub> (°):</label>
+            <input type="number" id="phi" step="0.01" required value="40">
+            <label for="gamma">  </label>
+            <label>γ<sub>p</sub> (kN/m³):</label>
+            <input type="number" id="gamma" step="0.01" required value="20">
         </div>
     </div>
 
-<!-- GEOGRID OPTION-->
+    <h3>Effective width and length of loading</h3>
+    <div class="cell">
+        <label>Effective width, W<sub>d</sub> (m): </label>
+        <input type="number" id="W" step="0.01" required value="0.7">
+    </div>
 
+    <div class="cases-container">
+        <div class="case-column">
+            <p class="underline">Case 1 loading inputs</p>
+            <label>Rectangular loading, q<sub>1k</sub> (kPa):
+                <input type="number" id="q1k" step="0.01" required value="140">
+            </label><br>
+            <label>Effective length, L<sub>1d</sub> (m):
+                <input type="number" id="L1" step="0.01" required value="3.6">
+            </label><br>
+        </div>
+
+        <div class="case-column">
+            <p class="underline">Case 2 loading inputs</p>
+            <label>Rectangular loading, q<sub>2k</sub> (kPa):
+                <input type="number" id="q2k" step="0.01" required value="190">
+            </label><br>
+            <label>Effective length, L<sub>2d</sub> (m):
+                <input type="number" id="L2" step="0.01" required value="3.1">
+            </label><br>
+        </div>
+    </div>
+</form>
+
+<!-- FORM 3: Geogrid Selection -->
+<form id="geogrid-inputs" class="box hidden">
     <div class="input-column">
         <h3>Use a geogrid?</h3>
         <select id="geogrid" required>
@@ -111,23 +114,19 @@
         </select>
     </div>
 
-    <div class = "container hidden" id = "geogridInputs">
+    <div class="container hidden" id="geogridValues">
         <div class="cell">
-            <label>T<sub>allowable</sub> (kN/m):</label>
-            <input type="number" id="Tallowable" step="0.01" value = "15">
+            <label>Geogrid allowable tensile strength, T<sub>allowable</sub> (kN/m):</label>
+            <input type="number" id="Tallowable" step="0.01" value="15">
         </div>
         <div class="cell">
-            <label>n: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp </label>
-            <input type="number" id="n" step="0.01" value = "2">
+            <label>No. of geogrids, n: </label>
+            <input type="number" id="n" step="0.01" value="2">
         </div>
-    </div>
-
-    <br>
-    <button type="submit" id="calculateBtn">Submit</button>
-
-
     </div>
 </form>
+
+
 <!-- INPUTS ENDS-->
 
 <!-- CU ALERT -->
@@ -140,12 +139,117 @@
 
 
 
-
 <!-- PLATFORM REQUIRED BOX -->
 <div class="box hidden" id="cohesivePlatformDecision">
-   <p>N<sub>c</sub> = (2+π) = 5.14</p>
-   <p>N<sub>γp</sub> = <span class="Ngamma_value"></span></p>
-   <p>K<sub>p</sub>tanδ = <span class="kptandelta_value"></span></p>
+
+<div class="equation-row">
+    <div class="equation-column">
+        <p>N<sub>c</sub> = 5.14</p>
+        <!-- Ngamma MathML-->
+        <p>
+            N<sub>γp</sub> =
+                <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+                    <mrow>
+                        <mn>2</mn>
+                        <mo>&#x22C5;</mo>
+                        <mi>tan</mi>
+                        <mo>(</mo>
+                        <mfrac>
+                            <mrow>
+                                <mi>φ</mi>
+                                <mi>π</mi>
+                            </mrow>
+                            <mn>180</mn>
+                        </mfrac>
+                        <mo>)</mo>
+                        <mo>&#x22C5;</mo>
+                        <mo>(</mo>
+                        <mn>1</mn>
+                        <mo>+</mo>
+
+                        <!-- e^( π·tan(φπ/180) ) -->
+                        <msup>
+                            <mi>e</mi>
+                            <mrow>
+                                <mo>(</mo>
+                                <mi>π</mi>
+                                <mo>&#x22C5;</mo>
+                                <mi>tan</mi>
+                                <mo>(</mo>
+                                <mfrac>
+                                    <mrow>
+                                        <mi>φ</mi>
+                                        <mi>π</mi>
+                                    </mrow>
+                                    <mn>180</mn>
+                                </mfrac>
+                                <mo>)</mo>
+                                <mo>)</mo>
+                            </mrow>
+                        </msup>
+
+                        <mo>&#x22C5;</mo>
+
+                        <!-- tan( π/4 + φπ/360 )^2 -->
+                        <msup>
+                            <mrow>
+                                <mi>tan</mi>
+                                <mo>(</mo>
+                                <mfrac>
+                                    <mi>π</mi>
+                                    <mn>4</mn>
+                                </mfrac>
+                                <mo>+</mo>
+                                <mfrac>
+                                    <mrow>
+                                        <mi>φ</mi>
+                                        <mi>π</mi>
+                                    </mrow>
+                                    <mn>360</mn>
+                                </mfrac>
+                                <mo>)</mo>
+                            </mrow>
+                            <mn>2</mn>
+                        </msup>
+
+                        <mo>)</mo>
+                    </mrow>
+                </math>
+                = <span class="Ngamma_value"></span>
+        </p>
+        <!-- Kptandelta MathML-->
+        <p>
+            K<sub>p</sub>tanδ =
+                <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+                    <mrow>
+                        <msup>
+                            <mn>10</mn>
+                            <mrow>
+                                <mo>(</mo>
+                                <mn>-0.5061</mn>
+                                <mo>+</mo>
+                                <mn>0.01095</mn><mi>φ</mi>
+                                <mo>+</mo>
+                                <mn>5.03</mn>
+                                <mo>&#x00D7;</mo>
+                                <msup><mn>10</mn><mn>-4</mn></msup>
+                                <msup><mi>φ</mi><mn>2</mn></msup>
+                                <mo>)</mo>
+                            </mrow>
+                        </msup>
+                    </mrow>
+                </math>
+                = <span class="kptandelta_value"></span>
+        </p>
+    </div>
+
+    <div class="image-column">
+        <img src="images/Ngamma_graph.png" alt="Ngamma_graph" class="Ngamma_graph">
+        <img src="images/Kptandelta_graph.png" alt="Kptandelta_graph" class="Kptandelta_graph">
+
+    </div>
+</div>
+
 
    <div class="cases-container">
       <div class="case-column">
@@ -169,7 +273,7 @@
     <div class="cases-container">
         <div class="case-column">
             <p  class= "underline">Case loading 1:</p>
-            <p>R<sub>d1</sub> = c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub> = 
+            <p>R<sub>d1_subgrade</sub> = c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub> = 
                 <span class="cu_value"></span> x 5.14 x 
                 <span class = "sc1_value"></span> =
                 <span class="Rd1NoGeoGrid_value"></span> kPa
@@ -178,7 +282,7 @@
         </div>
         <div class="case-column">
             <p class= "underline">Case loading 2:</p>
-            <p>R<sub>d2</sub> = c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub> = 
+            <p>R<sub>d2_subgrade</sub> = c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub> = 
                 <span class="cu_value"></span> x 5.14 x 
                 <span class = "sc2_value"></span> =
                 <span class="Rd2NoGeoGrid_value"></span> kPa</p>
@@ -193,20 +297,20 @@
     <h3> Check that platform material is stronger than subgrade:</h3>
     <div class = "cases-container">
         <div class="case-column">
-            <p class= "underline">Case loading 1:</p>
-            <p>0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ1</sub>
+            <p class= "underline">Case 1 shape factors:</p>
+            <p>R<sub>d1_platform</sub> = 10.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ1</sub>
             = <br> 0.5 x <span class="gamma_value"></span> x <span class="W_value"></span> 
             x <span class="Ngamma_value"></span> x <span class="sgamma1_value"></span>
             = <span class="platformBC1_value"></span> kPa
-            <P>c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub> = <span class="Rd1NoGeoGrid_value"></span> kPa</P>
+            <P>R<sub>d1_subgrade</sub> = <span class="Rd1NoGeoGrid_value"></span> kPa</P>
         </div>
         <div class= "case-column">
-            <p class= "underline">Case loading 2:</p>
-            <p>0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ2</sub>
+            <p class= "underline">Case 2 shape factors:</p>
+            <p>R<sub>d2_platform</sub> = 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ2</sub>
             = <br> 0.5 x <span class="gamma_value"></span> x <span class="W_value"></span> 
             x <span class="Ngamma_value"></span> x <span class="sgamma2_value"></span>
             = <span class="platformBC2_value"></span> kPa
-            <P>c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub> = <span class="Rd2NoGeoGrid_value"></span> kPa</P>
+            <P>R<sub>d2_subgrade</sub> <span class="Rd2NoGeoGrid_value"></span> kPa</P>
         </div>
 
     </div>
@@ -221,7 +325,7 @@
             <p>q<sub>1d</sub> = 1.6q<sub>1k</sub> 
             = 1.6 x <span class="q1k_value"></span>
             = <span class="q1dB_value"></span> kPa</p>
-            <p>0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ1</sub>
+            <p>R<sub>d1_platform</sub>
             = <span class="platformBC1_value"></span> kPa</p>
         </div>
         <div class = "case-column">
@@ -229,7 +333,7 @@
             <p>q<sub>2d</sub> = 1.2q<sub>2k</sub> 
             = 1.2 x <span class="q2k_value"></span>
             = <span class="q2dB_value"></span> kPa</p>
-            <p>0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ2</sub>
+            <p>R<sub>d2_platform</sub>
             = <span class="platformBC2_value"></span> kPa</p>
         </div>
     </div>
@@ -240,7 +344,7 @@
 
 <!-- THICKNESS BOX-->
 <div class="box hidden" id="thickness">
-    <h3>Calculate the thickness of platform:</h3>
+    <h3>Calculate the thickness of platform without geogrid:</h3>
     <div class="cases-container">
         <div class="case-column">
             <p class= "underline">Case loading 1:</p>
@@ -304,8 +408,8 @@
 <!-- GEOGRID THICKNESS BOX-->
 <div class = "box hidden" id = "geogridBox">
     <h3> Calculate thickness with geogrid: </h3>
-    <p>Geogrid with T<sub>ult</sub> = <span class = "Tult_value"></span> nK/m to be used.</p>
-    <p>T<sub>d</sub> = T<sub>ult</sub> / 2 = <span class = "Td_value"></span> nK/m </p>
+    <p>T<sub>d</sub> = T<sub>allowable</sub> x n = <span class="Tallowable_value"></span>
+         x <span class = "n_value"></span> = <span class = "Td_value"></span> nK/m </p>
     <div class="cases-container">
         <div class = 'case-column'>
             <p class= "underline">Case 1 loading:</p>
@@ -375,7 +479,7 @@
         <div class = "container">
             <div class = "cell">
                 <label for ="thicknessWithGeogridUserInput">
-                    Selected thickness without geogrid (m):
+                    Selected thickness with geogrid (m):
                 </label>
                 <input type="number" id = "thicknessWithGeogridUserInput" step = "0.01" required>
             </div>

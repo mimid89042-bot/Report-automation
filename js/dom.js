@@ -16,15 +16,15 @@ export function display_platformRequired(q1dA, q2dA, Rd1, Rd2) {
     //TWP decision with comparisons
     let text = "";
     if (q1dA > Rd1) {
-        text += 'Now &nbsp;&nbsp; q<sub>1d</sub> > R<sub>d1</sub> <br>';
+        text += 'Now q<sub>1d</sub> > R<sub>d1_subgrade</sub> ';
     } else {
-        text += 'Now &nbsp;&nbsp;&nbsp; q<sub>1d</sub> < R<sub>d1</sub> <br>';
+        text += 'Now ; q<sub>1d</sub> < R<sub>d1_subgrade</sub> ';
     }
 
     if (q2dA > Rd2) {
-        text += 'and &nbsp;&nbsp;&nbsp; q<sub>2d</sub> > R<sub>d2</sub> <br>';
+        text += 'and q<sub>2d</sub> > R<sub>d2_subgrade</sub>, ';
     } else {
-        text += 'and &nbsp;&nbsp;&nbsp; q<sub>2d</sub> < R<sub>d2</sub> <br>';
+        text += 'and q<sub>2d</sub> < R<sub>d2_subgrade</sub>, ';
     }
 
     
@@ -36,27 +36,27 @@ export function display_platformRequired(q1dA, q2dA, Rd1, Rd2) {
             showElement("platformMaterial");
 
     }
-    twpDecision.innerHTML = text; // use innerHTML to allow <br>
+    twpDecision.innerHTML = text; // use innerHTML to allow 
 }
 
 export function display_subgradeVplatform(platformBC1, platformBC2, Rd1, Rd2){
     let text = "";
     if(platformBC1 > Rd1){
-        text += 'Now 0.5γ<sub>p</sub>W<sub>d</sub>N<sub>γp</sub>s<sub>γ1</sub> > c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub> ';
+        text += 'Now R<sub>d1_platform</sub> > R<sub>d1_subgrade</sub> ';
     }else {
-        text += 'Now 0.5γ<sub>p</sub>W<sub>d</sub>N<sub>γp</sub>s<sub>γ1</sub> > c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub> ';
+        text += 'Now R<sub>d1_platform</sub>  > R<sub>d1_subgrade</sub> ';
     }
 
     if(platformBC2 > Rd2){
-        text += 'and 0.5γ<sub>p</sub>W<sub>d</sub>N<sub>γp</sub>s<sub>γ2</sub> > c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub> <br>';
+        text += 'and R<sub>d2_platform</sub>  > R<sub>d2_subgrade</sub>, ';
     }else {
-        text += 'and 0.5γ<sub>p</sub>W<sub>d</sub>N<sub>γp</sub>s<sub>γ2</sub> > c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub> <br>';
+        text += 'and R<sub>d2_platform</sub>  > R<sub>d2_subgrade</sub>, ';
     }
 
     if(platformBC1 < Rd1 && platformBC2 < Rd2){
         text += " therefore platform is NOT stronger than subgrade"
     }else{
-        text+= " therefore platform is stronger than subgrade<";
+        text+= " therefore platform is stronger than subgrade";
     }
 
     showElement("subgradeVplatform");
@@ -67,15 +67,15 @@ export function display_subgradeVplatform(platformBC1, platformBC2, Rd1, Rd2){
 export function display_bearingResistance(platformBC1, platformBC2, q1dB, q2dB){
     let text = "";
     if (q1dB < platformBC1) {
-        text += 'Now q<sub>1d</sub> < 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ1</sub> ';
+        text += 'Now R<sub>d1_platform</sub> > q<sub>1d</sub> ';
     } else {
-        text += 'Now  q<sub>1d</sub> > 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ1</sub> ';
+        text += 'Now R<sub>d1_platform</sub> < q<sub>1d</sub> ';
     }
 
     if (q2dB < platformBC2) {
-        text += 'and q<sub>2d</sub> < 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ2</sub> <br>';
+        text += 'and R<sub>d2_platform</sub> > q<sub>2d</sub>, ';
     } else {
-        text += 'and  q<sub>2d</sub> > 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ2</sub> <br>';
+        text += 'and R<sub>d2_platform</sub> < q<sub>2d</sub>, ';
     }
 
     
