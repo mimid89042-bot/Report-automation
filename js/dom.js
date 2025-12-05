@@ -32,8 +32,8 @@ export function display_platformRequired(q1dA, q2dA, Rd1, Rd2) {
         text += 'therefore a working platform is NOT required for plant support';
     } else { 
            text += 'therefore a working platform is required for plant support';
-            //make platformMaterial box visible
-            showElement("platformMaterial");
+            //make platform-stronger-box box visible
+            //showElement("platform-stronger-box");
 
     }
     twpDecision.innerHTML = text; // use innerHTML to allow 
@@ -57,9 +57,9 @@ export function display_subgradeVplatform(platformBC1, platformBC2, Rd1, Rd2){
         text += " therefore platform is NOT stronger than subgrade"
     }else{
         text+= " therefore platform is stronger than subgrade";
+        showElement("platform-resistance-box");
     }
 
-    showElement("subgradeVplatform");
     subgradeVplatform.innerHTML = text;
 }
 
@@ -84,15 +84,15 @@ export function display_bearingResistance(platformBC1, platformBC2, q1dB, q2dB){
     } else { 
         text += 'therefore chosen platform material cannot provide the required bearing resistance';
     }
-    showElement("thickness");
+    showElement("no-geogrid-thickness-box");
     bearingResistance.innerHTML = text;
 }
 
 export function updateSummaryVisibilityNoGeogrid() {
-    const summary = document.getElementById("userParagraphSection");
-    const alertHidden = document.getElementById("thicknessNoGeogridAlert").classList.contains("hidden");
-    const noGeogrid = document.getElementById("geogrid").value;
-    const geogridBox = document.getElementById("geogridBox");
+    const summary = document.getElementById("summary-box");
+    const alertHidden = document.getElementById("no-geogrid-thickness-alert").classList.contains("hidden");
+    const noGeogrid = document.getElementById("geogrid-yesorno").value;
+    const geogridBox = document.getElementById("with-geogrid-thickness-box");
 
     if (alertHidden && (noGeogrid == "no")) {
         summary.classList.remove("hidden") ;// show summary when alert CLOSED
@@ -106,9 +106,9 @@ export function updateSummaryVisibilityNoGeogrid() {
 }
 
 export function updateSummaryVisibilityWithGeogrid(){
-    const summary = document.getElementById("userParagraphSection");
-    const alertHidden = document.getElementById("thicknessWITHGeogridAlert").classList.contains("hidden");
-    const noGeogrid = document.getElementById("geogrid").value;
+    const summary = document.getElementById("summary-box");
+    const alertHidden = document.getElementById("with-geogrid-thickness-alert").classList.contains("hidden");
+    const noGeogrid = document.getElementById("geogrid-yesorno").value;
 
     if (alertHidden && (noGeogrid == "yes")) {
         summary.classList.remove("hidden") ;// show summary when alert CLOSED

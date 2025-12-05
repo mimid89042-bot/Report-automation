@@ -63,6 +63,7 @@ input {
     margin-top:2px; 
     padding:2px; 
     background:hsla(0, 0%, 100%, 0.425);
+    display: block; 
 }
 
 .container {

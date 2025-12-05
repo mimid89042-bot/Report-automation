@@ -54,7 +54,7 @@
 </form>
 
 <!-- FORM 2: Cohesive Inputs -->
-<form id="cohesive-inputs" class="box hidden">
+<form id="cohesive-inputs-form" class="box hidden">
     <h3>Design values for soil properties</h3>
 
     <div class="container">
@@ -104,17 +104,17 @@
 </form>
 
 <!-- FORM 3: Geogrid Selection -->
-<form id="geogrid-inputs" class="box hidden">
+<form id="geogrid-selection-form" class="box hidden">
     <div class="input-column">
         <h3>Use a geogrid?</h3>
-        <select id="geogrid" required>
+        <select id="geogrid-yesorno" required>
             <option value="">-- Select --</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
         </select>
     </div>
 
-    <div class="container hidden" id="geogridValues">
+    <div class="container hidden" id="geogrid-inputs">
         <div class="cell">
             <label>Geogrid allowable tensile strength, T<sub>allowable</sub> (kN/m):</label>
             <input type="number" id="Tallowable" step="0.01" value="15">
@@ -129,10 +129,8 @@
 
 <!-- INPUTS ENDS-->
 
-<!-- CU ALERT -->
-
-
-<div id="cuAlert" class="alert hidden">
+<!-- PERMANENT CU ALERT -->
+<div id="cu-alert" class="alert hidden">
     Subgrade strength is outside of BRE recommended parameters (between 20 and 80 kPa). Another method is recommended
 </div>
 
@@ -140,7 +138,7 @@
 
 
 <!-- PLATFORM REQUIRED BOX -->
-<div class="box hidden" id="cohesivePlatformDecision">
+<div class="box hidden" id="platform-required-box">
 
 <div class="equation-row">
     <div class="equation-column">
@@ -292,8 +290,11 @@
     <p id= "twpDecision" class = "indented"></p>
     </div>
 
-<!-- PLATFORM MATERIAL BOX-->
-<div class= "box hidden" id="platformMaterial" >
+
+ 
+
+<!-- PLATFORM STRONGER BOX-->
+<div class= "box hidden" id="platform-stronger-box" >
     <h3> Check that platform material is stronger than subgrade:</h3>
     <div class = "cases-container">
         <div class="case-column">
@@ -315,8 +316,18 @@
 
     </div>
     <p id = "subgradeVplatform" class = "indented" ></p> <br>
+</div>
+
+<!-- PERMANENT PLATFORM NOT STRONGER ALERT -->
+<div id="platform-not-stronger-alert" class="alert hidden">
+    The platform material is weaker than subgrade. Choose a stronger platform material.
+</div>
 
 
+
+
+<!-- PLATFORM RESISTANCE BOX-->
+ <div class = "box hidden" id = "platform-resistance-box" >
     <h3> Check that platform material can provide required bearing resistance when placed at a 
         thickness sufficient to ensure that the subgrade does not materially affect bearing capacity:</h3>
     <div class = "cases-container">
@@ -339,11 +350,17 @@
     </div>
 
     <p id = "bearingResistance" class = "indented" ></p> 
-
 </div>
 
-<!-- THICKNESS BOX-->
-<div class="box hidden" id="thickness">
+<!-- PERMANENT PLATFORM NOT RESISTIVE ALERT -->
+<div id="platform-not-resistive-alert" class="alert hidden">
+    The platform is not strong enough to provide the required bearing resistance. Choose a stronger platform material.
+</div>
+
+
+
+<!-- NO GEOGRID THICKNESS BOX-->
+<div class="box hidden" id="no-geogrid-thickness-box">
     <h3>Calculate the thickness of platform without geogrid:</h3>
     <div class="cases-container">
         <div class="case-column">
@@ -394,8 +411,8 @@
 
 </div>
 
-<!-- DISMISSABLE ALERT -->
-<div id="thicknessNoGeogridAlert" class="alert hidden">
+<!-- DISMISSABLE NO GEOGRID THICKNESS ALERT -->
+<div id="no-geogrid-thickness-alert" class="alert hidden">
     <span class="closebtn" onclick="
     this.parentElement.classList.add('hidden');
     updateSummaryVisibilityNoGeogrid();
@@ -405,8 +422,8 @@
 </div>
 
 
-<!-- GEOGRID THICKNESS BOX-->
-<div class = "box hidden" id = "geogridBox">
+<!-- WITH GEOGRID THICKNESS BOX-->
+<div class = "box hidden" id = "with-geogrid-thickness-box">
     <h3> Calculate thickness with geogrid: </h3>
     <p>T<sub>d</sub> = T<sub>allowable</sub> x n = <span class="Tallowable_value"></span>
          x <span class = "n_value"></span> = <span class = "Td_value"></span> nK/m </p>
@@ -492,8 +509,8 @@
 
 </div>
 
-<!-- DISMISSABLE ALERT -->
-<div id="thicknessWITHGeogridAlert" class="alert hidden">
+<!-- DISMISSABLE WITH GEOGRID THICKNESS ALERT -->
+<div id="with-geogrid-thickness-alert" class="alert hidden">
     <span class="closebtn" onclick="
     this.parentElement.classList.add('hidden');
     updateSummaryVisibilityWithGeogrid();
@@ -502,8 +519,8 @@
 </div>
 
 
-<!--SUMMARY SECTION-->
-<div class="box hidden" id="userParagraphSection">
+<!--SUMMARY BOX-->
+<div class="box hidden" id="summary-box">
     <h3>Enter your summary paragraph:</h3>
     <textarea id="userParagraphInput" placeholder="Type your paragraph here..." style="width:100%; min-height:120px;"></textarea>
     <br>
