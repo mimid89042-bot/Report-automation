@@ -274,7 +274,7 @@
             <p>R<sub>d1_subgrade</sub> = c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub> = 
                 <span class="cu_value"></span> x 5.14 x 
                 <span class = "sc1_value"></span> =
-                <span class="Rd1NoGeoGrid_value"></span> kPa
+                <span class="Rd1_subgrade_value"></span> kPa
             </p>
             <p>q<sub>1d</sub> = 2.0q<sub>1k</sub> = 2.0 x <span class= "q1k_value"></span> = <span class= "q1dA_value"></span> kPa</p>
         </div>
@@ -283,7 +283,7 @@
             <p>R<sub>d2_subgrade</sub> = c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub> = 
                 <span class="cu_value"></span> x 5.14 x 
                 <span class = "sc2_value"></span> =
-                <span class="Rd2NoGeoGrid_value"></span> kPa</p>
+                <span class="Rd2_subgrade_value"></span> kPa</p>
             <p>q<sub>2d</sub> = 1.5q<sub>2k</sub> = 1.5 x <span class= "q2k_value"></span> = <span class= "q2dA_value"></span> kPa</p>
         </div>
     </div>
@@ -302,16 +302,16 @@
             <p>R<sub>d1_platform</sub> = 10.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ1</sub>
             = <br> 0.5 x <span class="gamma_value"></span> x <span class="W_value"></span> 
             x <span class="Ngamma_value"></span> x <span class="sgamma1_value"></span>
-            = <span class="platformBC1_value"></span> kPa
-            <P>R<sub>d1_subgrade</sub> = <span class="Rd1NoGeoGrid_value"></span> kPa</P>
+            = <span class="Rd1_platform_value"></span> kPa
+            <P>R<sub>d1_subgrade</sub> = <span class="Rd1_subgrade_value"></span> kPa</P>
         </div>
         <div class= "case-column">
             <p class= "underline">Case 2 shape factors:</p>
             <p>R<sub>d2_platform</sub> = 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ2</sub>
             = <br> 0.5 x <span class="gamma_value"></span> x <span class="W_value"></span> 
             x <span class="Ngamma_value"></span> x <span class="sgamma2_value"></span>
-            = <span class="platformBC2_value"></span> kPa
-            <P>R<sub>d2_subgrade</sub> <span class="Rd2NoGeoGrid_value"></span> kPa</P>
+            = <span class="Rd2_platform_value"></span> kPa
+            <P>R<sub>d2_subgrade</sub> <span class="Rd2_subgrade_value"></span> kPa</P>
         </div>
 
     </div>
@@ -337,7 +337,7 @@
             = 1.6 x <span class="q1k_value"></span>
             = <span class="q1dB_value"></span> kPa</p>
             <p>R<sub>d1_platform</sub>
-            = <span class="platformBC1_value"></span> kPa</p>
+            = <span class="Rd1_platform_value"></span> kPa</p>
         </div>
         <div class = "case-column">
             <p class= "underline">Case loading 2:</p>
@@ -345,7 +345,7 @@
             = 1.2 x <span class="q2k_value"></span>
             = <span class="q2dB_value"></span> kPa</p>
             <p>R<sub>d2_platform</sub>
-            = <span class="platformBC2_value"></span> kPa</p>
+            = <span class="Rd2_platform_value"></span> kPa</p>
         </div>
     </div>
 
@@ -371,7 +371,7 @@
             <p>
                 D<sub>1</sub> = 
                 (<span class="W_value"></span> × 
-                ([1.6 × <span class="q1k_value"></span>] - <span class="subgradeBC1_value"></span>)) / 
+                ([1.6 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_value"></span>)) / 
                 (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>)
                 <sup>0.5</sup>
                 = <span class="D1NoGeogrid_value"></span> m
@@ -386,7 +386,7 @@
         <p>
             D<sub>2</sub> = 
             (<span class="W_value"></span> × 
-            ([1.2 × <span class="q2k_value"></span>] - <span class="subgradeBC2_value"></span>)) / 
+            ([1.2 × <span class="q2k_value"></span>] - <span class="Rd2_subgrade_value"></span>)) / 
             (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>)
             <sup>0.5</sup>
             = <span class="D2NoGeogrid_value"></span> m 
@@ -397,16 +397,12 @@
     <form id = "noGeogridForm">
         <div class = "container">
             <div class = "cell">
-                <label for ="thicknessNoGeogridUserInput">
+                <label for ="thickness-input-no-geogrid">
                     Selected thickness without geogrid (m):
                 </label>
-                <input type="number" id = "thicknessNoGeogridUserInput" step = "0.01" required>
+                <input type="number" id = "thickness-input-no-geogrid" step = "0.01" required>
             </div>
         </div>
-
-        <button type="submit">Submit</button>
-
-        
     </form>
 
 </div>
@@ -438,7 +434,7 @@
             <p>
                 D<sub>1</sub> = 
                 {<span class="W_value"></span>  
-                [(1.6 × <span class= "q1k_value"></span>) - <span class="subgradeBC1_value"></span> 
+                [(1.6 × <span class= "q1k_value"></span>) - <span class="Rd1_subgrade_value"></span> 
                 - (2 x <span class = "Td_value"></span> / <span class ="W_value"></span>)] /
                 [<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>]}
                 <sup>0.5</sup>
@@ -451,7 +447,7 @@
             <p>
                 D<sub>1</sub> = 
                 (<span class="W_value"></span> × 
-                ([1.25 × <span class="q1k_value"></span>] - <span class="subgradeBC1_value"></span>)) / 
+                ([1.25 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_value"></span>)) / 
                 (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>)
                 <sup>0.5</sup>
                 = <span class="D1NoGeogridC_value"></span> m
@@ -469,7 +465,7 @@
             <p>
                 D<sub>2</sub> = 
                 {<span class="W_value"></span>  
-                [(1.2 × <span class= "q2k_value"></span>) - <span class="subgradeBC2_value"></span> 
+                [(1.2 × <span class= "q2k_value"></span>) - <span class="Rd2_subgrade_value"></span> 
                 - (2 x <span class = "Td_value"></span> / <span class ="W_value"></span>)] /
                 [<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>]}
                 <sup>0.5</sup>
@@ -482,7 +478,7 @@
             <p>
                 D<sub>2</sub> = 
                 (<span class="W_value"></span> × 
-                ([1.05 × <span class="q2k_value"></span>] - <span class="subgradeBC2_value"></span>)) / 
+                ([1.05 × <span class="q2k_value"></span>] - <span class="Rd2_subgrade_value"></span>)) / 
                 (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>)
                 <sup>0.5</sup>
                 = <span class="D2NoGeogridC_value"></span> m    
@@ -498,13 +494,9 @@
                 <label for ="thicknessWithGeogridUserInput">
                     Selected thickness with geogrid (m):
                 </label>
-                <input type="number" id = "thicknessWithGeogridUserInput" step = "0.01" required>
+                <input type="number" id = "thickness-input-with-geogrid" step = "0.01" required>
             </div>
         </div>
-
-        <button type="submit">Submit</button>
-
-        
     </form>
 
 </div>

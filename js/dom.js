@@ -12,79 +12,86 @@ export function hideElement(id) {
 }
 
 
-export function display_platformRequired(q1dA, q2dA, Rd1, Rd2) {
+export function platformRequired(q1dA, q2dA, Rd1_subgrade, Rd2_subgrade) {
+  return !(q1dA < Rd1_subgrade && q2dA < Rd2_subgrade);
+}
+
+export function displayPlatformRequiredText(q1dA, q2dA, Rd1_subgrade, Rd2_subgrade) {
     //TWP decision with comparisons
     let text = "";
-    if (q1dA > Rd1) {
+    if (q1dA > Rd1_subgrade) {
         text += 'Now q<sub>1d</sub> > R<sub>d1_subgrade</sub> ';
     } else {
-        text += 'Now ; q<sub>1d</sub> < R<sub>d1_subgrade</sub> ';
+        text += 'Now q<sub>1d</sub> < R<sub>d1_subgrade</sub> ';
     }
 
-    if (q2dA > Rd2) {
+    if (q2dA > Rd2_subgrade) {
         text += 'and q<sub>2d</sub> > R<sub>d2_subgrade</sub>, ';
     } else {
         text += 'and q<sub>2d</sub> < R<sub>d2_subgrade</sub>, ';
     }
 
     
-    if (q1dA < Rd1 && q2dA < Rd2) {
-        text += 'therefore a working platform is NOT required for plant support';
+    if (q1dA < Rd1_subgrade && q2dA < Rd2_subgrade) {
+        text += 'therefore a working platform is not required for plant support';
     } else { 
-           text += 'therefore a working platform is required for plant support';
-            //make platform-stronger-box box visible
-            //showElement("platform-stronger-box");
-
+        text += 'therefore a working platform is required for plant support';
     }
-    twpDecision.innerHTML = text; // use innerHTML to allow 
+    twpDecision.innerHTML = text;
 }
 
-export function display_subgradeVplatform(platformBC1, platformBC2, Rd1, Rd2){
+export function platformStronger(Rd1_platform, Rd2_platform, Rd1, Rd2) {
+  return !(Rd1_platform < Rd1 && Rd2_platform < Rd2);
+}
+
+export function displayPlatformStrongertText(Rd1_platform, Rd2_platform, Rd1_subgrade, Rd2_subgrade){
     let text = "";
-    if(platformBC1 > Rd1){
+    if(Rd1_platform > Rd1_subgrade){
         text += 'Now R<sub>d1_platform</sub> > R<sub>d1_subgrade</sub> ';
     }else {
-        text += 'Now R<sub>d1_platform</sub>  > R<sub>d1_subgrade</sub> ';
+        text += 'Now R<sub>d1_platform</sub>  < R<sub>d1_subgrade</sub> ';
     }
 
-    if(platformBC2 > Rd2){
+    if(Rd2_platform > Rd2_subgrade){
         text += 'and R<sub>d2_platform</sub>  > R<sub>d2_subgrade</sub>, ';
     }else {
-        text += 'and R<sub>d2_platform</sub>  > R<sub>d2_subgrade</sub>, ';
+        text += 'and R<sub>d2_platform</sub>  < R<sub>d2_subgrade</sub>, ';
     }
 
-    if(platformBC1 < Rd1 && platformBC2 < Rd2){
+    if(Rd1_platform < Rd1_subgrade && Rd2_platform < Rd2_subgrade){
         text += " therefore platform is NOT stronger than subgrade"
     }else{
         text+= " therefore platform is stronger than subgrade";
-        showElement("platform-resistance-box");
+        //showElement("platform-resistance-box");
     }
 
     subgradeVplatform.innerHTML = text;
 }
 
+export function platformResistive(Rd1_platform, Rd2_platform, q1dB, q2dB){
+    return !(q1dB > Rd1_platform && q2dB > Rd2_platform);
+}
 
-export function display_bearingResistance(platformBC1, platformBC2, q1dB, q2dB){
+export function displayPlatformResistiveText(Rd1_platform, Rd2_platform, q1dB, q2dB){
     let text = "";
-    if (q1dB < platformBC1) {
+    if (q1dB < Rd1_platform) {
         text += 'Now R<sub>d1_platform</sub> > q<sub>1d</sub> ';
     } else {
         text += 'Now R<sub>d1_platform</sub> < q<sub>1d</sub> ';
     }
 
-    if (q2dB < platformBC2) {
+    if (q2dB < Rd2_platform) {
         text += 'and R<sub>d2_platform</sub> > q<sub>2d</sub>, ';
     } else {
         text += 'and R<sub>d2_platform</sub> < q<sub>2d</sub>, ';
     }
 
     
-    if (q1dB > platformBC1 && q2dB > platformBC2) {
+    if (q1dB > Rd1_platform && q2dB > Rd2_platform) {
         text += 'therefore chosen platform material canNOT provide the required bearing resistance';
     } else { 
         text += 'therefore chosen platform material cannot provide the required bearing resistance';
     }
-    showElement("no-geogrid-thickness-box");
     bearingResistance.innerHTML = text;
 }
 

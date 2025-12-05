@@ -1,12 +1,14 @@
-const REQUIRED_INPUT_IDS = ["soilType", "cu", "phi", "gamma", "W", "q1k", "L1", "q2k", "L2", "geogrid-yesorno"];
+const REQUIRED_INPUT_IDS = ["soilType", "cu", "phi", "gamma", "W", "q1k", "L1", "q2k", "L2", "geogrid-yesorno"
+];
 const REQUIRED_GEOGRID_IDS = ["Tallowable", "n"];
-import { showElement, hideElement, display_platformRequired, 
-        display_subgradeVplatform, display_bearingResistance,updateSummaryVisibilityNoGeogrid
+import { showElement, hideElement, displayPlatformRequiredText, 
+        displayPlatformStrongertText, displayPlatformResistiveText,updateSummaryVisibilityNoGeogrid,
+        platformRequired, platformStronger, platformResistive
          } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
-import { Ngamma, kptandelta, sc, sgamma, sp, RdNoGeoGrid, platformBC, 
-        q1dA, q2dA, q1dB, q2dB, q1dC, q2dC, subgradeBC, 
-        DNoGeogrid, DWithGeogrid } from './calculations.js';
+import { NgammaF, kptandeltaF, scF, sgammaF, spF, Rd_subgradeF, Rd_platformF, 
+        q1dAF, q2dAF, q1dBF, q2dBF, q1dCF, q2dCF, 
+        DNoGeogridF, DWithGeogridF } from './calculations.js';
 import { validateCu, validateNOGeorgridThickness,
         validateWITHGeorgridThickness
         } from './validation.js';
@@ -52,17 +54,37 @@ function allRequiredInputsFilled() {
     return true;
 }
 
+// Function to hide all sections from a given one
+export function hideFrom(sectionId) {
+    const sections = [
+    "soil-selection-form",
+    "cohesive-inputs-form",
+    "geogrid-selection-form",
+    "cu-alert",
+    "platform-required-box",
+    "platform-stronger-box",
+    "platform-not-stronger-alert",
+    "platform-resistance-box",
+    "platform-not-resistive-alert",
+    "no-geogrid-thickness-box",
+    "no-geogrid-thickness-alert",
+    "with-geogrid-thickness-box",
+    "with-geogrid-thickness-alert",
+    "summary-box"
+];
+    const startIndex = sections.indexOf(sectionId);
+    if (startIndex === -1) return; // Section not found
 
+    for (let i = startIndex + 1; i < sections.length; i++) {
+        hideElement(sections[i]);
+    }
+}
 
 
 export function runCalculations(){
     if (!allRequiredInputsFilled()) {
         // Hide boxes until all inputs are present
-           hideElement("platform-required-box");
-           hideElement("platform-stronger-box");
-           hideElement("no-geogrid-thickness-box");
-           hideElement("with-geogrid-thickness-box");
-           hideElement("summary-box");
+        hideFrom("cu-alert");
         return;
     }else {
         //if all requires fields are filled load inputs 
@@ -72,183 +94,158 @@ export function runCalculations(){
     }
     //check cu
     if(!validateCu()){
-        hideElement("platform-required-box");
-        hideElement("platform-stronger-box");
-        hideElement("platform-resistance-box");
-        hideElement("no-geogrid-thickness-box");
-        hideElement("with-geogrid-thickness-box");
-        hideElement("summary-box");
+        showElement("cu-alert");
+        hideFrom("cu-alert");
         return;
+    }else{
+        hideElement("cu-alert");
     }
+
+    const cu = inputData.cu; 
+    const phi = inputData.phi; 
+    const gamma = inputData.gamma; 
+    const W = inputData.W; 
+    const L1 = inputData.L1; 
+    const L2 = inputData.L2; 
+    const q1k = inputData.q1k; 
+    const q2k = inputData.q2k; 
+    const Tallowable = inputData.Tallowable; 
+    const n = inputData.n; 
 
     //--------------------
     // PLATFORM REQUIRED
     //--------------------
 
     // Calculate Ngamma
-    loadCalculated("Ngamma", Ngamma(inputData.phi))
+    loadCalculated("Ngamma", NgammaF(phi));
+    const Ngamma = calculatedData.Ngamma;
 
     // Update kpTanδ with user phi input
-    loadCalculated("kptandelta", kptandelta(inputData.phi));
+    loadCalculated("kptandelta", kptandeltaF(phi));   
+    const kptandelta = calculatedData.kptandelta;
+
 
     // s_ factors 
-    loadCalculated("sc1", sc(inputData.W, inputData.L1));
-    loadCalculated("sc2", sc(inputData.W, inputData.L2));
-    loadCalculated("sgamma1", sgamma(inputData.W, inputData.L1));
-    loadCalculated("sgamma2", sgamma(inputData.W, inputData.L2));
-    loadCalculated("sp1", sp(inputData.W, inputData.L1));
-    loadCalculated("sp2", sp(inputData.W, inputData.L2));
+    loadCalculated("sc1", scF(W, L1));
+    const sc1 = calculatedData.sc1;
+    loadCalculated("sc2", scF(W, L2));
+    const sc2 = calculatedData.sc2;
+    loadCalculated("sgamma1", sgammaF(W, L1));
+    const sgamma1 = calculatedData.sgamma1;
+    loadCalculated("sgamma2", sgammaF(W, L2));
+    const sgamma2 = calculatedData.sgamma2;
+    loadCalculated("sp1", spF(W, L1));
+    const sp1 = calculatedData.sp1;
+    loadCalculated("sp2", spF(W, L2));
+    const sp2 = calculatedData.sp2;
 
 
     // R_d no geogrod
-    loadCalculated("Rd1NoGeoGrid", RdNoGeoGrid(inputData.cu, calculatedData.sc1));
-    loadCalculated("Rd2NoGeoGrid", RdNoGeoGrid(inputData.cu, calculatedData.sc2));
+    loadCalculated("Rd1_subgrade", Rd_subgradeF(cu, sc1));
+    const Rd1_subgrade = calculatedData.Rd1_subgrade;
+    loadCalculated("Rd2_subgrade", Rd_subgradeF(cu, sc2));
+    const Rd2_subgrade = calculatedData.Rd2_subgrade;
 
     
     // Factored loads
-    loadCalculated("q1dA", q1dA(inputData.q1k));
-    loadCalculated("q2dA", q2dA(inputData.q2k));
-    loadCalculated("q1dB", q1dB(inputData.q1k));
-    loadCalculated("q2dB", q2dB(inputData.q2k));
-    loadCalculated("q1dC", q1dC(inputData.q1k));
-    loadCalculated("q2dC", q2dC(inputData.q2k));
+    loadCalculated("q1dA", q1dAF(q1k));
+    const q1dA = calculatedData.q1dA;
+    loadCalculated("q2dA", q2dAF(q2k));
+    const q2dA = calculatedData.q2dA;
+    loadCalculated("q1dB", q1dBF(q1k));
+    const q1dB = calculatedData.q1dB;
+    loadCalculated("q2dB", q2dBF(q2k));
+    const q2dB = calculatedData.q2dB;
+    loadCalculated("q1dC", q1dCF(q1k));
+    const q1dC = calculatedData.q1dC;
+    loadCalculated("q2dC", q2dCF(q2k));
+    const q2dC = calculatedData.q2dC;
+
+    showElement("platform-required-box")
+
 
     //call the platform required decision 
-    display_platformRequired(
-        calculatedData.q1dA,   
-        calculatedData.q2dA,   
-        calculatedData.Rd1NoGeoGrid,
-        calculatedData.Rd2NoGeoGrid  
-    );
+    displayPlatformRequiredText(q1dA, q2dA, Rd1_subgrade, Rd2_subgrade);
+
+    // Conditional alert or next box
+    if(!platformRequired(q1dA, q2dA,Rd1_subgrade, Rd2_subgrade)){
+        hideFrom("platform-required-box");
+        showElement("summary-box");
+        return;
+    }else{
+        hideElement("summary-box");
+    } 
+
+    //--------------------
+    // PLATFORM STRONGER
+    //--------------------
+
+    loadCalculated("Rd1_platform", Rd_platformF(gamma, 
+        W, Ngamma, sgamma1));
+    const Rd1_platform = calculatedData.Rd1_platform;
+    loadCalculated("Rd2_platform", Rd_platformF(gamma, 
+        W, Ngamma, sgamma2));
+    const Rd2_platform = calculatedData.Rd2_platform;
     
-    //Reveal platform decision box
-    showElement("platform-required-box");
-
-//     //--------------------------------------------------
-//     // 3) DECISION STEP — Is platform required
-//     //--------------------------------------------------
-
-//    
-
-//     const platformRequired = (
-//         calculatedData.q1dA > calculatedData.Rd1NoGeoGrid &&
-//         calculatedData.q2dA > calculatedData.Rd1NoGeoGrid
-//     );
-
-//     if (!platformRequired) {
-//         //--------------------------------------------------
-//         //  If platform NOT required 
-//         //--------------------------------------------------
-
-//         console.log("Platform NOT required");
-//         return;   // stop here!
-//     }
-
-//     //--------------------------------------------------
-//     // 4) PLATFORM REQUIRED 
-//     //--------------------------------------------------
     
-//     console.log("Platform required");
+    showElement("platform-stronger-box");
 
-    
-//     //--------------------------------------------------
-//     // 5) PLATFORM MATERIAL
-//     //--------------------------------------------------
+    displayPlatformStrongertText(Rd1_platform, Rd2_platform, Rd1_subgrade, Rd2_subgrade);
 
-//     loadCalculated("platformBC1", platformBC(inputData.gamma, 
-//         inputData.W, calculatedData.Ngamma, calculatedData.sgamma1));
-//     loadCalculated("platformBC2", platformBC(inputData.gamma, 
-//         inputData.W, calculatedData.Ngamma, calculatedData.sgamma2));
+    if(!platformStronger(Rd1_platform,Rd2_platform,Rd1_subgrade, Rd2_subgrade)){
+        showElement("platform-not-stronger-alert");
+        hideFrom("platform-not-stronger-alert");
+        return;
+    }else{
+        hideElement("platform-not-stronger-alert");
+    }
+
+    //---------------------
+    // PLATFORM RESISTANCE
+    //--------------------
+
+    showElement("platform-resistive-box");
+
+    displayPlatformResistiveText(Rd1_platform, Rd2_platform,q1dB,q2dB);
+
+    if(!platformResistive(Rd1_platform,Rd2_platform,Rd1_subgrade, Rd2_subgrade)){
+        showElement("platform-not-resistive-alert");
+        hideFrom("platforms-not-resistive-alert");
+        return;
+    }else{
+        hideElement("platform-not-resistive-alert");
+    }
 
 
-//     display_subgradeVplatform(
-//         calculatedData.platformBC1,   
-//         calculatedData.platformBC2,   
-//         calculatedData.Rd1NoGeoGrid,
-//         calculatedData.Rd2NoGeoGrid, 
-//     )
+    //-----------------------
+    // NO GEOGRID THICKNESS
+    //-----------------------
 
-
-//     const platformStronger = (
-//         calculatedData.platformBC1 > calculatedData.Rd1NoGeoGrid &&
-//         calculatedData.platformBC2 > calculatedData.Rd2NoGeoGrid
-//     );
-
-//     if (!platformStronger) {
-//         //--------------------------------------------------
-//         //  If platform NOT stronger than subgrade
-//         //--------------------------------------------------
-//         console.log("Platform NOT stronger than subgrade");
-//     }else{
-//         console.log("Platform stronger than sugrade");
-//     }
-
+    showElement("no-geogrid-thickness-box");
 
     
-//     //--------------------------------------------------
-//     // 6) PLATFORM MATERIAL BEARING RESISTANCE
-//     //--------------------------------------------------
+    loadCalculated("D1NoGeogrid", DNoGeogridF(W, q1dB, Rd1_subgrade, gamma, kptandelta, sp1));
+    const D1NoGeogrid = calculatedData.D1NoGeogrid;
+    loadCalculated("D2NoGeogrid", DNoGeogridF(W, q2dB, Rd2_subgrade, gamma, kptandelta, sp2));
+    const D2NoGeogrid = calculatedData.D2NoGeogrid;
+    loadCalculated("DlargerNoGeorgrid", Math.max(D1NoGeogrid, D2NoGeogrid));
+    const DlargerNoGeorgrid = calculatedData.DlargerNoGeorgrid;
 
-//     loadCalculated("q1dB", q1dB(inputData.q1k));
-//     loadCalculated("q2dB", q2dB(inputData.q2k));
-
-//     // document.getElementById("platformBC_value2").textContent =
-//     //     Number(calculatedData.platformBC).toFixed(0);
-
-//     const bearingResistance = (
-//         calculatedData.platformBC1 > calculatedData.q1dB && calculatedData.platformBC2 > calculatedData.q2dB
-//     );
-
-//     display_bearingResistance(
-//         calculatedData.platformBC1, 
-//         calculatedData.platformBC2, 
-//         calculatedData.q1dB,
-//         calculatedData.q2dB
-//     )
-
-//     if (!bearingResistance) {
-//         //--------------------------------------------------
-//         //  If platform NOT able to provide bearing resistance
-//         //--------------------------------------------------
-
-//         console.log("Platform material NOT able to provide required bearing resistance");
-//     } else{
-//         console.log("Platform material able to provide bearing resistance");
-//     }
-
-//     //--------------------------------------------------
-//     // 7) THICKNESS OF PLATFORM
-//     //--------------------------------------------------
-
-//     loadCalculated("subgradeBC1", subgradeBC(inputData.cu, calculatedData.sc1));
-//     loadCalculated("subgradeBC2", subgradeBC(inputData.cu, calculatedData.sc2));
-
-//     loadCalculated("q1dB", q1dB(inputData.q1k));
-//     loadCalculated("q2dB", q2dB(inputData.q2k));
-    
-//     loadCalculated("D1NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q1dB, 
-//         calculatedData.subgradeBC1, inputData.gamma, calculatedData.kptandelta, calculatedData.sp1));
-//     loadCalculated("D2NoGeogrid", DNoGeogrid(inputData.W, calculatedData.q2dB, 
-//         calculatedData.subgradeBC2, inputData.gamma, calculatedData.kptandelta, calculatedData.sp2));
-
-    
-//     loadCalculated("DlargerNoGeorgrid", Math.max(calculatedData.D1NoGeogrid, calculatedData.D2NoGeogrid));
+    const thicknessNoGeogridUserInput = 
+    parseFloat(document.getElementById("thickness-input-no-geogrid").value);
 
 
-//       //ALERT FOR THICKNESS
-//    document.getElementById("noGeogridForm").addEventListener("submit", function(event) {
-//         event.preventDefault();
+    if (thicknessNoGeogridUserInput < DlargerNoGeorgrid) {
+        showElement("no-geogrid-thickness-alert");
+        hideFrom("no-geogrid-thickness-alert");
+        console.log("entered");
+    }else{
+        hideElement("no-geogrid-thickness-alert");
+    }
 
-//         if (!validateNOGeorgridThickness(calculatedData.DlargerNoGeorgrid)) {
-//             document.getElementById("no-geogrid-thickness-alert").classList.remove("hidden");
-//             console.log("Thickness too small");
-//         } else {
-//             document.getElementById("no-geogrid-thickness-alert").classList.add("hidden");
-//             console.log("Thickness OK");
-//         }
-
-//         updateSummaryVisibilityNoGeogrid();   // <-- IMPORTANT
-//     });
+        
+    const inputWithout= document.getElementById("thickness-input-no-geogrid");
+    inputWithout.addEventListener("input", updateSummaryVisibilityNoGeogrid);
 
 
 
@@ -262,29 +259,29 @@ export function runCalculations(){
 //         // showElement("with-geogrid-thickness-box");
 
 //         // Load tensile strength
-//         loadCalculated("Td", inputData.Tallowable * inputData.n);
+//         loadCalculated("Td", Tallowable * n);
 
 //         // Fist formula - with geogrid
-//         loadCalculated("D1WithGeogrid", DWithGeogrid(inputData.W, calculatedData.q1dB, 
-//             calculatedData.subgradeBC1, calculatedData.Td, inputData.gamma, 
-//             calculatedData.kptandelta, calculatedData.sp1));
-//         loadCalculated("D2WithGeogrid", DWithGeogrid(inputData.W, calculatedData.q2dB, 
-//             calculatedData.subgradeBC2, calculatedData.Td, inputData.gamma, 
-//             calculatedData.kptandelta, calculatedData.sp2));
+//         loadCalculated("D1WithGeogrid", DWithGeogrid(W, q1dB, 
+//             Rd1_subgrade, calculatedData.Td, gamma, 
+//             kptandelta, sp1));
+//         loadCalculated("D2WithGeogrid", DWithGeogrid(W, q2dB, 
+//             Rd2_subgrade, calculatedData.Td, gamma, 
+//             kptandelta, sp2));
 
 //         // Second formula - ignoring geogrid
-//         loadCalculated("D1NoGeogridC", DNoGeogrid(inputData.W, calculatedData.q1dC, 
-//             calculatedData.subgradeBC1, inputData.gamma, calculatedData.kptandelta, 
-//             calculatedData.sp1));
-//         loadCalculated("D2NoGeogridC", DNoGeogrid(inputData.W, calculatedData.q2dC, 
-//             calculatedData.subgradeBC2, inputData.gamma, calculatedData.kptandelta, 
-//             calculatedData.sp2));
+//         loadCalculated("D1NoGeogridC", DNoGeogrid(W, q1dC, 
+//             Rd1_subgrade, gamma, kptandelta, 
+//             sp1));
+//         loadCalculated("D2NoGeogridC", DNoGeogrid(W, q2dC, 
+//             Rd2_subgrade, gamma, kptandelta, 
+//             sp2));
 
 //         // Max D of first and second formula
 //         loadCalculated("D1largerWithGeorgrid", Math.max(calculatedData.D1WithGeogrid,
-//             calculatedData.D1NoGeogridC).toFixed(2));
+//             D1NoGeogridC).toFixed(2));
 //         loadCalculated("D2largerWithGeorgrid", Math.max(calculatedData.D2WithGeogrid,
-//             calculatedData.D2NoGeogridC).toFixed(2));
+//             D2NoGeogridC).toFixed(2));
 
 //         // Max of D1 and D2 with geogrid
 //         loadCalculated("DlargerWithGeorgrid", Math.max(calculatedData.D1largerWithGeorgrid,

@@ -1,14 +1,13 @@
-import { showElement, hideElement, display_platformRequired, 
-        display_subgradeVplatform, display_bearingResistance,updateSummaryVisibilityNoGeogrid
+import { showElement, hideElement,
          } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
-import { Ngamma, kptandelta, sc, sgamma, sp, RdNoGeoGrid, platformBC, 
-        q1dA, q2dA, q1dB, q2dB, q1dC, q2dC, subgradeBC, 
-        DNoGeogrid, DWithGeogrid } from './calculations.js';
+import { NgammaF, kptandeltaF, scF, sgammaF, spF, Rd_subgradeF, Rd_platformF, 
+        q1dAF, q2dAF, q1dBF, q2dBF, q1dCF, q2dCF, 
+        DNoGeogridF, DWithGeogridF } from './calculations.js';
 import { validateCu, validateNOGeorgridThickness,
         validateWITHGeorgridThickness
         } from './validation.js';
-import { addCohesiveInputListeners, runCalculations} from './events_helper.js'
+import { addCohesiveInputListeners, runCalculations, hideFrom} from './events_helper.js'
 
 // Sets up all event listeners to monitor user input and update the page dynamically
 export function initEventListeners() {
@@ -22,15 +21,7 @@ export function initEventListeners() {
             addCohesiveInputListeners();
         } 
         else {
-            hideElement('cohesive-inputs-form');
-            hideElement('geogrid-selection-form');
-            hideElement("platform-required-box");
-           hideElement("platform-stronger-box");
-            hideElement("platform-resistance-box");
-           hideElement("no-geogrid-thickness-box");
-           hideElement("with-geogrid-thickness-box");
-           hideElement("summary-box");
-
+            hideFrom("soil-selection-form");
         }
     });
 
@@ -73,49 +64,6 @@ export function initEventListeners() {
         }
     });
 }
-
-
-
-
-// function checkAllInputsFilled() {
-//     const filled = allRequiredInputsFilled();
-
-//     if (filled) {
-//         showElement("platform-required-box");
-//     } else {
-//         hideElement("platform-required-box");
-//     }
-
-//     return filled;
-// }
-
-
-// export function attachGlobalInputListeners() {
-//     document.querySelectorAll("input, select").forEach(el => {
-//         el.addEventListener("input", onAnyInputChanged);
-//         el.addEventListener("change", onAnyInputChanged);
-//     });
-// }
-
-// function onAnyInputChanged() {
-//     if (!checkAllInputsFilled()) {
-//         // Hide everything if incomplete
-//         hideElement("platform-required-box");
-//         hideElement("platform-stronger-box");
-//         hideElement("platform-resistance-box");
-//         hideElement("no-geogrid-thickness-box");
-//         hideElement("with-geogrid-thickness-box");
-//         hideElement("summary-box");
-//         return;
-//     }
-
-//     // All required inputs exist → run full workflow
-//     runCalculations();
-//     updateSummaryVisibilityNoGeogrid();
-//     display_platformRequired();
-//     display_subgradeVplatform();
-//     display_bearingResistance();
-// }
 
 
 
