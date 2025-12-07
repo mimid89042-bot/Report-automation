@@ -1,4 +1,4 @@
-import { showElement, hideElement,
+import { showElement, hideElement,updateNoGeogridThickness, updateWithGeogridThickness
          } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
 import { NgammaF, kptandeltaF, scF, sgammaF, spF, Rd_subgradeF, Rd_platformF, 
@@ -8,6 +8,12 @@ import { validateCu, validateNOGeorgridThickness,
         validateWITHGeorgridThickness
         } from './validation.js';
 import { addCohesiveInputListeners, runCalculations, hideFrom} from './events_helper.js'
+
+// events.js (or state.js)
+export const state = {
+    alertDismissed: false
+};
+
 
 // Sets up all event listeners to monitor user input and update the page dynamically
 export function initEventListeners() {
@@ -63,6 +69,35 @@ export function initEventListeners() {
             document.getElementById("cu-alert").classList.add("hidden");
         }
     });
+
+
+    // No Geogrid thickness input handling
+    const thicknessInput = document.getElementById("thickness-input-no-geogrid");
+    const geogridSelect = document.getElementById("geogrid-yesorno");
+    const closeAlertBtnNoGeogrid = document.getElementById("close-no-geogrid-alert");
+
+    if (thicknessInput) {
+        thicknessInput.addEventListener("input", () => {
+            state.alertDismissed = false; // reset dismissal if input changes
+            updateNoGeogridThickness();
+        });
+    }
+
+    if (geogridSelect) {
+        geogridSelect.addEventListener("change", updateNoGeogridThickness);
+    }
+
+    if (closeAlertBtnNoGeogrid) {
+        closeAlertBtnNoGeogrid.addEventListener("click", () => {
+            document.getElementById("no-geogrid-thickness-alert").classList.add("hidden");
+            state.alertDismissed = true;
+            updateNoGeogridThickness(); // re-evaluate boxes after closing alert
+        });
+    }
+
+    // Run once on load
+    updateNoGeogridThickness();
+
 }
 
 

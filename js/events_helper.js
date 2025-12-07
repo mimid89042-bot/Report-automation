@@ -2,7 +2,7 @@ const REQUIRED_INPUT_IDS = ["soilType", "cu", "phi", "gamma", "W", "q1k", "L1", 
 ];
 const REQUIRED_GEOGRID_IDS = ["Tallowable", "n"];
 import { showElement, hideElement, displayPlatformRequiredText, 
-        displayPlatformStrongertText, displayPlatformResistiveText,updateSummaryVisibilityNoGeogrid,
+        displayPlatformStrongertText, displayPlatformResistiveText,updateNoGeogridThickness,
         platformRequired, platformStronger, platformResistive
          } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
@@ -230,22 +230,6 @@ export function runCalculations(){
     const D2NoGeogrid = calculatedData.D2NoGeogrid;
     loadCalculated("DlargerNoGeorgrid", Math.max(D1NoGeogrid, D2NoGeogrid));
     const DlargerNoGeorgrid = calculatedData.DlargerNoGeorgrid;
-
-    const thicknessNoGeogridUserInput = 
-    parseFloat(document.getElementById("thickness-input-no-geogrid").value);
-
-
-    if (thicknessNoGeogridUserInput < DlargerNoGeorgrid) {
-        showElement("no-geogrid-thickness-alert");
-        hideFrom("no-geogrid-thickness-alert");
-        console.log("entered");
-    }else{
-        hideElement("no-geogrid-thickness-alert");
-    }
-
-        
-    const inputWithout= document.getElementById("thickness-input-no-geogrid");
-    inputWithout.addEventListener("input", updateSummaryVisibilityNoGeogrid);
 
 
 

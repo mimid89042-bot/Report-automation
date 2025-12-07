@@ -1,5 +1,4 @@
 // calculations.js
-import { calculatedData } from './data.js';
 
 // === Calculation Functions ===
 export function NgammaF(phi) {

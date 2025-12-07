@@ -1,5 +1,7 @@
 import {validateNOGeorgridThickness} from './validation.js'
 import { calculatedData } from './data.js';
+import { state  } from './events.js';
+
 
 export function showElement(id) {
     const el = document.getElementById(id);
@@ -95,35 +97,49 @@ export function displayPlatformResistiveText(Rd1_platform, Rd2_platform, q1dB, q
     bearingResistance.innerHTML = text;
 }
 
-export function updateSummaryVisibilityNoGeogrid() {
-    const summary = document.getElementById("summary-box");
-    const alertHidden = document.getElementById("no-geogrid-thickness-alert").classList.contains("hidden");
-    const noGeogrid = document.getElementById("geogrid-yesorno").value;
-    const geogridBox = document.getElementById("with-geogrid-thickness-box");
 
-    if (alertHidden && (noGeogrid == "no")) {
-        summary.classList.remove("hidden") ;// show summary when alert CLOSED
+// Update No Geogrid Thickness and related boxes
+export function updateNoGeogridThickness() {
+    const thicknessInput = parseFloat(document.getElementById("thickness-input-no-geogrid").value);
+    const required = parseFloat(calculatedData.DlargerNoGeorgrid);
+    const geogridSelect = document.getElementById("geogrid-yesorno").value;
 
-    } else if (alertHidden &&(noGeogrid == "yes")){
-        geogridBox.classList.remove("hidden") ;// show summary when alert CLOSED
-    } else {
-        summary.classList.add("hidden") ;// hide summary when alert OPEN
 
+    if (isNaN(thicknessInput)) {
+        return; // return if user hasnt input anything yet
+    }
+    console.log("Required No Geogrid Thickness: ", required);
+    console.log("User Input No Geogrid Thickness: ", thicknessInput);
+
+
+    // Only continue flow if valid input or alert has been dismissed
+    if ((thicknessInput >= required) || state.alertDismissed) {
+        hideElement("no-geogrid-thickness-alert");
+        if (geogridSelect == "yes"){
+            showElement("with-geogrid-thickness-box");
+            hideElement("summary-box");
+        }else{
+            showElement("summary-box");
+            hideElement("with-geogrid-thickness-box");
+        }
+    }else {// Otherwise wait for valid input or dismissal
+        showElement("no-geogrid-thickness-alert");
+        hideElement("summary-box");
+        hideElement("with-geogrid-thickness-box");
     }
 }
 
-export function updateSummaryVisibilityWithGeogrid(){
+export function updateWithGeogridThickness(){
+
+export function updateWithGeogridThickness(){
     const summary = document.getElementById("summary-box");
     const alertHidden = document.getElementById("with-geogrid-thickness-alert").classList.contains("hidden");
-    const noGeogrid = document.getElementById("geogrid-yesorno").value;
+    const geogridYesOrNo = document.getElementById("geogrid-yesorno").value;
 
-    if (alertHidden && (noGeogrid == "yes")) {
+    if (alertHidden && (geogridYesOrNo == "yes")) {
         summary.classList.remove("hidden") ;// show summary when alert CLOSED
     } else  {
         summary.classList.add("hidden") ;// hide summary when alert OPEN
 
     }
 }
-
-window.updateSummaryVisibilityNoGeogrid = updateSummaryVisibilityNoGeogrid;
-window.updateSummaryVisibilityWithGeogrid = updateSummaryVisibilityWithGeogrid;
