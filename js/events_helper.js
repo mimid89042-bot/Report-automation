@@ -229,66 +229,35 @@ export function runCalculations(){
     loadCalculated("D2NoGeogrid", DNoGeogridF(W, q2dB, Rd2_subgrade, gamma, kptandelta, sp2));
     const D2NoGeogrid = calculatedData.D2NoGeogrid;
     loadCalculated("DlargerNoGeorgrid", Math.max(D1NoGeogrid, D2NoGeogrid));
-    const DlargerNoGeorgrid = calculatedData.DlargerNoGeorgrid;
 
 
 
-//     //--------------------------------------------------
-//     // 8) THICKNESS OF PLATFORM WITH GEOGRID
-//     //--------------------------------------------------   
+    //------------------------
+    // WITH GEOGRID THICKNESS
+    //------------------------  
 
-//     const geogridChoice = document.getElementById("geogrid-yesorno").value;
+    loadCalculated("Td", Tallowable * n);
+    const Td = calculatedData.Td;
 
-//     if (geogridChoice == "yes") {
-//         // showElement("with-geogrid-thickness-box");
+    // Fist formula - with geogrid
+    loadCalculated("D1WithGeogrid", DWithGeogridF(W, q1dB, Rd1_subgrade,Td, gamma, kptandelta, sp1));
+    const D1WithGeogrid = calculatedData.D1WithGeogrid;
+    loadCalculated("D2WithGeogrid", DWithGeogridF(W, q2dB, Rd2_subgrade, calculatedData.Td, gamma, kptandelta, sp2));
+    const D2WithGeogrid = calculatedData.TdD2WithGeogrid;
 
-//         // Load tensile strength
-//         loadCalculated("Td", Tallowable * n);
+    // Second formula - ignoring geogrid
+    loadCalculated("D1NoGeogridC", DNoGeogridF(W, q1dC, Rd1_subgrade, gamma, kptandelta, sp1));
+    const D1NoGeogridC = calculatedData.D1NoGeogridC;
+    loadCalculated("D2NoGeogridC", DNoGeogridF(W, q2dC, Rd2_subgrade, gamma, kptandelta, sp2));
+    const D2NoGeogridC = calculatedData.D2NoGeogridC;
 
-//         // Fist formula - with geogrid
-//         loadCalculated("D1WithGeogrid", DWithGeogrid(W, q1dB, 
-//             Rd1_subgrade, calculatedData.Td, gamma, 
-//             kptandelta, sp1));
-//         loadCalculated("D2WithGeogrid", DWithGeogrid(W, q2dB, 
-//             Rd2_subgrade, calculatedData.Td, gamma, 
-//             kptandelta, sp2));
+    // Max D of first and second formula
+    loadCalculated("D1largerWithGeorgrid", Math.max(D1WithGeogrid,D1NoGeogridC).toFixed(2));
+    const D1largerWithGeorgrid = calculatedData.D1largerWithGeorgrid;
+    loadCalculated("D2largerWithGeorgrid", Math.max(calculatedData.D2WithGeogrid, D2NoGeogridC).toFixed(2));
+    const D2largerWithGeorgrid = calculatedData.D2largerWithGeorgrid;
 
-//         // Second formula - ignoring geogrid
-//         loadCalculated("D1NoGeogridC", DNoGeogrid(W, q1dC, 
-//             Rd1_subgrade, gamma, kptandelta, 
-//             sp1));
-//         loadCalculated("D2NoGeogridC", DNoGeogrid(W, q2dC, 
-//             Rd2_subgrade, gamma, kptandelta, 
-//             sp2));
+    // Max of D1 and D2 with geogrid
+    loadCalculated("DlargerWithGeorgrid", Math.max(D1largerWithGeorgrid, D2largerWithGeorgrid).toFixed(2));
 
-//         // Max D of first and second formula
-//         loadCalculated("D1largerWithGeorgrid", Math.max(calculatedData.D1WithGeogrid,
-//             D1NoGeogridC).toFixed(2));
-//         loadCalculated("D2largerWithGeorgrid", Math.max(calculatedData.D2WithGeogrid,
-//             D2NoGeogridC).toFixed(2));
-
-//         // Max of D1 and D2 with geogrid
-//         loadCalculated("DlargerWithGeorgrid", Math.max(calculatedData.D1largerWithGeorgrid,
-//             calculatedData.D2largerWithGeorgrid).toFixed(2));
-
-
-//         //INPUT FORM HANDLING
-//         document.getElementById("withGeogridForm").addEventListener("submit", function(event) {
-//             event.preventDefault();
-
-//             if (!validateWITHGeorgridThickness(calculatedData.DlargerWithGeorgrid)) {
-//                 document.getElementById("with-geogrid-thickness-alert").classList.remove("hidden");
-//                 console.log("Thickness too small");
-//             } else {
-//                 document.getElementById("with-geogrid-thickness-alert").classList.add("hidden");
-//                 console.log("Thickness OK");
-//             }
-
-//             updateSummaryVisibilityWithGeogrid();   // <-- IMPORTANT
-//         });
-  
-
-//     }else{
-//         hideElement("with-geogrid-thickness-box");
-//     }
 }

@@ -11,7 +11,8 @@ import { addCohesiveInputListeners, runCalculations, hideFrom} from './events_he
 
 // events.js (or state.js)
 export const state = {
-    alertDismissed: false
+    alertNoGeoDismissed: false,
+    alertWithGeoDismissed: false
 };
 
 
@@ -71,14 +72,14 @@ export function initEventListeners() {
     });
 
 
-    // No Geogrid thickness input handling
-    const thicknessInput = document.getElementById("thickness-input-no-geogrid");
+    // NO Geogrid thickness input handling
+    const thicknessInputNoGeo = document.getElementById("thickness-input-no-geogrid");
     const geogridSelect = document.getElementById("geogrid-yesorno");
     const closeAlertBtnNoGeogrid = document.getElementById("close-no-geogrid-alert");
 
-    if (thicknessInput) {
-        thicknessInput.addEventListener("input", () => {
-            state.alertDismissed = false; // reset dismissal if input changes
+    if (thicknessInputNoGeo) {
+        thicknessInputNoGeo.addEventListener("input", () => {
+            state.alertNoGeoDismissed = false; // reset dismissal if input changes
             updateNoGeogridThickness();
         });
     }
@@ -90,13 +91,40 @@ export function initEventListeners() {
     if (closeAlertBtnNoGeogrid) {
         closeAlertBtnNoGeogrid.addEventListener("click", () => {
             document.getElementById("no-geogrid-thickness-alert").classList.add("hidden");
-            state.alertDismissed = true;
+            state.alertNoGeoDismissed = true;
             updateNoGeogridThickness(); // re-evaluate boxes after closing alert
         });
     }
 
     // Run once on load
     updateNoGeogridThickness();
+
+
+    // WITH Geogrid thickness input handling
+    const thicknessInputWithGeo = document.getElementById("thickness-input-with-geogrid");
+    const closeAlertBtnWithGeogrid = document.getElementById("close-with-geogrid-alert");
+
+    if (thicknessInputWithGeo) {
+        thicknessInputWithGeo.addEventListener("input", () => {
+            state.alertWithGeoDismissed = false; // reset dismissal if input changes
+            updateWithGeogridThickness();
+        });
+    }
+
+    if (geogridSelect) {
+        geogridSelect.addEventListener("change", updateWithGeogridThickness);
+    }
+
+    if (closeAlertBtnWithGeogrid) {
+        closeAlertBtnWithGeogrid.addEventListener("click", () => {
+            document.getElementById("with-geogrid-thickness-alert").classList.add("hidden");
+            state.alertWithGeoDismissed = true;
+            updateWithGeogridThickness(); // re-evaluate boxes after closing alert
+        });
+    }
+
+
+
 
 }
 

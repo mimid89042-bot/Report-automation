@@ -39,8 +39,6 @@ export const calculatedData = {
     Rd2_platform: null,
     q1d2: null,
     q2d2: null,
-    // subgradeBC1: null,
-    // subgradeBC2: null,
     D1NoGeogrid: null,
     D2NoGeogrid: null,
     DlargerNoGeorgrid: null,

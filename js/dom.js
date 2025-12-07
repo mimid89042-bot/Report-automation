@@ -111,9 +111,12 @@ export function updateNoGeogridThickness() {
     console.log("Required No Geogrid Thickness: ", required);
     console.log("User Input No Geogrid Thickness: ", thicknessInput);
 
+    hideElement("with-geogrid-thickness-alert");
+
+
 
     // Only continue flow if valid input or alert has been dismissed
-    if ((thicknessInput >= required) || state.alertDismissed) {
+    if ((thicknessInput >= required) || state.alertNoGeoDismissed) {
         hideElement("no-geogrid-thickness-alert");
         if (geogridSelect == "yes"){
             showElement("with-geogrid-thickness-box");
@@ -130,16 +133,22 @@ export function updateNoGeogridThickness() {
 }
 
 export function updateWithGeogridThickness(){
+    const thicknessInput = parseFloat(document.getElementById("thickness-input-with-geogrid").value);
+    const required = parseFloat(calculatedData.DlargerWithGeorgrid);
 
-export function updateWithGeogridThickness(){
-    const summary = document.getElementById("summary-box");
-    const alertHidden = document.getElementById("with-geogrid-thickness-alert").classList.contains("hidden");
-    const geogridYesOrNo = document.getElementById("geogrid-yesorno").value;
-
-    if (alertHidden && (geogridYesOrNo == "yes")) {
-        summary.classList.remove("hidden") ;// show summary when alert CLOSED
-    } else  {
-        summary.classList.add("hidden") ;// hide summary when alert OPEN
-
+    
+    if (isNaN(thicknessInput)) {
+        return; // return if user hasnt input anything yet
     }
+
+        // Only continue flow if valid input or alert has been dismissed
+    if ((thicknessInput >= required) || state.alertWithGeoDismissed) {
+        hideElement("with-geogrid-thickness-alert");
+        showElement("summary-box");
+    }else {// Otherwise wait for valid input or dismissal
+        showElement("with-geogrid-thickness-alert");
+        hideElement("summary-box");
+    }
+
+
 }
