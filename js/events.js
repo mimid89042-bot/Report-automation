@@ -100,6 +100,18 @@ export function initEventListeners() {
     updateNoGeogridThickness();
 
 
+    const pointThreeAlert = document.getElementById("point-three-alert");
+    const closePointThreeBtn = document.getElementById("close-point-three-alert");
+
+    // Add click listener to close button
+    if (closePointThreeBtn) {
+        closePointThreeBtn.addEventListener("click", () => {
+            pointThreeAlert.classList.add("hidden"); // hide alert
+        });
+    }
+
+
+
     // WITH Geogrid thickness input handling
     const thicknessInputWithGeo = document.getElementById("thickness-input-with-geogrid");
     const closeAlertBtnWithGeogrid = document.getElementById("close-with-geogrid-alert");
@@ -122,6 +134,8 @@ export function initEventListeners() {
             updateWithGeogridThickness(); // re-evaluate boxes after closing alert
         });
     }
+
+    updateWithGeogridThickness(); // Run once on load
 
 
 

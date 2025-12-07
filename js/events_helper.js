@@ -116,6 +116,8 @@ export function runCalculations(){
     // PLATFORM REQUIRED
     //--------------------
 
+    
+
     // Calculate Ngamma
     loadCalculated("Ngamma", NgammaF(phi));
     const Ngamma = calculatedData.Ngamma;
@@ -243,7 +245,14 @@ export function runCalculations(){
     loadCalculated("D1WithGeogrid", DWithGeogridF(W, q1dB, Rd1_subgrade,Td, gamma, kptandelta, sp1));
     const D1WithGeogrid = calculatedData.D1WithGeogrid;
     loadCalculated("D2WithGeogrid", DWithGeogridF(W, q2dB, Rd2_subgrade, calculatedData.Td, gamma, kptandelta, sp2));
-    const D2WithGeogrid = calculatedData.TdD2WithGeogrid;
+    const D2WithGeogrid = calculatedData.D2WithGeogrid;
+
+    console.log("D1 with geogrid: ", D1WithGeogrid);
+    console.log("D2 with geogrid: ", D2WithGeogrid);
+
+    if (D1WithGeogrid <= 0.3 && D2WithGeogrid <= 0.3){
+        showElement("point-three-alert");
+    }
 
     // Second formula - ignoring geogrid
     loadCalculated("D1NoGeogridC", DNoGeogridF(W, q1dC, Rd1_subgrade, gamma, kptandelta, sp1));

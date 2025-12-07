@@ -97,9 +97,19 @@ input {
 }
 
 .cases-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;  /* two equal columns */
     gap: 150px;
     margin-top: 20px;
+}
+
+#point-three-alert {
+    width: 100%;          /* span entire container */
+    color: white;
+    background: #f44336;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
 }
 
 .case-column {
