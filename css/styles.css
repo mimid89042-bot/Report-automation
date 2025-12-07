@@ -103,14 +103,6 @@ input {
     margin-top: 20px;
 }
 
-#point-three-alert {
-    width: 100%;          /* span entire container */
-    color: white;
-    background: #f44336;
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 10px;
-}
 
 .case-column {
     flex: none;
