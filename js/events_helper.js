@@ -3,6 +3,7 @@ const REQUIRED_INPUT_IDS = ["soilType", "cu", "phi", "gamma", "W", "q1k", "L1", 
 const REQUIRED_GEOGRID_IDS = ["Tallowable", "n"];
 import { showElement, hideElement, displayPlatformRequiredText, 
         displayPlatformStrongertText, displayPlatformResistiveText,updateNoGeogridThickness,
+        updateWithGeogridThickness,
         platformRequired, platformStronger, platformResistive
          } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
@@ -21,8 +22,10 @@ export function addCohesiveInputListeners() {
 
     const inputs = cohesiveForm.querySelectorAll("input, select");
     inputs.forEach(input => {
-        input.addEventListener("input", runCalculations);
-        input.addEventListener("change", runCalculations);
+        input.addEventListener("input", 
+            runCalculations, updateNoGeogridThickness, updateWithGeogridThickness);
+        input.addEventListener("change", 
+            runCalculations, updateNoGeogridThickness, updateWithGeogridThickness);
     });
 
     cohesiveForm.dataset.listenersAdded = "true"; // mark listeners as added
@@ -69,6 +72,7 @@ export function hideFrom(sectionId) {
     "no-geogrid-thickness-box",
     "no-geogrid-thickness-alert",
     "with-geogrid-thickness-box",
+    "point-three-alert",
     "with-geogrid-thickness-alert",
     "summary-box"
 ];
@@ -100,6 +104,11 @@ export function runCalculations(){
     }else{
         hideElement("cu-alert");
     }
+
+
+    // Update thickness boxes on each calculation run
+    updateNoGeogridThickness();
+    updateWithGeogridThickness();
 
     const cu = inputData.cu; 
     const phi = inputData.phi; 
@@ -206,13 +215,13 @@ export function runCalculations(){
     // PLATFORM RESISTANCE
     //--------------------
 
-    showElement("platform-resistive-box");
+    showElement("platform-resistance-box");
 
     displayPlatformResistiveText(Rd1_platform, Rd2_platform,q1dB,q2dB);
 
-    if(!platformResistive(Rd1_platform,Rd2_platform,Rd1_subgrade, Rd2_subgrade)){
+    if(!platformResistive(Rd1_platform,Rd2_platform,q1dB,q2dB)){
         showElement("platform-not-resistive-alert");
-        hideFrom("platforms-not-resistive-alert");
+        hideFrom("platform-not-resistive-alert");
         return;
     }else{
         hideElement("platform-not-resistive-alert");
@@ -244,7 +253,7 @@ export function runCalculations(){
     // Fist formula - with geogrid
     loadCalculated("D1WithGeogrid", DWithGeogridF(W, q1dB, Rd1_subgrade,Td, gamma, kptandelta, sp1));
     const D1WithGeogrid = calculatedData.D1WithGeogrid;
-    loadCalculated("D2WithGeogrid", DWithGeogridF(W, q2dB, Rd2_subgrade, calculatedData.Td, gamma, kptandelta, sp2));
+    loadCalculated("D2WithGeogrid", DWithGeogridF(W, q2dB, Rd2_subgrade, Td, gamma, kptandelta, sp2));
     const D2WithGeogrid = calculatedData.D2WithGeogrid;
 
     console.log("D1 with geogrid: ", D1WithGeogrid);

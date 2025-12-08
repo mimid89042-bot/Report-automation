@@ -1,4 +1,3 @@
-import {validateNOGeorgridThickness} from './validation.js'
 import { calculatedData } from './data.js';
 import { state  } from './events.js';
 
@@ -15,7 +14,7 @@ export function hideElement(id) {
 
 
 export function platformRequired(q1dA, q2dA, Rd1_subgrade, Rd2_subgrade) {
-  return !(q1dA < Rd1_subgrade && q2dA < Rd2_subgrade);
+  return !(q1dA < Rd1_subgrade || q2dA < Rd2_subgrade);
 }
 
 export function displayPlatformRequiredText(q1dA, q2dA, Rd1_subgrade, Rd2_subgrade) {
@@ -34,7 +33,7 @@ export function displayPlatformRequiredText(q1dA, q2dA, Rd1_subgrade, Rd2_subgra
     }
 
     
-    if (q1dA < Rd1_subgrade && q2dA < Rd2_subgrade) {
+    if (q1dA < Rd1_subgrade || q2dA < Rd2_subgrade) {
         text += 'therefore a working platform is not required for plant support';
     } else { 
         text += 'therefore a working platform is required for plant support';
@@ -43,7 +42,7 @@ export function displayPlatformRequiredText(q1dA, q2dA, Rd1_subgrade, Rd2_subgra
 }
 
 export function platformStronger(Rd1_platform, Rd2_platform, Rd1, Rd2) {
-  return !(Rd1_platform < Rd1 && Rd2_platform < Rd2);
+  return !(Rd1_platform < Rd1 || Rd2_platform < Rd2);
 }
 
 export function displayPlatformStrongertText(Rd1_platform, Rd2_platform, Rd1_subgrade, Rd2_subgrade){
@@ -60,8 +59,8 @@ export function displayPlatformStrongertText(Rd1_platform, Rd2_platform, Rd1_sub
         text += 'and R<sub>d2_platform</sub>  < R<sub>d2_subgrade</sub>, ';
     }
 
-    if(Rd1_platform < Rd1_subgrade && Rd2_platform < Rd2_subgrade){
-        text += " therefore platform is NOT stronger than subgrade"
+    if(Rd1_platform < Rd1_subgrade || Rd2_platform < Rd2_subgrade){
+        text += " therefore platform is not stronger than subgrade"
     }else{
         text+= " therefore platform is stronger than subgrade";
         //showElement("platform-resistance-box");
@@ -71,28 +70,28 @@ export function displayPlatformStrongertText(Rd1_platform, Rd2_platform, Rd1_sub
 }
 
 export function platformResistive(Rd1_platform, Rd2_platform, q1dB, q2dB){
-    return !(q1dB > Rd1_platform && q2dB > Rd2_platform);
+    return !(q1dB > Rd1_platform || q2dB > Rd2_platform);
 }
 
 export function displayPlatformResistiveText(Rd1_platform, Rd2_platform, q1dB, q2dB){
     let text = "";
     if (q1dB < Rd1_platform) {
-        text += 'Now R<sub>d1_platform</sub> > q<sub>1d</sub> ';
+        text += 'Now q<sub>1d</sub> < R<sub>d1_platform</sub> ';
     } else {
-        text += 'Now R<sub>d1_platform</sub> < q<sub>1d</sub> ';
+        text += 'Now q<sub>1d</sub> > R<sub>d1_platform</sub> ';
     }
 
     if (q2dB < Rd2_platform) {
-        text += 'and R<sub>d2_platform</sub> > q<sub>2d</sub>, ';
+        text += 'and q<sub>2d</sub> < R<sub>d2_platform</sub>,';
     } else {
-        text += 'and R<sub>d2_platform</sub> < q<sub>2d</sub>, ';
+        text += 'and q<sub>2d</sub> > R<sub>d2_platform</sub>,';
     }
 
     
-    if (q1dB > Rd1_platform && q2dB > Rd2_platform) {
-        text += 'therefore chosen platform material canNOT provide the required bearing resistance';
-    } else { 
+    if (q1dB > Rd1_platform || q2dB > Rd2_platform) {
         text += 'therefore chosen platform material cannot provide the required bearing resistance';
+    } else { 
+        text += 'therefore chosen platform material can provide the required bearing resistance';
     }
     bearingResistance.innerHTML = text;
 }
@@ -101,7 +100,7 @@ export function displayPlatformResistiveText(Rd1_platform, Rd2_platform, q1dB, q
 // Update No Geogrid Thickness and related boxes
 export function updateNoGeogridThickness() {
     const thicknessInput = parseFloat(document.getElementById("thickness-input-no-geogrid").value);
-    const required = parseFloat(calculatedData.DlargerNoGeorgrid);
+    const required = parseFloat(calculatedData.DlargerNoGeorgrid).toFixed(2);
     const geogridSelect = document.getElementById("geogrid-yesorno").value;
 
 
@@ -112,6 +111,8 @@ export function updateNoGeogridThickness() {
     console.log("User Input No Geogrid Thickness: ", thicknessInput);
 
     hideElement("with-geogrid-thickness-alert");
+    hideElement("point-three-alert");
+
 
 
 
@@ -134,7 +135,7 @@ export function updateNoGeogridThickness() {
 
 export function updateWithGeogridThickness(){
     const thicknessInput = parseFloat(document.getElementById("thickness-input-with-geogrid").value);
-    const required = parseFloat(calculatedData.DlargerWithGeorgrid);
+    const required = parseFloat(calculatedData.DlargerWithGeorgrid).toFixed(2);
 
     
     if (isNaN(thicknessInput)) {
