@@ -452,7 +452,96 @@ span, label,p {
         border-radius: 3px;
     }
 
-    @page {
-        margin: 5mm;
+@page {
+        margin: 5mm;   /* distance from printer edge */
     }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* ---------------------------------------------------------
+       PRINT HEADER (outside border)
+    --------------------------------------------------------- */
+    /* body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 15mm;
+        padding: 3mm 10mm;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box; */
+        /* Optional: uncomment to visualize header
+        background: #eee;
+        */
+    /* } */
+
+    #screen-header {
+        display: none !important; /* hide screen header */
+    }
+
+    #print-header {
+        display: block !important; /* show print header */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 30mm;
+        padding: 5mm 15mm;
+        box-sizing: border-box;
+        border-bottom: none; /* optional */
+    }
+
+
+    /* ---------------------------------------------------------
+       PRINT FOOTER (outside border)
+    --------------------------------------------------------- */
+    body::after {
+        content: "Calculation of the required platform thickness in accordance with BRE 470 guidelines.";
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 15mm;
+        padding: 3mm 10mm;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        box-sizing: border-box;
+        /* Optional for debugging:
+        background: #eee;
+        */
+    }
+
+    /* ---------------------------------------------------------
+       PAGE BORDER (inside margins, below header/footer)
+       This surrounds ONLY the content area.
+    --------------------------------------------------------- */
+    .print-border {
+        position: relative;
+        top: 10mm;       /* matches @page margin */
+        bottom: 10mm;
+        left: 10mm;
+        right: 10mm;
+        border: 1px solid black;
+        pointer-events: none;
+        box-sizing: border-box;
+        page-break-inside: avoid;
+    }
+
+    @media screen {
+    #screen-header {
+        display: block;
+    }
+    #print-header {
+        display: none;
+    }
+    }
+
 }

@@ -8,7 +8,7 @@
 </head>
 <body>
 <!-- REPORT HEADER PAGE 1 -->
-<div class="report-header">
+<div class="report-header" id="screen-header">
 
     <!-- Left column: Project No & Designer -->
     <div class="header-column left-column">
@@ -17,7 +17,7 @@
                 <span class="label-text">Project No</span>
                 <span class="label-colon">:</span>
             </label>
-            <input type="text">
+            <input type="text" id = "projectNo">
         </div>
 
         <div class="input-row">
@@ -25,7 +25,7 @@
                 <span class="label-text">Designer</span>
                 <span class="label-colon">:</span>
             </label>
-            <input type="text">
+            <input type="text" id = "designerName">
         </div>
     </div>
 
@@ -41,15 +41,16 @@
                 <span class="label-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date</span>
                 <span class="label-colon">:</span>
             </label>
-            <input type="date">
+            <input type="date" id = "reportDate">
         </div>
-            <span>Page 1 of 2</span>
+            <span id = "pageNumberPreview">Page 1 of 1</span>
     </div>
 
 </div>
 
+<div id="print-header" class="print-only"></div>
 
-<div class = "report-container">
+<div class = "print-border">
 <h1>Temporary Working Platform Design (BRE 470)</h1>
 <!-- FORM 1: Soil Selection -->
 <form id="soil-selection-form">
