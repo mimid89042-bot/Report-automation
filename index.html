@@ -280,13 +280,31 @@
     </div>
 </div>
 
-    <!-- Case 1 and 2 loading definition images-->
+    <!-- Case 1 and 2 loading definition-->
     <div class="cases-container">
         <div class="case-column">
-            <img src="images/Case1_Loading.png" alt="Case 1 loading" class="case-loading-image">
+            <h3>Case 1 loading</h3>
+            <p>These loading conditions may apply when the rig or crane operator is unlikely to be able to aid recovery
+                from an imminent platform failure. Operations in which this type of loading condition applies could include:</p>
+            <p>• Standing</p>
+            <p>• Travelling</p>
+            <p>• Handling (in crane mode, e.g. lifting a precast concrete pile into the leader, handling casings and 
+                reinforcement cages)</p>
         </div>
         <div class="case-column">
-            <img src="images/Case2_Loading.png" alt="Case 2 loading" class="case-loading-image">
+            <h3>Case 2 loading</h3>
+            <p>These loading conditions may apply when the rig or crane operator can control the load safely, for example
+                by releasing the line load, or by reducing power, to aid recovery from an imminent platform failure. 
+                Case 2 loading is generally given by the worst combination of loas and orientation of the rig. Operations
+                in which this type of loading condition applies to a piling rig could include:</p>
+            <p>• Installing casing</p>
+            <p>• Drilling</p>
+            <p>• Extracting an auger</p>
+            <p>• Extracting casing</p>
+            <p>• Rig travelling or slewing with a fixed mast which has a foot or fixed load (e.g. pile held in the leader)
+                close to the platform surface
+            </p>
+
         </div>
     </div>
 
@@ -342,19 +360,44 @@
     <div class = "cases-container">
         <div class="case-column">
             <p class= "underline">Case 1 shape factors:</p>
-            <p>R<sub>d1_platform</sub> = 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ1</sub>
-            = <br> 0.5 x <span class="gamma_value"></span> x <span class="W_value"></span> 
-            x <span class="Ngamma_value"></span> x <span class="sgamma1_value"></span>
-            = <span class="Rd1_platform_value"></span> kPa
-            <P>R<sub>d1_subgrade</sub> = <span class="Rd1_subgrade_value"></span> kPa</P>
+            <div class="eq-block">
+                <div class="eq-row">
+                    <div class="eq-left">R<sub>d1_platform</sub></div>
+                    <div class="eq-right">= 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ1</sub></div>
+                </div>
+
+                <div class="eq-row">
+                    <div class="eq-left"></div>
+                    <div class="eq-right">= 0.5 × <span class="gamma_value"></span> × <span class="W_value"></span> × <span class="Ngamma_value"></span> × <span class="sgamma1_value"></span></div>
+                 </div>
+
+                <div class="eq-row">
+                    <div class="eq-left"></div>
+                    <div class="eq-right">= <span class="Rd1_platform_value"></span> kPa</div>
+                </div>
+            </div>
+            <p>R<sub>d1_subgrade</sub> = <span class="Rd1_subgrade_value"></span> kPa</P>
         </div>
         <div class= "case-column">
             <p class= "underline">Case 2 shape factors:</p>
-            <p>R<sub>d2_platform</sub> = 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ2</sub>
-            = <br> 0.5 x <span class="gamma_value"></span> x <span class="W_value"></span> 
-            x <span class="Ngamma_value"></span> x <span class="sgamma2_value"></span>
-            = <span class="Rd2_platform_value"></span> kPa
-            <P>R<sub>d2_subgrade</sub> <span class="Rd2_subgrade_value"></span> kPa</P>
+            <div class="eq-block">
+                <div class="eq-row">
+                    <div class="eq-left">R<sub>d2_platform</sub></div>
+                    <div class="eq-right">= 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ2</sub></div>
+                </div>
+
+                <div class="eq-row">
+                    <div class="eq-left"></div>
+                    <div class="eq-right">= 0.5 × <span class="gamma_value"></span> × <span class="W_value"></span> × <span class="Ngamma_value"></span> × <span class="sgamma2_value"></span></div>
+                 </div>
+
+                <div class="eq-row">
+                    <div class="eq-left"></div>
+                    <div class="eq-right">= <span class="Rd2_platform_value"></span> kPa</div>
+                </div>
+            </div>
+
+            <P>R<sub>d2_subgrade</sub> = <span class="Rd2_subgrade_value"></span> kPa</P>
         </div>
 
     </div>

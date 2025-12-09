@@ -245,6 +245,32 @@ span, label,p {
 }
 
 
+.eq-block {
+    display: table;
+       border-collapse: collapse;  /* remove table-like spacing */
+}
+
+.eq-row {
+    display: table-row;
+}
+
+.eq-left,
+.eq-right {
+    display: table-cell;
+    padding: 0;
+}
+
+.eq-left {
+    display: inline-block;
+    width: 40px;        /* shrink to fit text */
+    margin: 0;
+    padding: 0;
+    white-space: nowrap; /* prevents weird wrapping that adds space */
+}
+
+.eq-right {
+    white-space: nowrap;
+}
 
 
 
@@ -325,7 +351,7 @@ span, label,p {
     /* --- IMAGES --- */
     .Ngamma_graph,
     .Kptandelta_graph {
-        width: 120px;   /* set desired width for print */
+        width: 160px;   /* set desired width for print */
         height: auto;   /* maintain aspect ratio */
         max-height: none; /* remove screen constraints */
     }
