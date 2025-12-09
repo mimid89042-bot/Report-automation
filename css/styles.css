@@ -43,12 +43,12 @@ span, label,p {
 }
 /*-----------------------------------------------------------------*/
 .report-container {
-    border: 1px solid black;  /* visible border */
-    padding: 10px;
-    margin: 0;
-        page-break-before: auto;   /* allow it to appear right after header */
+    border: 1px solid rgb(0, 0, 0);
     page-break-inside: avoid;
+    padding: 2px;
 }
+
+
 
 .report-header {
     display: flex;
@@ -314,6 +314,26 @@ span, label,p {
     #thicknessWITHGeogridAlert {
         display: none !important;
     }
+
+
+     .report-section {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 10px; /* optional spacing between sections */
+    }
+
+    /* Prevent header from splitting */
+    .report-header {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        page-break-before: always;
+    }
+
+    /* Prevent container from splitting */
+    .report-container {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
     /*-------------------------------------------------------------*/
 .input-row {
     display: flex;
@@ -418,14 +438,6 @@ span, label,p {
     }
 
     /* ----------- REPORT CONTAINER ON SAME PAGE ------------- */
-
-    .report-container {
-        border: 1px solid black;
-        padding: 8px;
-        margin: 0;
-        page-break-inside: auto; /* allow splitting if needed */
-        page-break-before: auto;
-    }
 
 
 
