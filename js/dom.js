@@ -76,15 +76,15 @@ export function platformResistive(Rd1_platform, Rd2_platform, q1dB, q2dB){
 export function displayPlatformResistiveText(Rd1_platform, Rd2_platform, q1dB, q2dB){
     let text = "";
     if (q1dB < Rd1_platform) {
-        text += 'Now q<sub>1d</sub> < R<sub>d1_platform</sub> ';
+        text += 'Now R<sub>d1_platform</sub> > q<sub>1d</sub> ';
     } else {
-        text += 'Now q<sub>1d</sub> > R<sub>d1_platform</sub> ';
+        text += 'Now R<sub>d1_platform</sub> < q<sub>1d</sub> ';
     }
 
     if (q2dB < Rd2_platform) {
-        text += 'and q<sub>2d</sub> < R<sub>d2_platform</sub>,';
+        text += 'and R<sub>d2_platform</sub> > q<sub>2d</sub>,';
     } else {
-        text += 'and q<sub>2d</sub> > R<sub>d2_platform</sub>,';
+        text += 'and R<sub>d2_platform</sub> < q<sub>2d</sub>,';
     }
 
     

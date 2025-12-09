@@ -326,50 +326,8 @@
    </div>
 
 </div>
-</div>
-<!-- REPORT HEADER PAGE 2 -->
-<div class="report-header">
 
-    <!-- Left column: Project No & Designer -->
-    <div class="header-column left-column">
-        <div class="input-row">
-            <label class="label-pair">
-                <span class="label-text">Project No</span>
-                <span class="label-colon">:</span>
-            </label>
-            <input type="text">
-        </div>
-
-        <div class="input-row">
-            <label class="label-pair">
-                <span class="label-text">Designer</span>
-                <span class="label-colon">:</span>
-            </label>
-            <input type="text">
-        </div>
-    </div>
-
-    <!-- Center column: Logo -->
-    <div class="header-column center-column">
-        <img src="images/AOS_logo.png" alt="Logo" class="logo">
-    </div>
-
-    <!-- Right column: Date & Page -->
-<div class="header-column right-column">
-     <div class="input-row">
-            <label class="label-pair">
-                <span class="label-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date</span>
-                <span class="label-colon">:</span>
-            </label>
-            <input type="date">
-        </div>
-            <span>Page 2 of 2</span>
-    </div>
-
-</div>   
-
-<div class = "report-container">
-
+<div class = "box hidden" id="platform-required-box">
 <!-- PLATFORM REQUIRED BOX -->
    <h3>Check if a working platform is required</h3>
     <span>Check that subgrade cannot provide required bearing resistance without a working platform:</span>
@@ -394,6 +352,7 @@
         </div>
     </div>
     <p id= "twpDecision" class = "indented"></p>
+</div>
 
 <!-- PLATFORM STRONGER BOX-->
 <div class= "box hidden" id="platform-stronger-box" >
@@ -591,54 +550,7 @@
 <div class = "box hidden" id = "with-geogrid-thickness-box">
     <h3> Calculate thickness with geogrid: </h3>
     <p>T<sub>d</sub> = T<sub>allowable</sub> x n = <span class="Tallowable_value"></span>
-         x <span class = "n_value"></span> = <span class = "Td_value"></span> nK/m </p>
-
-         </div>
-
-</div>  
-<!-- REPORT HEADER PAGE 3 -->
-<div class="report-header">
-
-    <!-- Left column: Project No & Designer -->
-    <div class="header-column left-column">
-        <div class="input-row">
-            <label class="label-pair">
-                <span class="label-text">Project No</span>
-                <span class="label-colon">:</span>
-            </label>
-            <input type="text">
-        </div>
-
-        <div class="input-row">
-            <label class="label-pair">
-                <span class="label-text">Designer</span>
-                <span class="label-colon">:</span>
-            </label>
-            <input type="text">
-        </div>
-    </div>
-
-    <!-- Center column: Logo -->
-    <div class="header-column center-column">
-        <img src="images/AOS_logo.png" alt="Logo" class="logo">
-    </div>
-
-    <!-- Right column: Date & Page -->
-<div class="header-column right-column">
-     <div class="input-row">
-            <label class="label-pair">
-                <span class="label-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date</span>
-                <span class="label-colon">:</span>
-            </label>
-            <input type="date">
-        </div>
-            <span>Page 2 of 2</span>
-    </div>
-
-</div>   
-
-
-<div class = "report-container">
+         x <span class = "n_value"></span> = <span class = "Td_value"></span> kN/m </p>
 
     <div class="cases-container">
         <div class = 'case-column'>
@@ -798,7 +710,7 @@
                 </span>
                 <sup>0.5</sup>
             </span>
-            = <span class="D1NoGeogridC_value"></span> m
+            = <span class="D2NoGeogridC_value"></span> m
         </p>
             <!--Max D1=2-->
             <p class = "indented">Max D2  =  <span class ="D2largerWithGeorgrid_value"></span> m</p>
@@ -817,6 +729,7 @@
             </div>
         </div>
     </form>
+</div>
 
 <!-- DISMISSABLE WITH GEOGRID THICKNESS ALERT -->
 <div id="with-geogrid-thickness-alert" class="alert hidden">
@@ -829,7 +742,7 @@
 
 <!--SUMMARY BOX-->
 <div class="box hidden" id="summary-box">
-    <h3>Enter your summary paragraph:</h3>
+    <h3>Analysis summary:</h3>
     <textarea id="userParagraphInput" placeholder="Type your paragraph here..." style="width:100%; min-height:120px;"></textarea>
     <br>
     <!-- <button id="submitParagraphBtn" type="button">Insert Paragraph</button>
