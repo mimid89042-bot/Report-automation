@@ -271,6 +271,26 @@ span, label,p {
 .eq-right {
     white-space: nowrap;
 }
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 1.1;
+}
+.fraction-wrapper {
+    display: inline-flex;
+    align-items: top;
+}
+.fraction .top {
+    display: block;
+    border-bottom: 1px solid black;
+    padding: 0 2px;
+}
+
+.fraction .bottom {
+    display: block;
+    padding: 0 2px;
+}
 
 
 
@@ -363,11 +383,11 @@ span, label,p {
     display: flex;
     justify-content: space-between; /* Spread the three columns */
     align-items: flex-start;
-    padding: 20px;
-    margin-bottom: 20px; /* Space below header */
+    padding: 10px;
+    margin-bottom: 10px; /* Space below header */
     background-color: #f3d5af9c;
     border: 5px solid  #c4740cc9; ;
-    gap: 30px;
+    gap: 20px;
 }
 
     .report-header .header-column {
@@ -398,11 +418,17 @@ span, label,p {
     }
 
     /* ----------- REPORT CONTAINER ON SAME PAGE ------------- */
+
     .report-container {
         border: 1px solid black;
         padding: 8px;
-        page-break-inside: avoid;
+        margin: 0;
+        page-break-inside: auto; /* allow splitting if needed */
+        page-break-before: auto;
     }
+
+
+
 
     /* -------- SELECT STYLING -------- */
     select {

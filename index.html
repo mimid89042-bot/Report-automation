@@ -450,32 +450,79 @@
     <div class="cases-container">
         <div class="case-column">
             <p class= "underline">Case loading 1:</p>
-            <p>D<sub>1</sub> = {W<sub>d</sub> [q<sub>1d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>
-                / γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p1</sub>]}<sup>0.5</sup></p>
+            <p>
+                D<sub>1</sub> =
+                {
+                    W<sub>d</sub>
+                    [
+                        <span class="fraction">
+                            <span class="top">
+                                q<sub>1d</sub> − c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>
+                            </span>
+                            <span class="bottom">
+                                γ<sub>p</sub>K<sub>p</sub>tanδ s<sub>p1</sub>
+                            </span>
+                        </span>
+                    ]
+                }<sup>0.5</sup>
+            </p>
             <p>Where q<sub>1d</sub> = 1.6 × q<sub>1k</sub></p>
             <p>
-                D<sub>1</sub> = 
-                (<span class="W_value"></span> × 
-                ([1.6 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_value"></span>)) / 
-                (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>)
-                <sup>0.5</sup>
+                D<sub>1</sub> =
+                <span class="fraction-wrapper">
+                    <span class="fraction">
+                        <span class="top">
+                            (<span class="W_value"></span> × 
+                            ([1.6 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_value"></span>))
+                        </span>
+                        <span class="bottom">
+                            (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>)
+                        </span>
+                    </span>
+                    <sup>0.5</sup>
+                </span>
                 = <span class="D1NoGeogrid_value"></span> m
             </p>
+
+
         </div>
 
     <div class="case-column">
         <p class="underline">Case 2 loading:</p>
-        <p>D<sub>2</sub> = {W<sub>d</sub> [q<sub>2d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>
-            / γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p2</sub>]}<sup>0.5</sup></p>
+            <p>
+                D<sub>2</sub> =
+                {
+                    W<sub>d</sub>
+                    [
+                        <span class="fraction">
+                            <span class="top">
+                                q<sub>2d</sub> − c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>
+                            </span>
+                            <span class="bottom">
+                                γ<sub>p</sub>K<sub>p</sub>tanδ s<sub>p2</sub>
+                            </span>
+                        </span>
+                    ]
+                }<sup>0.5</sup>
+            </p>
         <p>Where q<sub>2d</sub> = 1.2 × q<sub>2k</sub></p>
         <p>
-            D<sub>2</sub> = 
-            (<span class="W_value"></span> × 
-            ([1.2 × <span class="q2k_value"></span>] - <span class="Rd2_subgrade_value"></span>)) / 
-            (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>)
-            <sup>0.5</sup>
-            = <span class="D2NoGeogrid_value"></span> m 
+            D<sub>2</sub> =
+            <span class="fraction-wrapper">
+                <span class="fraction">
+                    <span class="top">
+                        (<span class="W_value"></span> × 
+                        ([1.2 × <span class="q2k_value"></span>] - <span class="Rd2_subgrade_value"></span>))
+                    </span>
+                    <span class="bottom">
+                        (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>)
+                    </span>
+                </span>
+                <sup>0.5</sup>
+            </span>
+            = <span class="D2NoGeogrid_value"></span> m
         </p>
+
         <br>
     </div>
     </div>
@@ -509,76 +556,161 @@
         <div class = 'case-column'>
             <p class= "underline">Case 1 loading:</p>
             <!--First formula-->
-            <p>D<sub>1</sub> = {W<sub>d</sub> [q<sub>1d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>
-            - (2T<sub>d</sub> /W<sub>d</sub>)]
-            / [γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p1</sub>]}<sup>0.5</sup></p>
+            <p>
+                D<sub>1</sub> =
+                <span class="fraction-wrapper">
+                    <span class="fraction">
+                        <span class="top">
+                            W<sub>d</sub> [q<sub>1d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>
+                            - (2T<sub>d</sub> / W<sub>d</sub>)]
+                        </span>
+                        <span class="bottom">
+                            γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p1</sub>
+                        </span>
+                    </span>
+                    <sup>0.5</sup>
+                </span>
+            </p>
+
             <p>where q<sub>1d</sub> =  1.6q<sub>1k</sub></p>
             <p>
-                D<sub>1</sub> = 
-                {<span class="W_value"></span>  
-                [(1.6 × <span class= "q1k_value"></span>) - <span class="Rd1_subgrade_value"></span> 
-                - (2 x <span class = "Td_value"></span> / <span class ="W_value"></span>)] /
-                [<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>]}
-                <sup>0.5</sup>
-                = <span class ="D1WithGeogrid_value"></span> m
+                D<sub>1</sub> =
+                <span class="fraction-wrapper">
+                    <span class="fraction">
+                        <span class="top">
+                            <span class="W_value"></span>  
+                            [(1.6 × <span class="q1k_value"></span>) - <span class="Rd1_subgrade_value"></span> 
+                            - (2 × <span class="Td_value"></span> / <span class="W_value"></span>)]
+                        </span>
+                        <span class="bottom">
+                            <span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>
+                        </span>
+                    </span>
+                    <sup>0.5</sup>
+                </span>
+                = <span class="D1WithGeogrid_value"></span> m
             </p>
+
 
         </div>
             <div class = 'case-column'>
             <p class="underline">Case 2 loading:</p>
             <!--First formula-->
-            <p>D<sub>2</sub> = {W<sub>d</sub> [q<sub>2d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>
-            - (2T<sub>d</sub> /W<sub>d</sub>)]
-            / [γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p2</sub>]}<sup>0.5</sup></p>
+            <p>
+                D<sub>2</sub> =
+                <span class="fraction-wrapper">
+                    <span class="fraction">
+                        <span class="top">
+                            W<sub>d</sub> [q<sub>2d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>
+                            - (2T<sub>d</sub> / W<sub>d</sub>)]
+                        </span>
+                        <span class="bottom">
+                            γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p2</sub>
+                        </span>
+                    </span>
+                    <sup>0.5</sup>
+                </span>
+            </p>
+
             <p>where q<sub>2d</sub> =  1.2q<sub>2k</sub></p>
             <p>
-                D<sub>2</sub> = 
-                {<span class="W_value"></span>  
-                [(1.2 × <span class= "q2k_value"></span>) - <span class="Rd2_subgrade_value"></span> 
-                - (2 x <span class = "Td_value"></span> / <span class ="W_value"></span>)] /
-                [<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>]}
-                <sup>0.5</sup>
-                = <span class ="D2WithGeogrid_value"></span> m
+                D<sub>2</sub> =
+                <span class="fraction-wrapper">
+                    <span class="fraction">
+                        <span class="top">
+                            <span class="W_value"></span>  
+                            [(1.2 × <span class="q2k_value"></span>) - <span class="Rd2_subgrade_value"></span> 
+                            - (2 × <span class="Td_value"></span> / <span class="W_value"></span>)]
+                        </span>
+                        <span class="bottom">
+                            <span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>
+                        </span>
+                    </span>
+                    <sup>0.5</sup>
+                </span>
+                = <span class="D2WithGeogrid_value"></span> m
             </p>
         </div>
     </div>
 
-                <!-- DISMISSABLE NO GEOGRID THICKNESS ALERT -->
-            <div id="point-three-alert" class="alert hidden">
-                <span class="closebtn" id="close-point-three-alert">&times;</span>
-               Minimum acceptable cover to the reinforcement is 0.3 m
-            </div>
-            <h3>Design thickness of platform should satify: </h3>
+        <!-- DISMISSABLE NO GEOGRID THICKNESS ALERT -->
+    <div id="point-three-alert" class="alert hidden">
+        <span class="closebtn" id="close-point-three-alert">&times;</span>
+        Minimum acceptable cover to the reinforcement is 0.3 m
+    </div>
+    <h3>Design thickness of platform should satify: </h3>
     <div class = "cases-container">
         <div class = "case-column">
             <!--Second formula-->
-            <p>D<sub>1</sub> (ignoring geogrid) = {W<sub>d</sub> [q<sub>1d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>
-                / γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p1</sub>]}<sup>0.5</sup></p>
-            <p>Where q<sub>1d</sub> = 1.25 × q<sub>1k</sub></p>
-            <p>
-                D<sub>1</sub> = 
-                (<span class="W_value"></span> × 
-                ([1.25 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_value"></span>)) / 
-                (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>)
+        <p>
+            D<sub>1</sub> (ignoring geogrid) =
+            <span class="fraction-wrapper">
+                <span class="fraction">
+                    <span class="top">
+                        W<sub>d</sub> [q<sub>1d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>]
+                    </span>
+                    <span class="bottom">
+                        γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p1</sub>
+                    </span>
+                </span>
                 <sup>0.5</sup>
-                = <span class="D1NoGeogridC_value"></span> m
-            </p> <br><br>
+            </span>
+        </p>
+
+            <p>Where q<sub>1d</sub> = 1.25 × q<sub>1k</sub></p>
+        <p>
+            D<sub>1</sub> =
+            <span class="fraction-wrapper">
+                <span class="fraction">
+                    <span class="top">
+                        <span class="W_value"></span> × 
+                        ([1.25 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_value"></span>)
+                    </span>
+                    <span class="bottom">
+                        <span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>
+                    </span>
+                </span>
+                <sup>0.5</sup>
+            </span>
+            = <span class="D1NoGeogridC_value"></span> m
+        </p>
+
             <!--Max D1-->
             <p class = "indented">Max D1  =  <span class ="D1largerWithGeorgrid_value"></span> m</p>
         </div>
         <div class = "case-column">
               <!--Second formula-->
-            <p>D<sub>2</sub> (ignoring geogrid) = {W<sub>d</sub> [q<sub>2d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>
-                / γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p2</sub>]}<sup>0.5</sup></p>
-            <p>Where q<sub>2d</sub> = 1.05 × q<sub>2k</sub></p>
-            <p>
-                D<sub>2</sub> = 
-                (<span class="W_value"></span> × 
-                ([1.05 × <span class="q2k_value"></span>] - <span class="Rd2_subgrade_value"></span>)) / 
-                (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>)
+        <p>
+            D<sub>2</sub> (ignoring geogrid) =
+            <span class="fraction-wrapper">
+                <span class="fraction">
+                    <span class="top">
+                        W<sub>d</sub> [q<sub>2d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>]
+                    </span>
+                    <span class="bottom">
+                        γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p2</sub>
+                    </span>
+                </span>
                 <sup>0.5</sup>
-                = <span class="D2NoGeogridC_value"></span> m    
-            </p> <br><br>
+            </span>
+        </p>
+            <p>Where q<sub>2d</sub> = 1.05 × q<sub>2k</sub></p>
+        <p>
+            D<sub>2</sub> =
+            <span class="fraction-wrapper">
+                <span class="fraction">
+                    <span class="top">
+                        <span class="W_value"></span> × 
+                        ([1.05 × <span class="q2k_value"></span>] - <span class="Rd2_subgrade_value"></span>)
+                    </span>
+                    <span class="bottom">
+                        <span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>
+                    </span>
+                </span>
+                <sup>0.5</sup>
+            </span>
+            = <span class="DNoGeogridC_value"></span> m
+        </p>
             <!--Max D1=2-->
             <p class = "indented">Max D2  =  <span class ="D2largerWithGeorgrid_value"></span> m</p>
 
