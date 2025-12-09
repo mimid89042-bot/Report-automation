@@ -13,12 +13,19 @@
     <!-- Left column: Project No & Designer -->
     <div class="header-column left-column">
         <div class="input-row">
-            <label for="projectNo">Project No&nbsp;&nbsp; :</label>
-            <input id="projectNo" type="text" placeholder="Enter project number">
+            <label class="label-pair">
+                <span class="label-text">Project No</span>
+                <span class="label-colon">:</span>
+            </label>
+            <input type="text">
         </div>
+
         <div class="input-row">
-            <label for="designer">Designer&nbsp;&nbsp;&nbsp;&nbsp; :</label>
-            <input id="designer" type="text" placeholder="Enter designer name">
+            <label class="label-pair">
+                <span class="label-text">Designer</span>
+                <span class="label-colon">:</span>
+            </label>
+            <input type="text">
         </div>
     </div>
 
@@ -28,12 +35,15 @@
     </div>
 
     <!-- Right column: Date & Page -->
-    <div class="header-column right-column">
-        <div class="input-row">
-            <label for="reportDate">Date:</label>
-            <input id="reportDate" type="date">
+<div class="header-column right-column">
+     <div class="input-row">
+            <label class="label-pair">
+                <span class="label-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date</span>
+                <span class="label-colon">:</span>
+            </label>
+            <input type="date">
         </div>
-        <span>Page 1 of 2</span>
+            <span>Page 1 of 2</span>
     </div>
 
 </div>
@@ -56,11 +66,11 @@
 <!-- FORM 2: Cohesive Inputs -->
 <form id="cohesive-inputs-form" class="box hidden">
     <h3>Design values for soil properties</h3>
-    <div class="container">
+    <div class="no-gap-container">
 
-        <!-- CU row -->
+        <!-- Cu row -->
         <div class="row">
-            <label class="main-label">Subgrade undrained shear strength:</label>
+            <label class="main-label">Subgrade undrained shear strength,</label>
 
             <div class="input-pair">
                 <label class="sub-label">C<sub>u</sub> (kPa):</label>
@@ -70,7 +80,7 @@
 
         <!-- Working platform row -->
         <div class="row">
-            <label class="main-label">Working platform:</label>
+            <label class="main-label">Working platform,</label>
 
             <div class="input-pair">
                 <label class="sub-label">ϕ'<sub>p</sub> (°):</label>
@@ -78,14 +88,14 @@
             </div>
 
             <div class="input-pair">
-                <label class="sub-label">γ<sub>p</sub> (kN/m<sup>3</sup>):</label>
+                <label class="sub-label">&nbsp;&nbsp;γ<sub>p</sub> (kN/m<sup>3</sup>):</label>
                 <input type="number" id="gamma" step="0.01" required value="20">
             </div>
         </div>
 
     </div>
 
-
+    <!--Width row-->
     <h3>Effective width and length of loading</h3>
     <div class ="row">
         <label class="main-label">Effective width, </label>
@@ -95,26 +105,42 @@
             </div>
     </div>
 
-
+    <!-- Case 1 and 2 loading inputs-->
     <div class="cases-container">
         <div class="case-column">
             <p class="underline">Case 1 loading inputs</p>
-            <label>Rectangular loading, q<sub>1k</sub> (kPa):
-                <input type="number" id="q1k" step="0.01" required value="140">
-            </label><br>
-            <label>Effective length, L<sub>1d</sub> (m):
-                <input type="number" id="L1" step="0.01" required value="3.6">
-            </label><br>
+            <div class ="row">
+                <label class="main-label">Rectangular loading,</label>
+                    <div class="input-pair">
+                        <label class="sub-label"> q<sub>1k</sub> (kPa):</label>
+                        <input type="number" id="q1k" step="0.01" required value="140">
+                    </div>
+            </div>
+            <div class ="row">
+                <label class="main-label">Effective length,</label>
+                    <div class="input-pair">
+                        <label class="sub-label">L<sub>1d</sub> (m):</label>
+                        <input type="number" id="L1" step="0.01" required value="3.6">
+                    </div>
+            </div>
         </div>
 
         <div class="case-column">
             <p class="underline">Case 2 loading inputs</p>
-            <label>Rectangular loading, q<sub>2k</sub> (kPa):
-                <input type="number" id="q2k" step="0.01" required value="190">
-            </label><br>
-            <label>Effective length, L<sub>2d</sub> (m):
-                <input type="number" id="L2" step="0.01" required value="3.1">
-            </label><br>
+            <div class ="row">
+                <label class="main-label">Rectangular loading,</label>
+                    <div class="input-pair">
+                        <label class="sub-label"> q<sub>2k</sub> (kPa):</label>
+                        <input type="number" id="q2k" step="0.01" required value="190">
+                    </div>
+            </div>
+            <div class ="row">
+                <label class="main-label">Effective length,</label>
+                    <div class="input-pair">
+                        <label class="sub-label">L<sub>2d</sub> (m):</label>
+                        <input type="number" id="L2" step="0.01" required value="3.1">
+                    </div>
+            </div>
         </div>
     </div>
 </form>
@@ -129,17 +155,27 @@
             <option value="no">No</option>
         </select>
     </div>
-
-    <div class="container hidden" id="geogrid-inputs">
-        <div class="cell">
-            <label>Geogrid allowable tensile strength, T<sub>allowable</sub> (kN/m):</label>
-            <input type="number" id="Tallowable" step="0.01" value="15">
-        </div>
-        <div class="cell">
-            <label>No. of geogrids, n: </label>
-            <input type="number" id="n" step="0.01" value="2">
-        </div>
+<div class="box hidden" id="geogrid-inputs">
+<div class="row">
+    <label class="main-label">Geogrid allowable tensile strength,</label>
+    <div class="input-pair">
+        <label class="sub-label">T<sub>allowable</sub> (kN/m):</label>
+        <input type="number" id="Tallowable" step="0.01" value="15">
     </div>
+</div>
+
+<div class="row">
+    <label class="main-label">No. of geogrids,</label>
+    <div class="input-pair">
+        <label class="sub-label">n:</label>
+        <input type="number" id="n" step="0.01" value="2">
+    </div>
+</div>
+</div>
+
+
+
+    <br>
 </form>
 
 
@@ -158,6 +194,7 @@
 
 <div class="equation-row">
     <div class="equation-column">
+        <!-- Nc Value -->
         <p>N<sub>c</sub> = 5.14</p>
         <!-- Ngamma MathML-->
         <p>
@@ -231,13 +268,11 @@
                 </math>
                 = <span class="Ngamma_value"></span>
         </p>
-        <!-- Kptandelta MathML-->
-        <p>
-            K<sub>p</sub>tanδ 
-                = <span class="kptandelta_value"></span>
-        </p>
+        <!-- Kptandelta-->
+        <p>K<sub>p</sub>tanδ = <span class="kptandelta_value"></span></p>
     </div>
 
+    <!-- Ngamma and Kptandelta images -->
     <div class="image-column">
         <img src="images/Ngamma_graph.png" alt="Ngamma_graph" class="Ngamma_graph">
         <img src="images/Kptandelta_graph.png" alt="Kptandelta_graph" class="Kptandelta_graph">
@@ -245,7 +280,17 @@
     </div>
 </div>
 
+    <!-- Case 1 and 2 loading definition images-->
+    <div class="cases-container">
+        <div class="case-column">
+            <img src="images/Case1_Loading.png" alt="Case 1 loading" class="case-loading-image">
+        </div>
+        <div class="case-column">
+            <img src="images/Case2_Loading.png" alt="Case 2 loading" class="case-loading-image">
+        </div>
+    </div>
 
+    <!-- s factors-->
    <div class="cases-container">
       <div class="case-column">
          <h3>Case 1 loading results</h3>
@@ -262,6 +307,7 @@
       </div>
    </div>
 
+<!-- PLATFORM REQUIRED BOX -->
    <h3>Check if a working platform is required</h3>
     <span>Check that subgrade cannot provide required bearing resistance without a working platform:</span>
 
@@ -325,8 +371,7 @@
 
 <!-- PLATFORM RESISTANCE BOX-->
  <div class = "box hidden" id = "platform-resistance-box" >
-    <h3> Check that platform material can provide required bearing resistance when placed at a 
-        thickness sufficient to ensure that the subgrade does not materially affect bearing capacity:</h3>
+    <h3> Check that platform material can provide required bearing resistance:</h3>
     <div class = "cases-container">
         <div class = "case-column">
             <p class= "underline">Case loading 1:</p>
