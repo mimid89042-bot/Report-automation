@@ -5,22 +5,13 @@
     <meta charset= "utf-8">
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- jsPDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<!-- html2canvas -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<!-- Include MathJax -->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 </head>
 <body>
 
 <div class = "report-page">
 
 <!-- REPORT HEADER PAGE 1 -->
-<div class="report-header" id="screen-header">
+<div class="report-header">
 
     <!-- Left column: Project No & Designer -->
     <div class="header-column left-column">
@@ -55,13 +46,13 @@
             </label>
             <input type="date" id = "reportDate">
         </div>
-            <span id = "pageNumberPreview">Page 1 of 1</span>
+            <span id = "pageNumberPreview">Page 1 of 2</span>
     </div>
 
 </div>
 
 
-<div class = "report-body">    
+ <div class = "report-content">
 <h1>Temporary Working Platform Design (BRE 470)</h1>
 <!-- FORM 1: Soil Selection -->
 <form id="soil-selection-form">
@@ -169,7 +160,7 @@
     </div>
 <div class="box hidden" id="geogrid-inputs">
 <div class="row">
-    <label class="main-label">Geogrid allowable tensile strength,</label>
+    <label class="main-label">Geogrid allowable (NOT ULTIMATE) tensile strength,</label>
     <div class="input-pair">
         <label class="sub-label">T<sub>allowable</sub> (kN/m):</label>
         <input type="number" id="Tallowable" step="0.01" value="15">
@@ -189,16 +180,12 @@
 
     <br>
 </form>
-
-
 <!-- INPUTS ENDS-->
 
 <!-- PERMANENT CU ALERT -->
 <div id="cu-alert" class="alert hidden">
     Subgrade strength is outside of BRE recommended parameters (between 20 and 80 kPa). Another method is recommended
 </div>
-
-
 
 
 <!-- PLATFORM REQUIRED BOX -->
@@ -337,9 +324,6 @@
       </div>
    </div>
 
-</div>
-
-<div class = "box hidden" id="platform-required-box">
 <!-- PLATFORM REQUIRED BOX -->
    <h3>Check if a working platform is required</h3>
     <span>Check that subgrade cannot provide required bearing resistance without a working platform:</span>
@@ -365,6 +349,57 @@
     </div>
     <p id= "twpDecision" class = "indented"></p>
 </div>
+
+</div> <!--end of page 1 content-->
+<div class="report-footer ">
+    Calculation of the required platform thickness in accordance with BRE 470 guidelines.
+</div>
+</div> <!--end of page 1-->
+
+<div class = "report-page">
+<!-- REPORT HEADER PAGE 1 -->
+<div class="report-header">
+
+    <!-- Left column: Project No & Designer -->
+    <div class="header-column left-column">
+        <div class="input-row">
+            <label class="label-pair">
+                <span class="label-text">Project No</span>
+                <span class="label-colon">:</span>
+            </label>
+            <input type="text" id = "projectNo2">
+        </div>
+
+        <div class="input-row">
+            <label class="label-pair">
+                <span class="label-text">Designer</span>
+                <span class="label-colon">:</span>
+            </label>
+            <input type="text" id = "designerName2">
+        </div>
+    </div>
+
+    <!-- Center column: Logo -->
+    <div class="header-column center-column">
+        <img src="images/AOS_logo.png" alt="Logo" class="logo">
+    </div>
+
+    <!-- Right column: Date & Page -->
+    <div class="header-column right-column">
+     <div class="input-row">
+            <label class="label-pair">
+                <span class="label-text">Date</span>
+                <span class="label-colon">:</span>
+            </label>
+            <input type="date" id = "reportDate2">
+        </div>
+            <span id = "pageNumberPreview">Page 2 of 2</span>
+    </div>
+
+</div>
+
+<div class = "report-content">
+
 
 <!-- PLATFORM STRONGER BOX-->
 <div class= "box hidden" id="platform-stronger-box" >
@@ -413,6 +448,7 @@
         </div>
 
     </div>
+    
     <p id = "subgradeVplatform" class = "indented" ></p> <br>
 </div>
 
@@ -420,8 +456,6 @@
 <div id="platform-not-stronger-alert" class="alert hidden">
     The platform material is weaker than subgrade. Choose a stronger platform material.
 </div>
-
-
 
 
 <!-- PLATFORM RESISTANCE BOX-->
@@ -541,7 +575,7 @@
     <form id = "noGeogridForm">
         <div class = "container">
             <div class = "cell">
-                <label for ="thickness-input-no-geogrid">
+                <label for ="thickness-input-no-geogrid" style = "font-size: 14pt;">
                     Selected thickness without geogrid (m):
                 </label>
                 <input type="number" id = "thickness-input-no-geogrid" step = "0.01" required>
@@ -734,7 +768,7 @@
         <form id = "withGeogridForm">
         <div class = "container">
             <div class = "cell">
-                <label for ="thicknessWithGeogridUserInput">
+                <label for ="thicknessWithGeogridUserInput" style = "font-size: 14pt;">
                     Selected thickness with geogrid (m):
                 </label>
                 <input type="number" id = "thickness-input-with-geogrid" step = "0.01" required>
@@ -755,17 +789,18 @@
 <!--SUMMARY BOX-->
 <div class="box hidden" id="summary-box">
     <h3>Analysis summary:</h3>
-    <textarea id="userParagraphInput" placeholder="Type your paragraph here..." style="width:100%; min-height:120px;"></textarea>
+    <textarea id="userParagraphInput" placeholder="Type your paragraph here..." 
+    style="width:90%; min-height:40px;" font-size = "30px"></textarea>
     <br>
 </div>
 
+</div> <!--end of page 2 content-->
+
+<div class="report-footer ">
+    Calculation of the required platform thickness in accordance with BRE 470 guidelines.
 </div>
 
-<div class="report-footer">
-    My Report Footer
-</div>
-
-</div>
+</div> <!--end of page 2-->
 
 
 <script type="module" src="js/main.js"></script>

@@ -138,23 +138,32 @@ export function initEventListeners() {
 
     updateWithGeogridThickness(); // Run once on load
 
-    // -----------------------------
-    // PRINT HEADER INPUT UPDATES
-    // -----------------------------
-    document.addEventListener("DOMContentLoaded", () => {
-        // live update while typing
-        ["projectNo", "designerName", "reportDate"].forEach(id => {
-            const input = document.getElementById(id);
-            if (input) {
-                input.addEventListener("input", updatePrintHeader);
-            }
-        });
+    //HEADER SAVING AND LOADING
+    
+    // First page inputs
+    const projectNo = document.getElementById("projectNo");
+    const designerName = document.getElementById("designerName");
+    const reportDate = document.getElementById("reportDate");
+
+    // Second page inputs
+    const projectNo2 = document.getElementById("projectNo2");
+    const designerName2 = document.getElementById("designerName2");
+    const reportDate2 = document.getElementById("reportDate2");
+
+    // Sync function
+    function syncHeaders() {
+        if (projectNo2) projectNo2.value = projectNo.value;
+        if (designerName2) designerName2.value = designerName.value;
+        if (reportDate2) reportDate2.value = reportDate.value;
+    }
+
+    // Listen for changes on first page
+    [projectNo, designerName, reportDate].forEach(input => {
+        input.addEventListener("input", syncHeaders);
     });
 
-    // ensure header is populated before printing
-    window.onbeforeprint = updatePrintHeader;
-
-    
+    // Run once on load
+    syncHeaders();
 
 
 }
