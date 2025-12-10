@@ -8,6 +8,7 @@ import { validateCu, validateNOGeorgridThickness,
         validateWITHGeorgridThickness
         } from './validation.js';
 import { addCohesiveInputListeners, runCalculations, hideFrom} from './events_helper.js'
+import { updatePrintHeader } from './print.js';
 
 // events.js (or state.js)
 export const state = {
@@ -137,7 +138,23 @@ export function initEventListeners() {
 
     updateWithGeogridThickness(); // Run once on load
 
+    // -----------------------------
+    // PRINT HEADER INPUT UPDATES
+    // -----------------------------
+    document.addEventListener("DOMContentLoaded", () => {
+        // live update while typing
+        ["projectNo", "designerName", "reportDate"].forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.addEventListener("input", updatePrintHeader);
+            }
+        });
+    });
 
+    // ensure header is populated before printing
+    window.onbeforeprint = updatePrintHeader;
+
+    
 
 
 }

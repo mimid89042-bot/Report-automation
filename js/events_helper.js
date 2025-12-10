@@ -10,9 +10,7 @@ import { inputData, calculatedData, loadInput, loadCalculated } from './data.js'
 import { NgammaF, kptandeltaF, scF, sgammaF, spF, Rd_subgradeF, Rd_platformF, 
         q1dAF, q2dAF, q1dBF, q2dBF, q1dCF, q2dCF, 
         DNoGeogridF, DWithGeogridF } from './calculations.js';
-import { validateCu, validateNOGeorgridThickness,
-        validateWITHGeorgridThickness
-        } from './validation.js';
+import { validateCu} from './validation.js';
 
 
 // Function to add listeners to cohesive inputs

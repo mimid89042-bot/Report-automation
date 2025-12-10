@@ -5,8 +5,20 @@
     <meta charset= "utf-8">
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<!-- Include MathJax -->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 </head>
 <body>
+
+<div class = "report-page">
+
 <!-- REPORT HEADER PAGE 1 -->
 <div class="report-header" id="screen-header">
 
@@ -35,10 +47,10 @@
     </div>
 
     <!-- Right column: Date & Page -->
-<div class="header-column right-column">
+    <div class="header-column right-column">
      <div class="input-row">
             <label class="label-pair">
-                <span class="label-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date</span>
+                <span class="label-text">Date</span>
                 <span class="label-colon">:</span>
             </label>
             <input type="date" id = "reportDate">
@@ -48,9 +60,8 @@
 
 </div>
 
-<div id="print-header" class="print-only"></div>
 
-<div class = "print-border">
+<div class = "report-body">    
 <h1>Temporary Working Platform Design (BRE 470)</h1>
 <!-- FORM 1: Soil Selection -->
 <form id="soil-selection-form">
@@ -746,9 +757,12 @@
     <h3>Analysis summary:</h3>
     <textarea id="userParagraphInput" placeholder="Type your paragraph here..." style="width:100%; min-height:120px;"></textarea>
     <br>
-    <!-- <button id="submitParagraphBtn" type="button">Insert Paragraph</button>
-    <h3>Preview:</h3>
-    <div id="userParagraphDisplay" style="white-space: pre-wrap; border: 1px solid #ccc; padding: 10px; min-height: 80px;"></div> --> 
+</div>
+
+</div>
+
+<div class="report-footer">
+    My Report Footer
 </div>
 
 </div>

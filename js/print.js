@@ -1,42 +1,27 @@
-// print.js
+// REMOVE this import line
+// import html2pdf from 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
 
-export function preparePrintHeader() {
-    console.log("preparePrintHeader called");
-    const screenHeader = document.getElementById("screen-header");
-    const printHeader = document.getElementById("print-header");
+export function updatePrintHeader() {
+    const btn = document.getElementById('download-pdf-btn');
+    if (!btn) return;
 
-    if (!screenHeader || !printHeader){
-           console.log("Header elements missing!");
-           return;
-    }
-        console.log("Found headers");
-    // Clone the header
-    let clone = screenHeader.cloneNode(true);
+    btn.addEventListener('click', async () => {
+        const content = document.getElementById('report-content');
+        if (!content) return;
 
-    // Replace each input by ID
-    const projectNoInput = clone.querySelector("#projectNo");
-    const designerInput = clone.querySelector("#designerName");
-    const dateInput = clone.querySelector("#reportDate");
+        // Render MathJax first
+        await MathJax.typesetPromise([content]);
 
-    if (projectNoInput) {
-        const span = document.createElement("span");
-        span.textContent = projectNoInput.value || "";
-        projectNoInput.replaceWith(span);
-    }
+        const opt = {
+            margin: [15, 10, 15, 10],
+            filename: 'report.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 0.5, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['css', 'legacy'] }
+        };
 
-    if (designerInput) {
-        const span = document.createElement("span");
-        span.textContent = designerInput.value || "";
-        designerInput.replaceWith(span);
-    }
-
-    if (dateInput) {
-        const span = document.createElement("span");
-        span.textContent = dateInput.value || "";
-        dateInput.replaceWith(span);
-    }
-
-    // Inject into print header
-    printHeader.innerHTML = "";
-    printHeader.appendChild(clone);
+        // html2pdf is available on the global window object
+        window.html2pdf().set(opt).from(content).save();
+    });
 }
