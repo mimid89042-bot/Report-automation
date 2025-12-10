@@ -160,17 +160,17 @@
     </div>
 <div class="box hidden" id="geogrid-inputs">
 <div class="row">
-    <label class="main-label">Geogrid allowable (NOT ULTIMATE) tensile strength,</label>
+    <label class="main-label-geogrid">Geogrid allowable (NOT ULTIMATE) tensile strength,</label>
     <div class="input-pair">
-        <label class="sub-label">T<sub>allowable</sub> (kN/m):</label>
+        <label class="sub-label-geogrid">T<sub>allowable</sub> (kN/m):</label>
         <input type="number" id="Tallowable" step="0.01" value="15">
     </div>
 </div>
 
 <div class="row">
-    <label class="main-label">No. of geogrids,</label>
+    <label class="main-label-geogrid">No. of geogrids,</label>
     <div class="input-pair">
-        <label class="sub-label">n:</label>
+        <label class="sub-label-geogrid">n:</label>
         <input type="number" id="n" step="0.01" value="2">
     </div>
 </div>
@@ -351,14 +351,14 @@
 </div>
 
 </div> <!--end of page 1 content-->
-<div class="report-footer ">
+<div class="report-footer hidden-print">
     Calculation of the required platform thickness in accordance with BRE 470 guidelines.
 </div>
 </div> <!--end of page 1-->
 
 <div class = "report-page">
 <!-- REPORT HEADER PAGE 1 -->
-<div class="report-header">
+<div class="report-header hidden-print">
 
     <!-- Left column: Project No & Designer -->
     <div class="header-column left-column">
@@ -760,7 +760,7 @@
         </p>
             <!--Max D1=2-->
             <p class = "indented">Max D2  =  <span class ="D2largerWithGeorgrid_value"></span> m</p>
-
+            <br>
         </div>
     </div>
 
@@ -768,7 +768,7 @@
         <form id = "withGeogridForm">
         <div class = "container">
             <div class = "cell">
-                <label for ="thicknessWithGeogridUserInput" style = "font-size: 14pt;">
+                <label for ="thickness-input-with-geogrid" style = "font-size: 14pt;">
                     Selected thickness with geogrid (m):
                 </label>
                 <input type="number" id = "thickness-input-with-geogrid" step = "0.01" required>
@@ -790,13 +790,13 @@
 <div class="box hidden" id="summary-box">
     <h3>Analysis summary:</h3>
     <textarea id="userParagraphInput" placeholder="Type your paragraph here..." 
-    style="width:90%; min-height:40px;" font-size = "30px"></textarea>
+        style="width:90%; min-height:40px; font-size: 14px"></textarea>
     <br>
 </div>
 
 </div> <!--end of page 2 content-->
 
-<div class="report-footer ">
+<div class="report-footer hidden-print">
     Calculation of the required platform thickness in accordance with BRE 470 guidelines.
 </div>
 

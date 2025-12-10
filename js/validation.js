@@ -22,7 +22,7 @@ export function validateNOGeorgridThickness(DlargerNoGeorgrid){
 
 export function validateWITHGeorgridThickness(DlargerWithGeorgrid){
     const thicknessWithGeogridUserInput = 
-    parseFloat(document.getElementById("thicknessWithGeogridUserInput").value);
+    parseFloat(document.getElementById("thickness-input-with-geogrid").value);
     if (thicknessWithGeogridUserInput < DlargerWithGeorgrid){
         return false;
     }
