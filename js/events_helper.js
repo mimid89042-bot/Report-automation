@@ -208,7 +208,7 @@ export function runCalculations(){
         sc2 = calculatedData.sc2;
         showClass("sc");
     }else {
-        hideClass("sc1");
+        hideClass("sc");
     }
     loadCalculated("sgamma1", sgammaF(W, L1));
     const sgamma1 = calculatedData.sgamma1;
@@ -220,12 +220,30 @@ export function runCalculations(){
     const sp2 = calculatedData.sp2;
 
 
+    let Rd1_subgrade;
+    let Rd2_subgrade;
 
-    // R_d no geogrod
-    loadCalculated("Rd1_subgrade", Rd_subgradeF(cu, sc1));
-    const Rd1_subgrade = calculatedData.Rd1_subgrade;
-    loadCalculated("Rd2_subgrade", Rd_subgradeF(cu, sc2));
-    const Rd2_subgrade = calculatedData.Rd2_subgrade;
+    if (getSoilType() == "cohesive"){
+        // Rd_subgrade no geogrid COHESIVE
+        loadCalculated("Rd1_subgrade_cohesive", Rd_subgradeF(cu, sc1));
+        Rd1_subgrade = calculatedData.Rd1_subgrade_cohesive;
+        loadCalculated("Rd2_subgrade_cohesive", Rd_subgradeF(cu, sc2));
+        Rd2_subgrade = calculatedData.Rd2_subgrade_cohesive;
+
+        showClass("Rd_subgrade_cohesive");
+        hideClass("Rd_subgrade_granular");
+    } else if (getSoilType() == "granular"){
+        // Rd_subgrade GRANULAR   --- note using Rd platform formula for Rd subgrade!!!
+        loadCalculated("Rd1_subgrade_granular", Rd_platformF(
+            gamma_subgrade, W, Ngamma_subgrade, sgamma1));
+        Rd1_subgrade = calculatedData.Rd1_subgrade_granular;
+        loadCalculated("Rd2_subgrade_granular", Rd_platformF(
+            gamma_subgrade, W, Ngamma_subgrade, sgamma2));
+        Rd2_subgrade = calculatedData.Rd2_subgrade_granular;
+
+        hideClass("Rd_subgrade_cohesive");
+        showClass("Rd_subgrade_granular");
+    }
 
     // Factored loads
     loadCalculated("q1dA", q1dAF(q1k));

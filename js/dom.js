@@ -12,14 +12,17 @@ export function hideElement(id) {
     if (el) el.classList.add('hidden');
 }
 
-function showClass(className) {
-    document.querySelectorAll("." + className).forEach(el => el.style.display = "");
+export function showClass(className) {
+    document.querySelectorAll("." + className).forEach(el => {
+        el.classList.remove("hidden");
+    });
 }
 
-function hideClass(className) {
-    document.querySelectorAll("." + className).forEach(el => el.style.display = "none");
+export function hideClass(className) {
+    document.querySelectorAll("." + className).forEach(el => {
+        el.classList.add("hidden");
+    });
 }
-
 
 
 export function platformRequired(q1dA, q2dA, Rd1_subgrade, Rd2_subgrade) {
