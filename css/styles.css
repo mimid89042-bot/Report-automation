@@ -9,6 +9,12 @@ label {
     width: 330px;
 }
 
+
+.label-GWT{
+    display: inline-block; 
+    width: 265px;
+}
+
 input { 
     margin-bottom: 1px;
     width: 50px; 

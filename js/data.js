@@ -20,7 +20,8 @@ export const inputData = {
 //any value that is attained (in order of page 28)
 export const calculatedData = {
     //COHESIVE
-    Ngamma: null,
+    Ngamma_platform: null,
+    Ngamma_subrade: null,
     kptandelta: 5.5,
     sc1: null,
     sc2: null,

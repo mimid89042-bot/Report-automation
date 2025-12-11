@@ -7,8 +7,7 @@ import { NgammaF, kptandeltaF, scF, sgammaF, spF, Rd_subgradeF, Rd_platformF,
 import { validateCu, validateNOGeorgridThickness,
         validateWITHGeorgridThickness
         } from './validation.js';
-import { addCohesiveInputListeners, runCalculations, hideFrom} from './events_helper.js'
-import { updatePrintHeader } from './print.js';
+import { addInputListeners, runCalculations, hideFrom} from './events_helper.js'
 
 // events.js (or state.js)
 export const state = {
@@ -21,10 +20,6 @@ export const state = {
 export function initEventListeners() {
     // Cohesive and granular inputs
     const soilSelect = document.getElementById("soilType");
-    const soilLabel = document.getElementById("subgrade-volatile");
-    const soilInput = document.getElementById("cu"); // default cohesive input
-    const subgradeLabel = document.getElementById("subgrade-label");
-
     soilSelect.addEventListener("change", () => {
         const soil = soilSelect.value;
 
@@ -37,12 +32,13 @@ export function initEventListeners() {
         } else{
             //If they unselect hide everything
             hideFrom("soil-selection-form");
+            return;
         }
         showElement("case-loading-inputs-form");
         showElement("geogrid-selection-form");
         hideFrom("geogrid-selection-form");
 
-        //addCohesiveInputListeners();
+        addInputListeners();
         runCalculations();
     });
 

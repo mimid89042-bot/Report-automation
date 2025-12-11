@@ -1,9 +1,12 @@
-const REQUIRED_INPUT_IDS = ["soilType", "cu", "phi_platform", "gamma_platform", "W", "q1k", "L1", "q2k", "L2", "geogrid-yesorno"
+const REQUIRED_INPUT_IDS = ["soilType","phi_platform",
+     "gamma_platform", "W", "q1k", "L1", "q2k", "L2", "geogrid-yesorno"
 ];
+const REQUIRED_INPUT_IDS_COHESIVE = "cu";
+const REQUIRED_INPUT_IDS_GRANULAR  = ["phi_subgrade","gamma_subgrade"];
 const REQUIRED_GEOGRID_IDS = ["Tallowable", "n"];
 import { showElement, hideElement, displayPlatformRequiredText, 
-        displayPlatformStrongertText, displayPlatformResistiveText,updateNoGeogridThickness,
-        updateWithGeogridThickness,
+        displayPlatformStrongertText, displayPlatformResistiveText,
+        updateNoGeogridThickness,updateWithGeogridThickness,
         platformRequired, platformStronger, platformResistive
          } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
@@ -12,28 +15,52 @@ import { NgammaF, kptandeltaF, scF, sgammaF, spF, Rd_subgradeF, Rd_platformF,
         DNoGeogridF, DWithGeogridF } from './calculations.js';
 import { validateCu} from './validation.js';
 
+const soilSelectEl = document.getElementById("soilType");
 
-// Function to add listeners to cohesive inputs
-export function addCohesiveInputListeners() {
-    const cohesiveForm = document.getElementById("cohesive-inputs-form");
-    if (!cohesiveForm || cohesiveForm.dataset.listenersAdded) return; // prevent duplicates
-
-    const inputs = cohesiveForm.querySelectorAll("input, select");
-    inputs.forEach(input => {
-        input.addEventListener("input", 
-            runCalculations, updateNoGeogridThickness, updateWithGeogridThickness);
-        input.addEventListener("change", 
-            runCalculations, updateNoGeogridThickness, updateWithGeogridThickness);
-    });
-
-    cohesiveForm.dataset.listenersAdded = "true"; // mark listeners as added
+function getSoilType() {
+  return soilSelectEl ? soilSelectEl.value : null;
 }
 
+function attachListenersToForm(formId) {
+    const form = document.getElementById(formId);
+    if (!form || form.dataset.listenersAdded === "true") return;
+
+    const inputs = form.querySelectorAll("input, select");
+    inputs.forEach(input => {
+        input.addEventListener("input", () => {
+            runCalculations();
+            updateNoGeogridThickness();
+            updateWithGeogridThickness();
+        });
+        input.addEventListener("change", () => {
+            runCalculations();
+            updateNoGeogridThickness();
+            updateWithGeogridThickness();
+        });
+    });
+
+    form.dataset.listenersAdded = "true"; // prevent duplicates
+}
+
+export function addInputListeners() {
+    const soilType = getSoilType();
+    if (soilType === "cohesive") attachListenersToForm("cohesive-inputs-form");
+    else if (soilType === "granular") attachListenersToForm("granular-inputs-form");
+
+    // Case loading inputs always attach
+    attachListenersToForm("case-loading-inputs-form");
+}
 
 // Returns true or false
 function allRequiredInputsFilled() {
     let requiredList = [...REQUIRED_INPUT_IDS];
     const geogridValue = document.getElementById("geogrid-yesorno").value;
+
+    if ( getSoilType() == "cohesive"){
+        requiredList = requiredList.concat(REQUIRED_INPUT_IDS_COHESIVE);
+    }else if ( getSoilType() == "granular"){
+        requiredList = requiredList.concat(REQUIRED_INPUT_IDS_GRANULAR);
+    }
 
     if (geogridValue === "yes") {
         requiredList = requiredList.concat(REQUIRED_GEOGRID_IDS);
@@ -128,16 +155,13 @@ export function runCalculations(){
     // PLATFORM REQUIRED
     //--------------------
 
-    
-
-    // Calculate Ngamma
-    loadCalculated("Ngamma", NgammaF(phi_platform));
-    const Ngamma = calculatedData.Ngamma;
+    // Calculate Ngamma_platform
+    loadCalculated("Ngamma_platform", NgammaF(phi_platform));
+    const Ngamma_platform = calculatedData.Ngamma_platform;
 
     // Update kpTanδ with user phi_platform input
     loadCalculated("kptandelta", kptandeltaF(phi_platform));   
     const kptandelta = calculatedData.kptandelta;
-
 
     // s_ factors 
     loadCalculated("sc1", scF(W, L1));
@@ -153,14 +177,12 @@ export function runCalculations(){
     loadCalculated("sp2", spF(W, L2));
     const sp2 = calculatedData.sp2;
 
-
     // R_d no geogrod
     loadCalculated("Rd1_subgrade", Rd_subgradeF(cu, sc1));
     const Rd1_subgrade = calculatedData.Rd1_subgrade;
     loadCalculated("Rd2_subgrade", Rd_subgradeF(cu, sc2));
     const Rd2_subgrade = calculatedData.Rd2_subgrade;
 
-    
     // Factored loads
     loadCalculated("q1dA", q1dAF(q1k));
     const q1dA = calculatedData.q1dA;
@@ -174,6 +196,19 @@ export function runCalculations(){
     const q1dC = calculatedData.q1dC;
     loadCalculated("q2dC", q2dCF(q2k));
     const q2dC = calculatedData.q2dC;
+
+    //Update Nc or Ngammas
+    if ( getSoilType() == "cohesive"){
+        showElement("Nc");
+        hideElement("Ngammas");
+    } else if ( getSoilType() == "granular"){
+        loadCalculated("Ngamma_subgrade", NgammaF(phi_subgrade));
+        const Ngamma_subgrade = calculatedData.Ngamma_subgrade;
+
+        hideElement("Nc");
+        showElement("Ngammas");
+    }
+
 
     showElement("platform-required-box")
 
@@ -195,10 +230,10 @@ export function runCalculations(){
     //--------------------
 
     loadCalculated("Rd1_platform", Rd_platformF(gamma_platform, 
-        W, Ngamma, sgamma1));
+        W, Ngamma_platform, sgamma1));
     const Rd1_platform = calculatedData.Rd1_platform;
     loadCalculated("Rd2_platform", Rd_platformF(gamma_platform, 
-        W, Ngamma, sgamma2));
+        W, Ngamma_platform, sgamma2));
     const Rd2_platform = calculatedData.Rd2_platform;
     
     

@@ -101,7 +101,7 @@
     </div>
 </form>
 
-<!-- FORM 2B: Cohesive Inputs -->
+<!-- FORM 2B: Granular Inputs -->
  <form id = "granular-inputs-form" class = "box hidden">
     <h3>Design values for soil properties</h3>
     <div class = "cases-container">
@@ -139,9 +139,12 @@
             </div>
         </div>
     </div>
+    <div class = "row">
+        <label class = "label-GWT">Depth of the GWT (m): </label> <!--READ ONLY INPUT-->
+        <input type="number">
+    </div>
 
  </form>
-
 
 <!-- FORM 3: Case loading inputs-->
 <form id = "case-loading-inputs-form" class = "box hidden">
@@ -197,8 +200,6 @@
     </div>
 </form>>
 
-
-
 <!-- FORM 4: Geogrid Selection -->
 <form id="geogrid-selection-form" class="box hidden">
     <div class="input-column">
@@ -245,8 +246,80 @@
 <div class="equation-row">
     <div class="equation-column">
         <!-- Nc Value -->
-        <p>N<sub>c</sub> = 5.14</p>
-        <!-- Ngamma MathML-->
+        <p id ="Nc">N<sub>c</sub> = 5.14</p>
+        <!-- Ngamma subgrade Value -->
+        <p id = "Ngammas" class = "hidden">
+            N<sub>γp</sub> =
+                <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+                    <mrow>
+                        <mn>2</mn>
+                        <mo>&#x22C5;</mo>
+                        <mi>tan</mi>
+                        <mo>(</mo>
+                        <mfrac>
+                            <mrow>
+                                <mi>φ</mi>
+                                <mi>π</mi>
+                            </mrow>
+                            <mn>180</mn>
+                        </mfrac>
+                        <mo>)</mo>
+                        <mo>&#x22C5;</mo>
+                        <mo>(</mo>
+                        <mn>1</mn>
+                        <mo>+</mo>
+
+                        <!-- e^( π·tan(φπ/180) ) -->
+                        <msup>
+                            <mi>e</mi>
+                            <mrow>
+                                <mo>(</mo>
+                                <mi>π</mi>
+                                <mo>&#x22C5;</mo>
+                                <mi>tan</mi>
+                                <mo>(</mo>
+                                <mfrac>
+                                    <mrow>
+                                        <mi>φ</mi>
+                                        <mi>π</mi>
+                                    </mrow>
+                                    <mn>180</mn>
+                                </mfrac>
+                                <mo>)</mo>
+                                <mo>)</mo>
+                            </mrow>
+                        </msup>
+
+                        <mo>&#x22C5;</mo>
+
+                        <!-- tan( π/4 + φπ/360 )^2 -->
+                        <msup>
+                            <mrow>
+                                <mi>tan</mi>
+                                <mo>(</mo>
+                                <mfrac>
+                                    <mi>π</mi>
+                                    <mn>4</mn>
+                                </mfrac>
+                                <mo>+</mo>
+                                <mfrac>
+                                    <mrow>
+                                        <mi>φ</mi>
+                                        <mi>π</mi>
+                                    </mrow>
+                                    <mn>360</mn>
+                                </mfrac>
+                                <mo>)</mo>
+                            </mrow>
+                            <mn>2</mn>
+                        </msup>
+
+                        <mo>)</mo>
+                    </mrow>
+                </math>
+                = <span class="Ngamma_subgrade_value"></span>
+        </p>
+        <!-- Ngamma_platform MathML-->
         <p>
             N<sub>γp</sub> =
                 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
@@ -316,15 +389,15 @@
                         <mo>)</mo>
                     </mrow>
                 </math>
-                = <span class="Ngamma_value"></span>
+                = <span class="Ngamma_platform_value"></span>
         </p>
         <!-- Kptandelta-->
         <p>K<sub>p</sub>tanδ = <span class="kptandelta_value"></span></p>
     </div>
 
-    <!-- Ngamma and Kptandelta images -->
+    <!-- Ngamma_platform and Kptandelta images -->
     <div class="image-column">
-        <img src="images/Ngamma_graph.png" alt="Ngamma_graph" class="Ngamma_graph">
+        <img src="images/Ngamma_graph.png" alt="Ngamma_platform_graph" class="Ngamma_platform_graph">
         <img src="images/Kptandelta_graph.png" alt="Kptandelta_graph" class="Kptandelta_graph">
 
     </div>
@@ -466,7 +539,7 @@
 
                 <div class="eq-row">
                     <div class="eq-left"></div>
-                    <div class="eq-right">= 0.5 × <span class="gamma_platform_value"></span> × <span class="W_value"></span> × <span class="Ngamma_value"></span> × <span class="sgamma1_value"></span></div>
+                    <div class="eq-right">= 0.5 × <span class="gamma_platform_value"></span> × <span class="W_value"></span> × <span class="Ngamma_platform_value"></span> × <span class="sgamma1_value"></span></div>
                  </div>
 
                 <div class="eq-row">
@@ -486,7 +559,7 @@
 
                 <div class="eq-row">
                     <div class="eq-left"></div>
-                    <div class="eq-right">= 0.5 × <span class="gamma_platform_value"></span> × <span class="W_value"></span> × <span class="Ngamma_value"></span> × <span class="sgamma2_value"></span></div>
+                    <div class="eq-right">= 0.5 × <span class="gamma_platform_value"></span> × <span class="W_value"></span> × <span class="Ngamma_platform_value"></span> × <span class="sgamma2_value"></span></div>
                  </div>
 
                 <div class="eq-row">
