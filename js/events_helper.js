@@ -1,8 +1,8 @@
-const REQUIRED_INPUT_IDS = ["soilType","phi_platform",
-     "gamma_platform", "W", "q1k", "L1", "q2k", "L2", "geogrid-yesorno"
+const REQUIRED_INPUT_IDS = ["soilType","W", "q1k", "L1", "q2k", "L2", "geogrid-yesorno"
 ];
-const REQUIRED_INPUT_IDS_COHESIVE = "cu";
-const REQUIRED_INPUT_IDS_GRANULAR  = ["phi_subgrade","gamma_subgrade"];
+const REQUIRED_INPUT_IDS_COHESIVE = ["cu", "phi_platform_cohesive", "gamma_platform_cohesive"];
+const REQUIRED_INPUT_IDS_GRANULAR  = ["phi_subgrade","gamma_subgrade",
+      "phi_platform_granular", "gamma_platform_granular"];
 const REQUIRED_GEOGRID_IDS = ["Tallowable", "n"];
 import { showElement, hideElement, displayPlatformRequiredText, 
         displayPlatformStrongertText, displayPlatformResistiveText,
@@ -53,7 +53,7 @@ export function addInputListeners() {
 
 // Returns true or false
 function allRequiredInputsFilled() {
-    let requiredList = [...REQUIRED_INPUT_IDS];
+    let requiredList = [REQUIRED_INPUT_IDS];
     const geogridValue = document.getElementById("geogrid-yesorno").value;
 
     if ( getSoilType() == "cohesive"){
@@ -115,6 +115,7 @@ export function hideFrom(sectionId) {
 //                   SCRIPT FLOW
 //------------------------------------------------------//
 
+// RUN CALCULATIONS
 export function runCalculations(){
     if (!allRequiredInputsFilled()) {
         // Hide boxes until all inputs are present
@@ -126,23 +127,13 @@ export function runCalculations(){
             loadInput(key);
         }
     }
-    //check cu
-    if(!validateCu()){
-        showElement("cu-alert");
-        hideFrom("cu-alert");
-        return;
-    }else{
-        hideElement("cu-alert");
-    }
-
 
     // Update thickness boxes on each calculation run
     updateNoGeogridThickness();
     updateWithGeogridThickness();
 
-    const cu = inputData.cu; 
-    const phi_platform = inputData.phi_platform; 
-    const gamma_platform = inputData.gamma_platform; 
+
+    //Shared inputs
     const W = inputData.W; 
     const L1 = inputData.L1; 
     const L2 = inputData.L2; 
@@ -150,6 +141,29 @@ export function runCalculations(){
     const q2k = inputData.q2k; 
     const Tallowable = inputData.Tallowable; 
     const n = inputData.n; 
+
+    let phi_platform;
+    let gamma_platform;
+
+    if (getSoilType() == "cohesive"){
+        const cu = inputData.cu; 
+        phi_platform = inputData.phi_platform_cohesive; 
+        gamma_platform = inputData.gamma_platform_cohesive; 
+        if(!validateCu()){
+            showElement("cu-alert");
+            hideFrom("cu-alert");
+            return;
+        }else{
+            hideElement("cu-alert");
+        }
+    } else if (getSoilType() == "granular"){
+        phi_platform = inputData.phi_platform_granular; 
+        gamma_platform = inputData.gamma_platform_granular; 
+        hideElement("cu-alert");
+    }
+
+      console.log("Platform phi =", phi_platform);
+    console.log("Platform gamma =", gamma_platform);
 
     //--------------------
     // PLATFORM REQUIRED
