@@ -68,14 +68,14 @@
     </div>
 </form>
 
-<!-- FORM 2: Cohesive Inputs -->
+<!-- FORM 2A: Cohesive Inputs -->
 <form id="cohesive-inputs-form" class="box hidden">
     <h3>Design values for soil properties</h3>
     <div class="no-gap-container">
 
-        <!-- Cu row -->
+        <!-- Subgrade row -->
         <div class="row">
-            <label class="main-label">Subgrade undrained shear strength,</label>
+            <label class="main-label" id = "subgrade-label">Subgrade undrained shear strength,</label>
 
             <div class="input-pair">
                 <label class="sub-label" id = "subgrade-volatile">C<sub>u</sub> (kPa):</label>
@@ -99,7 +99,53 @@
         </div>
 
     </div>
+</form>
 
+<!-- FORM 2B: Cohesive Inputs -->
+ <form id = "granular-inputs-form" class = "box hidden">
+    <h3>Design values for soil properties</h3>
+    <div class = "cases-container">
+        <div class = "case-column">
+            <div class ="row">
+                <label class="main-label">Subgrade friction angle,</label>
+                    <div class="input-pair">
+                        <label class="sub-label">ϕ'<sub>s</sub> (°):</label>
+                        <input type="number" id="phi_subgrade" step="0.01" required>
+                    </div> 
+            </div>
+            <div class ="row">
+                <label class="main-label">Subgrade effective unit weight,</label>
+                    <div class="input-pair">
+                        <label class="sub-label">γ<sub>s</sub> (kN/m<sup>3</sup>):</label>
+                        <input type="number" id="gamma_subgrade" step="0.01" required>
+                    </div>
+            </div>
+        </div>
+
+         <div class = "case-column">
+            <div class ="row">
+                <label class="main-label">Working platform friction angle,</label>
+                    <div class="input-pair">
+                        <label class="sub-label">ϕ'<sub>p</sub> (°):</label>
+                        <input type="number" id="phi_platform" step="0.01" required>
+                    </div> 
+            </div>
+            <div class ="row">
+                <label class="main-label">Working platform effective unit weight,</label>
+                    <div class="input-pair">
+                        <label class="sub-label">γ<sub>p</sub> (kN/m<sup>3</sup>):</label>
+                        <input type="number" id="gamma_platform" step="0.01" required>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+ </form>
+
+
+<!-- FORM 3: Case loading inputs-->
+<form id = "case-loading-inputs-form" class = "box hidden">
+    
     <!--Width row-->
     <h3>Effective width and length of loading</h3>
     <div class ="row">
@@ -109,6 +155,7 @@
                 <input type="number" id="W" step="0.01" required value="0.7">
             </div>
     </div>
+
 
     <!-- Case 1 and 2 loading inputs-->
     <div class="cases-container">
@@ -148,9 +195,11 @@
             </div>
         </div>
     </div>
-</form>
+</form>>
 
-<!-- FORM 3: Geogrid Selection -->
+
+
+<!-- FORM 4: Geogrid Selection -->
 <form id="geogrid-selection-form" class="box hidden">
     <div class="input-column">
         <h3>Use a geogrid?</h3>

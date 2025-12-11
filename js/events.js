@@ -23,29 +23,27 @@ export function initEventListeners() {
     const soilSelect = document.getElementById("soilType");
     const soilLabel = document.getElementById("subgrade-volatile");
     const soilInput = document.getElementById("cu"); // default cohesive input
+    const subgradeLabel = document.getElementById("subgrade-label");
 
     soilSelect.addEventListener("change", () => {
         const soil = soilSelect.value;
 
         if (soil === "cohesive") {
-            soilLabel.innerHTML = "C<sub>u</sub> (kPa):";
-            soilInput.id = "cu";
-
-            // Show geogrid section if needed
-            showElement("geogrid-selection-form");
-
-            // Add listeners for cohesive inputs only
-            addCohesiveInputListeners();
-
+            showElement("cohesive-inputs-form");
+            hideElement("granular-inputs-form");
         } else if (soil === "granular") {
-            soilLabel.innerHTML = "ϕ'<sub>s</sub> (°):";
-            soilInput.id = "phi_subgrade";
-        } 
+            showElement("granular-inputs-form");
+            hideElement("cohesive-inputs-form");
+        } else{
+            //If they unselect hide everything
+            hideFrom("soil-selection-form");
+        }
+        showElement("case-loading-inputs-form");
+        showElement("geogrid-selection-form");
+        hideFrom("geogrid-selection-form");
 
-        showElement("cohesive-inputs-form");
-
-        // Re-run calculations on switching
-        //runCalculations();
+        //addCohesiveInputListeners();
+        runCalculations();
     });
 
 

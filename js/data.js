@@ -4,8 +4,9 @@
 export const inputData = {
     //COHESIVE
     cu: null,
-    phi_subgrade: null,
+    phi_subgrade: 20,
     phi_platform: 20,
+    gamma_subgrade: 35,
     gamma_platform: 40,
     W: null,
     L1: null,

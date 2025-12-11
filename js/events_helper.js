@@ -60,6 +60,8 @@ export function hideFrom(sectionId) {
     const sections = [
     "soil-selection-form",
     "cohesive-inputs-form",
+    "granular-inputs-form",
+    "case-loading-inputs-form",
     "geogrid-selection-form",
     "cu-alert",
     "platform-required-box",
