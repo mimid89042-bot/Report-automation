@@ -1,4 +1,4 @@
-const REQUIRED_INPUT_IDS = ["soilType", "cu", "phi_platform", "gamma", "W", "q1k", "L1", "q2k", "L2", "geogrid-yesorno"
+const REQUIRED_INPUT_IDS = ["soilType", "cu", "phi_platform", "gamma_platform", "W", "q1k", "L1", "q2k", "L2", "geogrid-yesorno"
 ];
 const REQUIRED_GEOGRID_IDS = ["Tallowable", "n"];
 import { showElement, hideElement, displayPlatformRequiredText, 
@@ -82,6 +82,9 @@ export function hideFrom(sectionId) {
     }
 }
 
+//------------------------------------------------------//
+//                   SCRIPT FLOW
+//------------------------------------------------------//
 
 export function runCalculations(){
     if (!allRequiredInputsFilled()) {
@@ -110,7 +113,7 @@ export function runCalculations(){
 
     const cu = inputData.cu; 
     const phi_platform = inputData.phi_platform; 
-    const gamma = inputData.gamma; 
+    const gamma_platform = inputData.gamma_platform; 
     const W = inputData.W; 
     const L1 = inputData.L1; 
     const L2 = inputData.L2; 
@@ -189,10 +192,10 @@ export function runCalculations(){
     // PLATFORM STRONGER
     //--------------------
 
-    loadCalculated("Rd1_platform", Rd_platformF(gamma, 
+    loadCalculated("Rd1_platform", Rd_platformF(gamma_platform, 
         W, Ngamma, sgamma1));
     const Rd1_platform = calculatedData.Rd1_platform;
-    loadCalculated("Rd2_platform", Rd_platformF(gamma, 
+    loadCalculated("Rd2_platform", Rd_platformF(gamma_platform, 
         W, Ngamma, sgamma2));
     const Rd2_platform = calculatedData.Rd2_platform;
     
@@ -233,9 +236,9 @@ export function runCalculations(){
     showElement("no-geogrid-thickness-box");
 
     
-    loadCalculated("D1NoGeogrid", DNoGeogridF(W, q1dB, Rd1_subgrade, gamma, kptandelta, sp1));
+    loadCalculated("D1NoGeogrid", DNoGeogridF(W, q1dB, Rd1_subgrade, gamma_platform, kptandelta, sp1));
     const D1NoGeogrid = calculatedData.D1NoGeogrid;
-    loadCalculated("D2NoGeogrid", DNoGeogridF(W, q2dB, Rd2_subgrade, gamma, kptandelta, sp2));
+    loadCalculated("D2NoGeogrid", DNoGeogridF(W, q2dB, Rd2_subgrade, gamma_platform, kptandelta, sp2));
     const D2NoGeogrid = calculatedData.D2NoGeogrid;
     loadCalculated("DlargerNoGeorgrid", Math.max(D1NoGeogrid, D2NoGeogrid));
 
@@ -249,9 +252,9 @@ export function runCalculations(){
     const Td = calculatedData.Td;
 
     // Fist formula - with geogrid
-    loadCalculated("D1WithGeogrid", DWithGeogridF(W, q1dB, Rd1_subgrade,Td, gamma, kptandelta, sp1));
+    loadCalculated("D1WithGeogrid", DWithGeogridF(W, q1dB, Rd1_subgrade,Td, gamma_platform, kptandelta, sp1));
     const D1WithGeogrid = calculatedData.D1WithGeogrid;
-    loadCalculated("D2WithGeogrid", DWithGeogridF(W, q2dB, Rd2_subgrade, Td, gamma, kptandelta, sp2));
+    loadCalculated("D2WithGeogrid", DWithGeogridF(W, q2dB, Rd2_subgrade, Td, gamma_platform, kptandelta, sp2));
     const D2WithGeogrid = calculatedData.D2WithGeogrid;
 
     console.log("D1 with geogrid: ", D1WithGeogrid);
@@ -262,9 +265,9 @@ export function runCalculations(){
     }
 
     // Second formula - ignoring geogrid
-    loadCalculated("D1NoGeogridC", DNoGeogridF(W, q1dC, Rd1_subgrade, gamma, kptandelta, sp1));
+    loadCalculated("D1NoGeogridC", DNoGeogridF(W, q1dC, Rd1_subgrade, gamma_platform, kptandelta, sp1));
     const D1NoGeogridC = calculatedData.D1NoGeogridC;
-    loadCalculated("D2NoGeogridC", DNoGeogridF(W, q2dC, Rd2_subgrade, gamma, kptandelta, sp2));
+    loadCalculated("D2NoGeogridC", DNoGeogridF(W, q2dC, Rd2_subgrade, gamma_platform, kptandelta, sp2));
     const D2NoGeogridC = calculatedData.D2NoGeogridC;
 
     // Max D of first and second formula

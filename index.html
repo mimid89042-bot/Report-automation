@@ -9,7 +9,7 @@
 <body>
 
 
-    <!--testing github-->
+
 <div class = "report-page">
 
 <!-- REPORT HEADER PAGE 1 -->
@@ -78,7 +78,7 @@
             <label class="main-label">Subgrade undrained shear strength,</label>
 
             <div class="input-pair">
-                <label class="sub-label">C<sub>u</sub> (kPa):</label>
+                <label class="sub-label" id = "subgrade-volatile">C<sub>u</sub> (kPa):</label>
                 <input type="number" id="cu" step="0.01" required value="24">
             </div>
         </div>
@@ -89,12 +89,12 @@
 
             <div class="input-pair">
                 <label class="sub-label">ϕ'<sub>p</sub> (°):</label>
-                <input type="number" id="phi" step="0.01" required value="40">
+                <input type="number" id="phi_platform" step="0.01" required value="40">
             </div>
 
             <div class="input-pair">
                 <label class="sub-label">&nbsp;&nbsp;γ<sub>p</sub> (kN/m<sup>3</sup>):</label>
-                <input type="number" id="gamma" step="0.01" required value="20">
+                <input type="number" id="gamma_platform" step="0.01" required value="20">
             </div>
         </div>
 
@@ -417,7 +417,7 @@
 
                 <div class="eq-row">
                     <div class="eq-left"></div>
-                    <div class="eq-right">= 0.5 × <span class="gamma_value"></span> × <span class="W_value"></span> × <span class="Ngamma_value"></span> × <span class="sgamma1_value"></span></div>
+                    <div class="eq-right">= 0.5 × <span class="gamma_platform_value"></span> × <span class="W_value"></span> × <span class="Ngamma_value"></span> × <span class="sgamma1_value"></span></div>
                  </div>
 
                 <div class="eq-row">
@@ -437,7 +437,7 @@
 
                 <div class="eq-row">
                     <div class="eq-left"></div>
-                    <div class="eq-right">= 0.5 × <span class="gamma_value"></span> × <span class="W_value"></span> × <span class="Ngamma_value"></span> × <span class="sgamma2_value"></span></div>
+                    <div class="eq-right">= 0.5 × <span class="gamma_platform_value"></span> × <span class="W_value"></span> × <span class="Ngamma_value"></span> × <span class="sgamma2_value"></span></div>
                  </div>
 
                 <div class="eq-row">
@@ -524,7 +524,7 @@
                             ([1.6 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_value"></span>))
                         </span>
                         <span class="bottom">
-                            (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>)
+                            (<span class="gamma_platform_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>)
                         </span>
                     </span>
                     <sup>0.5</sup>
@@ -563,7 +563,7 @@
                         ([1.2 × <span class="q2k_value"></span>] - <span class="Rd2_subgrade_value"></span>))
                     </span>
                     <span class="bottom">
-                        (<span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>)
+                        (<span class="gamma_platform_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>)
                     </span>
                 </span>
                 <sup>0.5</sup>
@@ -631,7 +631,7 @@
                             - (2 × <span class="Td_value"></span> / <span class="W_value"></span>)]
                         </span>
                         <span class="bottom">
-                            <span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>
+                            <span class="gamma_platform_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>
                         </span>
                     </span>
                     <sup>0.5</sup>
@@ -671,7 +671,7 @@
                             - (2 × <span class="Td_value"></span> / <span class="W_value"></span>)]
                         </span>
                         <span class="bottom">
-                            <span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>
+                            <span class="gamma_platform_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>
                         </span>
                     </span>
                     <sup>0.5</sup>
@@ -716,7 +716,7 @@
                         ([1.25 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_value"></span>)
                     </span>
                     <span class="bottom">
-                        <span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>
+                        <span class="gamma_platform_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>
                     </span>
                 </span>
                 <sup>0.5</sup>
@@ -753,7 +753,7 @@
                         ([1.05 × <span class="q2k_value"></span>] - <span class="Rd2_subgrade_value"></span>)
                     </span>
                     <span class="bottom">
-                        <span class="gamma_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>
+                        <span class="gamma_platform_value"></span> × <span class="kptandelta_value"></span> × <span class="sp2_value"></span>
                     </span>
                 </span>
                 <sup>0.5</sup>

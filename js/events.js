@@ -19,19 +19,35 @@ export const state = {
 
 // Sets up all event listeners to monitor user input and update the page dynamically
 export function initEventListeners() {
-    // Cohesive inputs
-    document.getElementById("soil-selection-form").addEventListener("change", () => {
-        const soil = document.getElementById("soilType").value;
-        if (soil === "cohesive"){
-            showElement('cohesive-inputs-form');
-            showElement("geogrid-selection-form"); 
+    // Cohesive and granular inputs
+    const soilSelect = document.getElementById("soilType");
+    const soilLabel = document.getElementById("subgrade-volatile");
+    const soilInput = document.getElementById("cu"); // default cohesive input
 
+    soilSelect.addEventListener("change", () => {
+        const soil = soilSelect.value;
+
+        if (soil === "cohesive") {
+            soilLabel.innerHTML = "C<sub>u</sub> (kPa):";
+            soilInput.id = "cu";
+
+            // Show geogrid section if needed
+            showElement("geogrid-selection-form");
+
+            // Add listeners for cohesive inputs only
             addCohesiveInputListeners();
+
+        } else if (soil === "granular") {
+            soilLabel.innerHTML = "ϕ'<sub>s</sub> (°):";
+            soilInput.id = "phi_subgrade";
         } 
-        else {
-            hideFrom("soil-selection-form");
-        }
+
+        showElement("cohesive-inputs-form");
+
+        // Re-run calculations on switching
+        //runCalculations();
     });
+
 
 
     // Geogrid yes/no handler
