@@ -1,4 +1,4 @@
-const REQUIRED_INPUT_IDS = ["soilType", "cu", "phi", "gamma", "W", "q1k", "L1", "q2k", "L2", "geogrid-yesorno"
+const REQUIRED_INPUT_IDS = ["soilType", "cu", "phi_platform", "gamma", "W", "q1k", "L1", "q2k", "L2", "geogrid-yesorno"
 ];
 const REQUIRED_GEOGRID_IDS = ["Tallowable", "n"];
 import { showElement, hideElement, displayPlatformRequiredText, 
@@ -109,7 +109,7 @@ export function runCalculations(){
     updateWithGeogridThickness();
 
     const cu = inputData.cu; 
-    const phi = inputData.phi; 
+    const phi_platform = inputData.phi_platform; 
     const gamma = inputData.gamma; 
     const W = inputData.W; 
     const L1 = inputData.L1; 
@@ -126,11 +126,11 @@ export function runCalculations(){
     
 
     // Calculate Ngamma
-    loadCalculated("Ngamma", NgammaF(phi));
+    loadCalculated("Ngamma", NgammaF(phi_platform));
     const Ngamma = calculatedData.Ngamma;
 
-    // Update kpTanδ with user phi input
-    loadCalculated("kptandelta", kptandeltaF(phi));   
+    // Update kpTanδ with user phi_platform input
+    loadCalculated("kptandelta", kptandeltaF(phi_platform));   
     const kptandelta = calculatedData.kptandelta;
 
 

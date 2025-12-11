@@ -1,11 +1,11 @@
 // data.js
-import { DEFAULT_PHI, DEFAULT_GAMMA } from './constants.js';
+import { DEFAULT_GAMMA } from './constants.js';
 
 // Store user inputs and calculated values
 export const inputData = {
     //COHESIVE
     cu: null,
-    phi: DEFAULT_PHI,
+    phi_platform: 20,
     gamma: DEFAULT_GAMMA,
     W: null,
     L1: null,
