@@ -12,6 +12,15 @@ export function hideElement(id) {
     if (el) el.classList.add('hidden');
 }
 
+function showClass(className) {
+    document.querySelectorAll("." + className).forEach(el => el.style.display = "");
+}
+
+function hideClass(className) {
+    document.querySelectorAll("." + className).forEach(el => el.style.display = "none");
+}
+
+
 
 export function platformRequired(q1dA, q2dA, Rd1_subgrade, Rd2_subgrade) {
   return !(q1dA < Rd1_subgrade || q2dA < Rd2_subgrade);

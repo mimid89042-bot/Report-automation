@@ -4,7 +4,7 @@ const REQUIRED_INPUT_IDS_COHESIVE = ["cu", "phi_platform_cohesive", "gamma_platf
 const REQUIRED_INPUT_IDS_GRANULAR  = ["phi_subgrade","gamma_subgrade",
       "phi_platform_granular", "gamma_platform_granular"];
 const REQUIRED_GEOGRID_IDS = ["Tallowable", "n"];
-import { showElement, hideElement, displayPlatformRequiredText, 
+import { showElement, hideElement, showClass, hideClass, displayPlatformRequiredText, 
         displayPlatformStrongertText, displayPlatformResistiveText,
         updateNoGeogridThickness,updateWithGeogridThickness,
         platformRequired, platformStronger, platformResistive
@@ -141,12 +141,15 @@ export function runCalculations(){
     const q2k = inputData.q2k; 
     const Tallowable = inputData.Tallowable; 
     const n = inputData.n; 
+    const cu = inputData.cu; // potential bug 
 
     let phi_platform;
     let gamma_platform;
+    // Granular only
+    let phi_subgrade;
+    let gamma_subgrade;
 
     if (getSoilType() == "cohesive"){
-        const cu = inputData.cu; 
         phi_platform = inputData.phi_platform_cohesive; 
         gamma_platform = inputData.gamma_platform_cohesive; 
         if(!validateCu()){
@@ -159,29 +162,54 @@ export function runCalculations(){
     } else if (getSoilType() == "granular"){
         phi_platform = inputData.phi_platform_granular; 
         gamma_platform = inputData.gamma_platform_granular; 
+        phi_subgrade = inputData.phi_subgrade;
+        gamma_subgrade = inputData.gamma_subgrade;
         hideElement("cu-alert");
     }
 
-      console.log("Platform phi =", phi_platform);
+    console.log("Platform phi =", phi_platform);
     console.log("Platform gamma =", gamma_platform);
 
     //--------------------
     // PLATFORM REQUIRED
     //--------------------
 
-    // Calculate Ngamma_platform
     loadCalculated("Ngamma_platform", NgammaF(phi_platform));
-    const Ngamma_platform = calculatedData.Ngamma_platform;
+    const Ngamma_platform = calculatedData.Ngamma_platform;  // Both have Ngamma-p
 
-    // Update kpTanδ with user phi_platform input
-    loadCalculated("kptandelta", kptandeltaF(phi_platform));   
+    let Ngamma_subgrade;
+    if(getSoilType() == "granular"){
+        loadCalculated("Ngamma_subgrade", NgammaF(phi_subgrade));
+        Ngamma_subgrade = calculatedData.Ngamma_subgrade;  // Granular needs Ngamma-s
+    }
+
+    //Update Nc or Ngammas
+    if ( getSoilType() == "cohesive"){
+        showElement("Nc");
+        hideElement("Ngammas");
+    } else if ( getSoilType() == "granular"){
+        loadCalculated("Ngamma_subgrade", NgammaF(phi_subgrade));
+        const Ngamma_subgrade = calculatedData.Ngamma_subgrade;
+        hideElement("Nc");
+        showElement("Ngammas");
+    }
+
+    loadCalculated("kptandelta", kptandeltaF(phi_platform));   // Both have Kptandelta
     const kptandelta = calculatedData.kptandelta;
 
     // s_ factors 
-    loadCalculated("sc1", scF(W, L1));
-    const sc1 = calculatedData.sc1;
-    loadCalculated("sc2", scF(W, L2));
-    const sc2 = calculatedData.sc2;
+    let sc1;
+    let sc2;
+
+    if (getSoilType() == "cohesive"){
+        loadCalculated("sc1", scF(W, L1));
+        sc1 = calculatedData.sc1;
+        loadCalculated("sc2", scF(W, L2));    // Cohesive needs sc
+        sc2 = calculatedData.sc2;
+        showClass("sc");
+    }else {
+        hideClass("sc1");
+    }
     loadCalculated("sgamma1", sgammaF(W, L1));
     const sgamma1 = calculatedData.sgamma1;
     loadCalculated("sgamma2", sgammaF(W, L2));
@@ -190,6 +218,8 @@ export function runCalculations(){
     const sp1 = calculatedData.sp1;
     loadCalculated("sp2", spF(W, L2));
     const sp2 = calculatedData.sp2;
+
+
 
     // R_d no geogrod
     loadCalculated("Rd1_subgrade", Rd_subgradeF(cu, sc1));
@@ -211,17 +241,6 @@ export function runCalculations(){
     loadCalculated("q2dC", q2dCF(q2k));
     const q2dC = calculatedData.q2dC;
 
-    //Update Nc or Ngammas
-    if ( getSoilType() == "cohesive"){
-        showElement("Nc");
-        hideElement("Ngammas");
-    } else if ( getSoilType() == "granular"){
-        loadCalculated("Ngamma_subgrade", NgammaF(phi_subgrade));
-        const Ngamma_subgrade = calculatedData.Ngamma_subgrade;
-
-        hideElement("Nc");
-        showElement("Ngammas");
-    }
 
 
     showElement("platform-required-box")
