@@ -53,11 +53,16 @@ export function displayPlatformRequiredText(q1dA, q2dA, Rd1_subgrade, Rd2_subgra
     twpDecision.innerHTML = text;
 }
 
-export function platformStronger(Rd1_platform, Rd2_platform, Rd1, Rd2) {
+export function platformStrongerCohesive(Rd1_platform, Rd2_platform, Rd1, Rd2) {
   return !(Rd1_platform < Rd1 || Rd2_platform < Rd2);
 }
 
-export function displayPlatformStrongertText(Rd1_platform, Rd2_platform, Rd1_subgrade, Rd2_subgrade){
+export function platformStrongerGranular(phi_platform, phi_subgrade) {
+  return (phi_platform > phi_subgrade);
+}
+
+
+export function displayPlatformStrongertTextCohesive(Rd1_platform, Rd2_platform, Rd1_subgrade, Rd2_subgrade){
     let text = "";
     if(Rd1_platform > Rd1_subgrade){
         text += 'Now R<sub>d1_platform</sub> > R<sub>d1_subgrade</sub> ';
@@ -78,8 +83,20 @@ export function displayPlatformStrongertText(Rd1_platform, Rd2_platform, Rd1_sub
         //showElement("platform-resistance-box");
     }
 
-    subgradeVplatform.innerHTML = text;
+    platformStongerCohesive.innerHTML = text;
 }
+
+export function displayPlatformStrongertTextGranular(phi_platform, phi_subgrade){
+    if (phi_platform > phi_subgrade){
+        platformStongerGranular.innerHTML = 
+        "Platform material is stronger than subgrade since ϕ'<sub>p</sub> > ϕ'<sub>s</sub>";
+    }else {
+        platformStongerGranular.innerHTML = 
+        "Platform material is not stronger than subgrade since ϕ'<sub>p</sub> < ϕ'<sub>s</sub>"; 
+    }
+}
+
+
 
 export function platformResistive(Rd1_platform, Rd2_platform, q1dB, q2dB){
     return !(q1dB > Rd1_platform || q2dB > Rd2_platform);

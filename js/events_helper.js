@@ -5,9 +5,10 @@ const REQUIRED_INPUT_IDS_GRANULAR  = ["phi_subgrade","gamma_subgrade",
       "phi_platform_granular", "gamma_platform_granular"];
 const REQUIRED_GEOGRID_IDS = ["Tallowable", "n"];
 import { showElement, hideElement, showClass, hideClass, displayPlatformRequiredText, 
-        displayPlatformStrongertText, displayPlatformResistiveText,
+        displayPlatformStrongertTextCohesive, displayPlatformStrongertTextGranular,
+        displayPlatformResistiveText,
         updateNoGeogridThickness,updateWithGeogridThickness,
-        platformRequired, platformStronger, platformResistive
+        platformRequired, platformStrongerCohesive, platformStrongerGranular, platformResistive
          } from './dom.js';
 import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
 import { NgammaF, kptandeltaF, scF, sgammaF, spF, Rd_subgradeF, Rd_platformF, 
@@ -53,7 +54,7 @@ export function addInputListeners() {
 
 // Returns true or false
 function allRequiredInputsFilled() {
-    let requiredList = [REQUIRED_INPUT_IDS];
+    let requiredList = REQUIRED_INPUT_IDS.slice();
     const geogridValue = document.getElementById("geogrid-yesorno").value;
 
     if ( getSoilType() == "cohesive"){
@@ -174,6 +175,8 @@ export function runCalculations(){
     // PLATFORM REQUIRED
     //--------------------
 
+    showElement("platform-required-box");
+
     loadCalculated("Ngamma_platform", NgammaF(phi_platform));
     const Ngamma_platform = calculatedData.Ngamma_platform;  // Both have Ngamma-p
 
@@ -189,7 +192,7 @@ export function runCalculations(){
         hideElement("Ngammas");
     } else if ( getSoilType() == "granular"){
         loadCalculated("Ngamma_subgrade", NgammaF(phi_subgrade));
-        const Ngamma_subgrade = calculatedData.Ngamma_subgrade;
+        Ngamma_subgrade = calculatedData.Ngamma_subgrade;
         hideElement("Nc");
         showElement("Ngammas");
     }
@@ -259,11 +262,6 @@ export function runCalculations(){
     loadCalculated("q2dC", q2dCF(q2k));
     const q2dC = calculatedData.q2dC;
 
-
-
-    showElement("platform-required-box")
-
-
     //call the platform required decision 
     displayPlatformRequiredText(q1dA, q2dA, Rd1_subgrade, Rd2_subgrade);
 
@@ -273,6 +271,7 @@ export function runCalculations(){
         showElement("summary-box");
         return;
     }else{
+        showElement("platform-stronger-box");
         hideElement("summary-box");
     } 
 
@@ -280,19 +279,34 @@ export function runCalculations(){
     // PLATFORM STRONGER
     //--------------------
 
-    loadCalculated("Rd1_platform", Rd_platformF(gamma_platform, 
-        W, Ngamma_platform, sgamma1));
-    const Rd1_platform = calculatedData.Rd1_platform;
-    loadCalculated("Rd2_platform", Rd_platformF(gamma_platform, 
-        W, Ngamma_platform, sgamma2));
-    const Rd2_platform = calculatedData.Rd2_platform;
-    
-    
-    showElement("platform-stronger-box");
+    let Rd1_platform;     // for cohesive 
+    let Rd2_platform;
 
-    displayPlatformStrongertText(Rd1_platform, Rd2_platform, Rd1_subgrade, Rd2_subgrade);
+    //Boolean shared by both
+    let PlatformStronger;
 
-    if(!platformStronger(Rd1_platform,Rd2_platform,Rd1_subgrade, Rd2_subgrade)){
+    if (getSoilType() == "cohesive"){
+        loadCalculated("Rd1_platform", Rd_platformF(gamma_platform, 
+            W, Ngamma_platform, sgamma1));
+        Rd1_platform = calculatedData.Rd1_platform;
+        loadCalculated("Rd2_platform", Rd_platformF(gamma_platform, 
+            W, Ngamma_platform, sgamma2));
+        Rd2_platform = calculatedData.Rd2_platform;
+        
+        displayPlatformStrongertTextCohesive(Rd1_platform, Rd2_platform, Rd1_subgrade, Rd2_subgrade);
+        PlatformStronger = platformStrongerCohesive(Rd1_platform, Rd2_platform, Rd1_subgrade, Rd2_subgrade);
+
+        showElement("platform-stronger-cohesive");
+        hideElement("platform-stronger-granular")
+    }else if (getSoilType() == "granular"){
+        displayPlatformStrongertTextGranular(phi_platform, phi_subgrade);
+        PlatformStronger = platformStrongerGranular(phi_platform, phi_subgrade);
+
+        hideElement("platform-stronger-cohesive");
+        showElement("platform-stronger-granular")
+    }
+
+    if(!PlatformStronger){
         showElement("platform-not-stronger-alert");
         hideFrom("platform-not-stronger-alert");
         return;

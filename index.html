@@ -495,7 +495,7 @@
 </div> <!--end of page 1-->
 
 <div class = "report-page">
-<!-- REPORT HEADER PAGE 1 -->
+<!-- REPORT HEADER PAGE 2 -->
 <div class="report-header hidden-print">
 
     <!-- Left column: Project No & Designer -->
@@ -542,52 +542,57 @@
 <!-- PLATFORM STRONGER BOX-->
 <div class= "box hidden" id="platform-stronger-box" >
     <h3> Check that platform material is stronger than subgrade:</h3>
-    <div class = "cases-container">
-        <div class="case-column">
-            <p class= "underline">Case 1 shape factors:</p>
-            <div class="eq-block">
-                <div class="eq-row">
-                    <div class="eq-left">R<sub>d1_platform</sub></div>
-                    <div class="eq-right">= 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ1</sub></div>
-                </div>
+    <!-- Cohesive platform stronger section-->
+    <div id = "platform-stronger-cohesive">
+        <div class = "cases-container">
+            <div class="case-column">
+                <p class= "underline">Case 1 shape factors:</p>
+                <div class="eq-block">
+                    <div class="eq-row">
+                        <div class="eq-left">R<sub>d1_platform</sub></div>
+                        <div class="eq-right">= 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ1</sub></div>
+                    </div>
 
-                <div class="eq-row">
-                    <div class="eq-left"></div>
-                    <div class="eq-right">= 0.5 × <span class="gamma_platform_value"></span> × <span class="W_value"></span> × <span class="Ngamma_platform_value"></span> × <span class="sgamma1_value"></span></div>
-                 </div>
+                    <div class="eq-row">
+                        <div class="eq-left"></div>
+                        <div class="eq-right">= 0.5 × <span class="gamma_platform_cohesive_value"></span> × <span class="W_value"></span> × <span class="Ngamma_platform_value"></span> × <span class="sgamma1_value"></span></div>
+                    </div>
 
-                <div class="eq-row">
-                    <div class="eq-left"></div>
-                    <div class="eq-right">= <span class="Rd1_platform_value"></span> kPa</div>
+                    <div class="eq-row">
+                        <div class="eq-left"></div>
+                        <div class="eq-right">= <span class="Rd1_platform_value"></span> kPa</div>
+                    </div>
                 </div>
+                <p>R<sub>d1_subgrade</sub> = <span class="Rd1_subgrade_cohesive_value"></span> kPa</P>
             </div>
-            <p>R<sub>d1_subgrade</sub> = <span class="Rd1_subgrade_cohesive_value"></span> kPa</P>
-        </div>
-        <div class= "case-column">
-            <p class= "underline">Case 2 shape factors:</p>
-            <div class="eq-block">
-                <div class="eq-row">
-                    <div class="eq-left">R<sub>d2_platform</sub></div>
-                    <div class="eq-right">= 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ2</sub></div>
+            <div class= "case-column">
+                <p class= "underline">Case 2 shape factors:</p>
+                <div class="eq-block">
+                    <div class="eq-row">
+                        <div class="eq-left">R<sub>d2_platform</sub></div>
+                        <div class="eq-right">= 0.5γ<sub>p</sub>W<sub>d</sub> N<sub>γp</sub> s<sub>γ2</sub></div>
+                    </div>
+
+                    <div class="eq-row">
+                        <div class="eq-left"></div>
+                        <div class="eq-right">= 0.5 × <span class="gamma_platform_cohesive_value"></span> × <span class="W_value"></span> × <span class="Ngamma_platform_value"></span> × <span class="sgamma2_value"></span></div>
+                    </div>
+
+                    <div class="eq-row">
+                        <div class="eq-left"></div>
+                        <div class="eq-right">= <span class="Rd2_platform_value"></span> kPa</div>
+                    </div>
                 </div>
 
-                <div class="eq-row">
-                    <div class="eq-left"></div>
-                    <div class="eq-right">= 0.5 × <span class="gamma_platform_value"></span> × <span class="W_value"></span> × <span class="Ngamma_platform_value"></span> × <span class="sgamma2_value"></span></div>
-                 </div>
-
-                <div class="eq-row">
-                    <div class="eq-left"></div>
-                    <div class="eq-right">= <span class="Rd2_platform_value"></span> kPa</div>
-                </div>
+                <P>R<sub>d2_subgrade</sub> = <span class="Rd1_subgrade_cohesive_value"></span> kPa</P>
             </div>
 
-            <P>R<sub>d2_subgrade</sub> = <span class="Rd2_subgrade_value"></span> kPa</P>
         </div>
-
+        <p id = "platformStongerCohesive" class = "indented" ></p> <br>
     </div>
-    
-    <p id = "subgradeVplatform" class = "indented" ></p> <br>
+    <!-- Cohesive platform stronger section-->
+    <div id = "platform-stronger-granular">
+        <p id = "platformStongerGranular" class = "indented" ></p> <br>
 </div>
 
 <!-- PERMANENT PLATFORM NOT STRONGER ALERT -->
