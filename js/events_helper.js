@@ -168,6 +168,9 @@ export function runCalculations(){
         hideElement("cu-alert");
     }
 
+    // For shared thickness boxes have one gamma_platform
+    loadCalculated("gamma_platform", gamma_platform);
+
     console.log("Platform phi =", phi_platform);
     console.log("Platform gamma =", gamma_platform);
 
@@ -285,20 +288,41 @@ export function runCalculations(){
     //Boolean shared by both
     let PlatformStronger;
 
+    // Rd platform handling for both cohesive and granular
+    //  -->  (Granular Rd platform gets used in resistance box)
     if (getSoilType() == "cohesive"){
-        loadCalculated("Rd1_platform", Rd_platformF(gamma_platform, 
+        // R1_platform cohesive
+        loadCalculated("Rd1_platform_cohesive", Rd_platformF(gamma_platform, 
             W, Ngamma_platform, sgamma1));
-        Rd1_platform = calculatedData.Rd1_platform;
-        loadCalculated("Rd2_platform", Rd_platformF(gamma_platform, 
+        Rd1_platform = calculatedData.Rd1_platform_cohesive;
+        loadCalculated("Rd1_platform", Rd1_platform);
+
+        // R2_platform cohesive
+        loadCalculated("Rd2_platform_cohesive", Rd_platformF(gamma_platform, 
             W, Ngamma_platform, sgamma2));
-        Rd2_platform = calculatedData.Rd2_platform;
+        Rd2_platform = calculatedData.Rd2_platform_cohesive;
+        loadCalculated("Rd2_platform", Rd2_platform);
+
         
         displayPlatformStrongertTextCohesive(Rd1_platform, Rd2_platform, Rd1_subgrade, Rd2_subgrade);
         PlatformStronger = platformStrongerCohesive(Rd1_platform, Rd2_platform, Rd1_subgrade, Rd2_subgrade);
 
         showElement("platform-stronger-cohesive");
-        hideElement("platform-stronger-granular")
-    }else if (getSoilType() == "granular"){
+        hideElement("platform-stronger-granular");
+    } else if (getSoilType() == "granular"){
+        // R1_platform granular
+        loadCalculated("Rd1_platform_granular", Rd_platformF(gamma_platform, 
+            W, Ngamma_platform, sgamma1));
+        Rd1_platform = calculatedData.Rd1_platform_granular;
+        loadCalculated("Rd1_platform", Rd1_platform);
+
+        // R2_platform granular
+        loadCalculated("Rd2_platform_granular", Rd_platformF(gamma_platform, 
+            W, Ngamma_platform, sgamma2));
+        Rd2_platform = calculatedData.Rd2_platform_granular;
+        loadCalculated("Rd2_platform", Rd2_platform);
+
+        
         displayPlatformStrongertTextGranular(phi_platform, phi_subgrade);
         PlatformStronger = platformStrongerGranular(phi_platform, phi_subgrade);
 
@@ -319,6 +343,15 @@ export function runCalculations(){
     //--------------------
 
     showElement("platform-resistance-box");
+
+    if (getSoilType() == "cohesive"){
+        showClass("platform-resistive-cohesive")
+        hideClass("platform-resistive-granular");
+    } else if (getSoilType() == "granular"){
+        hideClass("platform-resistive-cohesive")
+        showClass("platform-resistive-granular");
+    }
+
 
     displayPlatformResistiveText(Rd1_platform, Rd2_platform,q1dB,q2dB);
 

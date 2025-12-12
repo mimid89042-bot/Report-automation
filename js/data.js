@@ -21,7 +21,7 @@ export const inputData = {
 
 //any value that is attained (in order of page 28)
 export const calculatedData = {
-    //COHESIVE
+    gamma_platform: null,
     Ngamma_platform: null,
     Ngamma_subrade: null,
     kptandelta: 5.5,
@@ -43,6 +43,10 @@ export const calculatedData = {
     q2dC: null,
     Rd1_platform: null,
     Rd2_platform: null,
+    Rd1_platform_cohesive: null,
+    Rd2_platform_cohesive: null,
+    Rd1_platform_granular: null,
+    Rd2_platform_granular: null,
     q1d2: null,
     q2d2: null,
     D1NoGeogrid: null,

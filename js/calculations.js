@@ -56,12 +56,12 @@ export function q2dCF(q2k){
     return 1.05 * q2k;
 }
 
-export function DNoGeogridF(W, qdA, subgradeBC, gamma, kptandelta, sp){
-    return (W *Math.max(0,(qdA - subgradeBC)) / (gamma * kptandelta * sp)) ** 0.5;
+export function DNoGeogridF(W, qdA, Rd_subgrade, gamma, kptandelta, sp){
+    return (W *Math.max(0,(qdA - Rd_subgrade)) / (gamma * kptandelta * sp)) ** 0.5;
 }
 
-export function DWithGeogridF(W, qdB, subgradeBC, T, gamma, kptandelta, sp){
-    return (W * Math.max(0,(qdB - subgradeBC - 2*T/W)) / (gamma * kptandelta * sp)) ** 0.5;
+export function DWithGeogridF(W, qdB, Rd_subgrade, T, gamma, kptandelta, sp){
+    return (W * Math.max(0,(qdB - Rd_subgrade - 2*T/W)) / (gamma * kptandelta * sp)) ** 0.5;
 }
 
 //console.log(DNoGeogrid(2.4, 1.6*180, (2+Math.PI)* 40*1.14, 20, 109, 1.71)); // Example usage
