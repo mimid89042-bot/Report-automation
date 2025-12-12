@@ -368,6 +368,20 @@ export function runCalculations(){
     // NO GEOGRID THICKNESS
     //-----------------------
 
+
+    // Switch Rd_subgrade for cohesive and granular
+    if (getSoilType() == "cohesive"){
+       document.getElementsByClassName("Rd1_subgradeSWITCH")
+        = "c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>";
+        document.getElementsByClassName("Rd2_subgradeSWITCH")
+        = " 0.5γ<sub>s</sub>W<sub>d</sub>N<sub>γs</sub>s<sub>γ1</sub>";
+    } else if (soilType() == "granular"){
+       document.getElementsByClassName("Rd1_subgradeSWITCH")
+        = "c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>";
+        document.getElementsByClassName("Rd2_subgradeSWITCH")
+        = " 0.5γ<sub>s</sub>W<sub>d</sub>N<sub>γs</sub>s<sub>γ2</sub>";
+    }
+
     showElement("no-geogrid-thickness-box");
 
     
@@ -382,6 +396,7 @@ export function runCalculations(){
     //------------------------
     // WITH GEOGRID THICKNESS
     //------------------------  
+
 
     loadCalculated("Td", Tallowable * n);
     const Td = calculatedData.Td;
