@@ -31,6 +31,8 @@ export const calculatedData = {
     sgamma2: null,
     sp1: null,
     sp2: null,
+    Rd1_subgrade: null,
+    Rd2_subgrade: null,
     Rd1_subgrade_cohesive: null,
     Rd2_subgrade_cohesive: null,
     Rd1_subgrade_granular: null,

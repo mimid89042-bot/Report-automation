@@ -489,12 +489,13 @@
 </div>
 
 <!-- PERMANENT PLATFORM NOT REQUIRED ALERT -->
+
+</div> 
+</div> <!--end of page 1-->
 <div class="report-footer hidden-print">
     Calculation of the required platform thickness in accordance with BRE 470 guidelines.
 </div>
 
-</div> 
-</div> <!--end of page 1-->
 
 <div class = "report-page">
 <!-- REPORT HEADER PAGE 2 -->
@@ -688,7 +689,7 @@
                     <span class="fraction">
                         <span class="top">
                             (<span class="W_value"></span> × 
-                            ([1.6 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_cohesive_value"></span>))
+                            ([1.6 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_value"></span>))
                         </span>
                         <span class="bottom">
                             (<span class="gamma_platform_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>)
@@ -798,7 +799,7 @@
                     <span class="fraction">
                         <span class="top">
                             <span class="W_value"></span>  
-                            [(1.6 × <span class="q1k_value"></span>) - <span class="Rd1_subgrade_cohesive_value"></span> 
+                            [(1.6 × <span class="q1k_value"></span>) - <span class="Rd1_subgrade_value"></span> 
                             - (2 × <span class="Td_value"></span> / <span class="W_value"></span>)]
                         </span>
                         <span class="bottom">
@@ -869,7 +870,9 @@
             <span class="fraction-wrapper">
                 <span class="fraction">
                     <span class="top">
-                        W<sub>d</sub> [q<sub>1d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>]
+                        W<sub>d</sub> [q<sub>1d</sub> - 
+                        <span class = "Rd2_subgradeSWITCH">
+                        c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub></span>]
                     </span>
                     <span class="bottom">
                         γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p1</sub>
@@ -886,7 +889,7 @@
                 <span class="fraction">
                     <span class="top">
                         <span class="W_value"></span> × 
-                        ([1.25 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_cohesive_value"></span>)
+                        ([1.25 × <span class="q1k_value"></span>] - <span class="Rd1_subgrade_value"></span>)
                     </span>
                     <span class="bottom">
                         <span class="gamma_platform_value"></span> × <span class="kptandelta_value"></span> × <span class="sp1_value"></span>
@@ -907,7 +910,9 @@
             <span class="fraction-wrapper">
                 <span class="fraction">
                     <span class="top">
-                        W<sub>d</sub> [q<sub>2d</sub> - c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>]
+                        W<sub>d</sub> [q<sub>2d</sub> - 
+                        <span class = "Rd2_subgradeSWITCH">
+                        c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub></span>]
                     </span>
                     <span class="bottom">
                         γ<sub>p</sub>K<sub>p</sub>tanδs<sub>p2</sub>
@@ -970,12 +975,10 @@
 
 <!--end of page 2 content-->
 
+</div> <!--end of page 2-->
 <div class="report-footer hidden-print">
     Calculation of the required platform thickness in accordance with BRE 470 guidelines.
 </div>
-
-</div> <!--end of page 2-->
-
 
 <script type="module" src="js/main.js"></script>
 

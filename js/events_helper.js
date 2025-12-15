@@ -251,6 +251,11 @@ export function runCalculations(){
         showClass("Rd_subgrade_granular");
     }
 
+     //Shared Rd_subgrade for printing
+    loadCalculated("Rd1_subgrade", Rd1_subgrade);
+    loadCalculated("Rd2_subgrade", Rd2_subgrade);
+
+
     // Factored loads
     loadCalculated("q1dA", q1dAF(q1k));
     const q1dA = calculatedData.q1dA;
@@ -378,13 +383,13 @@ export function runCalculations(){
         });
 
         document.querySelectorAll(".Rd2_subgradeSWITCH").forEach(el => {
-            el.innerHTML = "0.5γ<sub>s</sub>W<sub>d</sub>N<sub>γs</sub>s<sub>γ1</sub>";
+            el.innerHTML = "c<sub>u</sub>N<sub>c</sub>s<sub>c2</sub>";
         });
 
     } else if (getSoilType() === "granular") {
 
         document.querySelectorAll(".Rd1_subgradeSWITCH").forEach(el => {
-            el.innerHTML = "c<sub>u</sub>N<sub>c</sub>s<sub>c1</sub>";
+            el.innerHTML = "0.5γ<sub>s</sub>W<sub>d</sub>N<sub>γs</sub>s<sub>γ1</sub>";
         });
 
         document.querySelectorAll(".Rd2_subgradeSWITCH").forEach(el => {
