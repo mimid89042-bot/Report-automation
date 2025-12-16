@@ -1,29 +1,101 @@
-TWP-Calculation/
+AOS TWP Report App
+
+A web-based reporting tool for generating Temporary Works Platform (TWP) design reports.
+The app runs in the browser, can be installed as a desktop app (PWA), works offline, and supports printing to PDF or paper.
+
+🔗 Live App
+
+👉 Open the app here:
+https://mimid89042-bot.github.io/Report-automation/
+
+The app can be installed on desktop via the Install button in Chrome or Edge.
+
+✨ Features
+
+Interactive HTML/CSS/JavaScript report generator
+
+Installable as a desktop app (PWA)
+
+Works offline after first load
+
+Print-friendly layout for engineering reports
+
+No backend or server required
+
+Automatic updates via GitHub Pages
+
+🖥️ How to Use
+Open in Browser
+
+Open the live link above
+
+Fill in report fields
+
+Print using Ctrl + P
+
+Install as Desktop App (Recommended)
+
+Open the app in Chrome or Edge
+
+Click Install in the address bar
+
+Launch it from your desktop or taskbar
+
+Use it like a normal application
+
+After installation, the app does not require the browser to be open.
+
+🖨️ Printing
+
+Printing works in both browser and installed app
+
+Use Ctrl + P or the browser’s print menu
+
+Designed for clean, professional report output
+
+🔄 Updates
+
+Changes pushed to this repository are automatically deployed via GitHub Pages
+
+Installed apps update automatically on next open
+
+Reinstallation is not required for normal updates
+
+📁 Project Structure
+Report-automation/
 │
-├── index.html             # Main HTML page with form inputs and results container
+├── index.html
+├── manifest.json
+├── service-worker.js
 ├── css/
-│   └── styles.css         # Styles for layout, columns, and form inputs
-└── js/
-    ├── main.js            # Entry point: initializes event listeners
-    ├── constants.js       # Stores all constants used in calculations such as Nc
-    ├── data.js            # Stores input values and results
-    ├── dom.js             # Handles DOM manipulation (show/hide elements, update results)
-    ├── events.js          # Handles form submission and event listeners
-    ├── calculations.js    # Contains calculation functions (s_c, s_gamma, s_p, N_gamma_p, updateCase)
-    ├── validation.js      # Input validation logic (e.g., subgrade limits)
-    └── results.js         # (Optional) Functions to update/display results in the DOM
+│   └── styles.css
+├── js/
+│   └── main.js
+├── images/
+│   └── icons and logos
 
+🧠 Technical Notes
 
-index.html needs to be run on a server 
-current path (need to automate for user) --->   cd "C:\Users\Amelia\Documents\Calculation-Automation"   
-                                                python -m http.server 8000
-                                                open http://localhost:8000
+Hosted using GitHub Pages
 
+Uses a Service Worker for offline support
 
-DOM manipulation is Document Object Model - a programming interface that represents an HTML or XML document as a tree of objects - the process of accessing, changing or updating the content, structure or style of a web page using JavaScript
-Every element like <input> is a "node" in the tree-like HTML document
-Javascript can traverse and modify this tree to change the page dynamically
-DOM uses document.getElementById(##ID##) to dynamically edit, hide, or show content
+Uses a Web App Manifest for PWA installation
 
-In the context of OOP - DOM elements are treated as objects each with there own properties (value, style)
-We can wrap DOM manipulation in custom classes to encapsulate behavior
+No external dependencies required
+
+🚀 Development
+
+To make changes:
+
+Edit HTML/CSS/JS files
+
+Commit and push to main
+
+GitHub Pages updates automatically
+
+No local server is required for production use.
+
+📄 License
+
+This project is for internal/testing/educational use.
