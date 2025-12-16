@@ -1,4 +1,4 @@
-# AOS TWP Report App
+# AOS TWP Generator
 
 Internal web-based tool for generating **Temporary Works Platform (TWP)** design reports for **AOS**.  
 The app runs in the browser and can be installed as a **desktop application (PWA)**.
