@@ -1,207 +1,51 @@
-**AOS TWP Report App**
+# AOS TWP Report App
 
-A web-based reporting tool for generating Temporary Works Platform (TWP) design reports.
-The app runs in the browser, can be installed as a desktop app (PWA), works offline, and supports printing to PDF or paper.
+Internal web-based tool for generating **Temporary Works Platform (TWP)** design reports for **AOS**.  
+The app runs in the browser and can be installed as a **desktop application (PWA)**.
 
+---
 
-**🔗 Live App**
-👉 Open the app here:
-https://mimid89042-bot.github.io/Report-automation/
+## 🔧 Tech Stack
 
-The app can be installed on desktop via the Install button in Chrome or Edge.
+- **HTML5** – structure and report layout  
+- **CSS3** – styling and print formatting  
+- **Vanilla JavaScript** – calculations and interactivity  
+- **PWA (Service Worker + Manifest)** – offline use and desktop install  
+- **GitHub Pages** – hosting and deployment  
 
+_No backend or external frameworks required._
 
-**✨ Features**
+---
 
-Interactive HTML/CSS/JavaScript report generator
+## ▶️ How to Use
 
-Installable as a desktop app (PWA)
+### Browser
+1. Open: [Live App](https://mimid89042-bot.github.io/Report-automation/)  
+2. Enter report data  
+3. Print using `Ctrl + P`  
 
-Works offline after first load
+### Desktop App (Recommended)
+1. Open the link in **Chrome or Edge**  
+2. Click **Install** in the address bar  
+3. Launch from desktop or taskbar  
 
-Print-friendly layout for engineering reports
+> The installed app works offline after first use.
 
-No backend or server required
+---
 
-Automatic updates via GitHub Pages
+## 📦 Dependencies
 
+- **None** – No Node, Python, or external libraries required
 
-**🖥️ How to Use**
-Open in Browser
+---
 
-Open the live link above
+## 🔄 Updates
 
-Fill in report fields
+- Pushing changes to `main` automatically updates the live app  
+- Installed apps update on next open (no reinstall needed)
 
-Print using Ctrl + P
+---
 
-Install as Desktop App (Recommended)
+## 🏢 Notes
 
-Open the app in Chrome or Edge
-
-Click Install in the address bar
-
-Launch it from your desktop or taskbar
-
-Use it like a normal application
-
-After installation, the app does not require the browser to be open.
-
-
-**🖨️ Printing**
-
-Printing works in both browser and installed app
-
-Use Ctrl + P or the browser’s print menu
-
-Designed for clean, professional report output
-
-
-**🔄 Updates**
-
-Changes pushed to this repository are automatically deployed via GitHub Pages
-
-Installed apps update automatically on next open
-
-Reinstallation is not required for normal updates
-
-
-**📁 Project Structure**
-Report-automation/
-│
-├── index.html
-├── manifest.json
-├── service-worker.js
-├── css/
-│   └── styles.css
-├── js/
-│   └── main.js
-├── images/
-│   └── icons and logos
-
-
-**🧠 Technical Notes**
-
-Hosted using GitHub Pages
-
-Uses a Service Worker for offline support
-
-Uses a Web App Manifest for PWA installation
-
-No external dependencies required
-
-
-**🚀 Development**
-
-To make changes:
-
-Edit HTML/CSS/JS files
-
-Commit and push to main
-
-GitHub Pages updates automatically
-
-No local server is required for production use.
-
-AOS TWP Report App
-
-A web-based reporting tool for generating Temporary Works Platform (TWP) design reports.
-The app runs in the browser, can be installed as a desktop app (PWA), works offline, and supports printing to PDF or paper.
-
-🔗 Live App
-
-👉 Open the app here:
-https://mimid89042-bot.github.io/Report-automation/
-
-The app can be installed on desktop via the Install button in Chrome or Edge.
-
-✨ Features
-
-Interactive HTML/CSS/JavaScript report generator
-
-Installable as a desktop app (PWA)
-
-Works offline after first load
-
-Print-friendly layout for engineering reports
-
-No backend or server required
-
-Automatic updates via GitHub Pages
-
-🖥️ How to Use
-Open in Browser
-
-Open the live link above
-
-Fill in report fields
-
-Print using Ctrl + P
-
-Install as Desktop App (Recommended)
-
-Open the app in Chrome or Edge
-
-Click Install in the address bar
-
-Launch it from your desktop or taskbar
-
-Use it like a normal application
-
-After installation, the app does not require the browser to be open.
-
-🖨️ Printing
-
-Printing works in both browser and installed app
-
-Use Ctrl + P or the browser’s print menu
-
-Designed for clean, professional report output
-
-🔄 Updates
-
-Changes pushed to this repository are automatically deployed via GitHub Pages
-
-Installed apps update automatically on next open
-
-Reinstallation is not required for normal updates
-
-📁 Project Structure
-Report-automation/
-│
-├── index.html
-├── manifest.json
-├── service-worker.js
-├── css/
-│   └── styles.css
-├── js/
-│   └── main.js
-├── images/
-│   └── icons and logos
-
-🧠 Technical Notes
-
-Hosted using GitHub Pages
-
-Uses a Service Worker for offline support
-
-Uses a Web App Manifest for PWA installation
-
-No external dependencies required
-
-🚀 Development
-
-To make changes:
-
-Edit HTML/CSS/JS files
-
-Commit and push to main
-
-GitHub Pages updates automatically
-
-No local server is required for production use.
-
-
-**📄 License**
-
-This project is for internal use
+This is an **internal AOS tool** intended for testing and report generation use only.
