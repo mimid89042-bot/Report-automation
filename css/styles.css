@@ -362,62 +362,89 @@ span, label,p {
     .report-footer.hidden-print { display: block;}
 
 
-    /*-------------------------------------------------------------*/
-.input-row {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-}
+        /*-------------------------------------------------------------*/
+    .input-row {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+    }
 
-.label-pair {
-    display: flex;
-    width: 160px;        /* adjust this to line up your colons */
-}
+    .label-pair {
+        display: flex;
+        width: 160px;        /* adjust this to line up your colons */
+    }
 
-.label-text {
-    flex: 1;             /* text left aligned */
-    text-align: left;
-}
+    .label-text {
+        flex: 1;             /* text left aligned */
+        text-align: left;
+    }
 
-.label-colon {
-    width: 10px;         /* colon right aligned */
-    text-align: right;
-    padding-right: 4px;
-}
+    .label-colon {
+        width: 10px;         /* colon right aligned */
+        text-align: right;
+        padding-right: 4px;
+    }
 
 
-.header-column {
-    display: flex;
-    flex-direction: column; /* stack items vertically */
-    gap: 2px; /* small gap between input rows */
-     vertical-align: bottom; /* align input bottom with label */
-}
+    .header-column {
+        display: flex;
+        flex-direction: column; /* stack items vertically */
+        gap: 2px; /* small gap between input rows */
+        vertical-align: bottom; /* align input bottom with label */
+    }
 
-.header-column.center-column {
-    align-items: center;
-}
+    .header-column.center-column {
+        align-items: center;
+    }
 
-.header-column.right-column {
-    align-items: flex-end;
-}
+    .header-column.right-column {
+        align-items: flex-end;
+    }
 
-.header-column input {
-    width: 120px;       /* all input boxes same width */
-    padding: 2px 4px;
-    vertical-align: middle; /* align input with label */
-    box-sizing: border-box;
-}
-   .report-header input[type="date"] {
-        width: 75px !important;   /* fixed width */
-   }
-.logo {
-    max-height: 60px; /* Adjust logo size */
-}
-.report-content{
-    border: 1px solid rgb(0, 0, 0);
-}
+    .header-column input {
+        width: 120px;       /* all input boxes same width */
+        padding: 2px 4px;
+        vertical-align: middle; /* align input with label */
+        box-sizing: border-box;
+    }
+    .report-header input[type="date"] {
+            width: 75px !important;   /* fixed width */
+    }
+    .logo {
+        max-height: 60px; /* Adjust logo size */
+    }
+    .report-content{
+        border: 1px solid rgb(0, 0, 0);
+    }
 
-    /*-------------------------------------------------------------*/
+    /*---------------------EQUATION BLOCK---------------------------*/
+    .eq-block {
+        display: table;
+        border-collapse: collapse;
+    }
+
+    .eq-row {
+        display: table-row;
+    }
+
+    .eq-left,
+    .eq-right {
+        display: table-cell;
+        padding: 0;
+        vertical-align: baseline;
+    }
+
+    /* FIX */
+    .eq-left {
+        width: 40px;          /* enough for Rd1_platform */
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+    }
+
+    .eq-right {
+        white-space: nowrap;
+    }
 
     /* --- IMAGES --- */
     .Ngamma_graph,
@@ -426,20 +453,17 @@ span, label,p {
         height: auto;   /* maintain aspect ratio */
         max-height: none; /* remove screen constraints */
     }
-
-
-
-    /* ------------ FIXED REPORT HEADER ------------- */
-.report-header {
-    display: flex;
-    justify-content: space-between; /* Spread the three columns */
-    align-items: flex-start;
-    padding: 10px;
-    margin-bottom: 10px; /* Space below header */
-    border: 1px solid  #000000c9; ;
-    gap: 20px;
-    page-break-before: always; /* forces a new page before this element */
-}
+        /* ------------ FIXED REPORT HEADER ------------- */
+    .report-header {
+        display: flex;
+        justify-content: space-between; /* Spread the three columns */
+        align-items: flex-start;
+        padding: 10px;
+        margin-bottom: 10px; /* Space below header */
+        border: 1px solid  #000000c9; ;
+        gap: 20px;
+        page-break-before: always; /* forces a new page before this element */
+    }
 
     .report-header .header-column {
         display: flex;
