@@ -24,7 +24,7 @@ export const calculatedData = {
     gamma_platform: null,
     Ngamma_platform: null,
     Ngamma_subrade: null,
-    kptandelta: 5.5,
+    kptandelta: null,
     sc1: null,
     sc2: null,
     sgamma1: null,

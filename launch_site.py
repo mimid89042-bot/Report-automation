@@ -3,10 +3,11 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 import threading
 import os
 import time
+import sys
 
 PORT = 8000
 
-# Make sure server runs from the folder where the script is
+# Ensure server serves files from script folder
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def start_server():
@@ -15,13 +16,13 @@ def start_server():
     print(f"Serving at http://localhost:{PORT}")
     httpd.serve_forever()
 
-# Start the server in a separate thread
+# Start server in a thread
 threading.Thread(target=start_server, daemon=True).start()
 
-# Open the browser
+# Open website
 webbrowser.open(f"http://localhost:{PORT}/index.html")
 
-# Keep script running indefinitely (since no console)
+# Keep script alive
 try:
     while True:
         time.sleep(1)
