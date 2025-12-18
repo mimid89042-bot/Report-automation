@@ -321,6 +321,17 @@ span, label,p {
     display: none; /* hides in screen */
 }
 
+/* remove in html stlying */
+.thickness-input-no-geogrid, .thickness-input-with-geogrid {
+    font-size: 14pt;
+}
+
+.userParagraphInput {
+    width:90%; 
+    min-height:40px; 
+    font-size: 14px
+}
+
  @media print{
 
     body {

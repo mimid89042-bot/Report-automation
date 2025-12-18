@@ -3,10 +3,12 @@
 <head>
     <title>AOS TWP Design</title>
     <meta charset= "utf-8">
-    <meta
-    http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self'"
-    />
+    <meta http-equiv="Content-Security-Policy"
+        content="
+            default-src 'self';
+            script-src 'self';
+            style-src 'self';
+        ">
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -751,7 +753,7 @@
     <form id = "noGeogridForm">
         <div class = "container">
             <div class = "cell">
-                <label for ="thickness-input-no-geogrid" style = "font-size: 14pt;">
+                <label for ="thickness-input-no-geogrid">
                     Selected thickness without geogrid (m):
                 </label>
                 <input type="number" id = "thickness-input-no-geogrid" step = "0.01" required>
@@ -952,7 +954,7 @@
         <form id = "withGeogridForm">
         <div class = "container">
             <div class = "cell">
-                <label for ="thickness-input-with-geogrid" style = "font-size: 14pt;">
+                <label for ="thickness-input-with-geogrid">
                     Selected thickness with geogrid (m):
                 </label>
                 <input type="number" id = "thickness-input-with-geogrid" step = "0.01" required>
@@ -972,7 +974,7 @@
 <div class="box hidden" id="summary-box">
     <h3>Analysis summary:</h3>
     <textarea id="userParagraphInput" placeholder="Type your paragraph here..." 
-        style="width:90%; min-height:40px; font-size: 14px"></textarea>
+       ></textarea>
     <br>
 </div>
 
@@ -987,14 +989,6 @@
 <!-- Your main JS -->
 <script type="module" src="js/main.js"></script>
 
-<!-- Service Worker Registration -->
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js', { scope: './' })
-    .then(() => console.log('Service Worker Registered'))
-    .catch(err => console.log('Service Worker registration failed:', err));
-}
-</script>
 
 
 </body>

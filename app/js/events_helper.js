@@ -16,12 +16,21 @@ import { NgammaF, kptandeltaF, scF, sgammaF, spF, Rd_subgradeF, Rd_platformF,
         DNoGeogridF, DWithGeogridF } from './calculations.js';
 import { validateCu} from './validation.js';
 
-const soilSelectEl = document.getElementById("soilType");
+// State flags
+export const state = {
+    alertNoGeoDismissed: false,
+    alertWithGeoDismissed: false,
+    calculationsBlocked: false
+};
 
+
+// Get soil type logic
+const soilSelectEl = document.getElementById("soilType");
 function getSoilType() {
   return soilSelectEl ? soilSelectEl.value : null;
 }
 
+// Listeners for all inputs
 function attachListenersToForm(formId) {
     const form = document.getElementById(formId);
     if (!form || form.dataset.listenersAdded === "true") return;
@@ -43,6 +52,7 @@ function attachListenersToForm(formId) {
     form.dataset.listenersAdded = "true"; // prevent duplicates
 }
 
+// Attach listeners based on soil type
 export function addInputListeners() {
     const soilType = getSoilType();
     if (soilType === "cohesive") attachListenersToForm("cohesive-inputs-form");
@@ -113,16 +123,18 @@ export function hideFrom(sectionId) {
 }
 
 //------------------------------------------------------//
-//                   SCRIPT FLOW
+//                   SCRIPT FLOW                        //
 //------------------------------------------------------//
 
 // RUN CALCULATIONS
 export function runCalculations(){
     if (!allRequiredInputsFilled()) {
+        state.calculationsBlocked = true;
         // Hide boxes until all inputs are present
         hideFrom("cu-alert");
         return;
     }else {
+        state.calculationsBlocked = false;
         //if all requires fields are filled load inputs 
         for (const key in inputData){
             loadInput(key);
@@ -154,10 +166,12 @@ export function runCalculations(){
         phi_platform = inputData.phi_platform_cohesive; 
         gamma_platform = inputData.gamma_platform_cohesive; 
         if(!validateCu()){
+            state.calculationsBlocked = true;
             showElement("cu-alert");
             hideFrom("cu-alert");
             return;
         }else{
+            state.calculationsBlocked = false;
             hideElement("cu-alert");
         }
     } else if (getSoilType() == "granular"){
@@ -170,9 +184,6 @@ export function runCalculations(){
 
     // For shared thickness boxes have one gamma_platform
     loadCalculated("gamma_platform", gamma_platform);
-
-    console.log("Platform phi =", phi_platform);
-    console.log("Platform gamma =", gamma_platform);
 
     //--------------------
     // PLATFORM REQUIRED

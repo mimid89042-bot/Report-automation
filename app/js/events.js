@@ -1,20 +1,10 @@
 import { showElement, hideElement,updateNoGeogridThickness, updateWithGeogridThickness
          } from './dom.js';
-import { inputData, calculatedData, loadInput, loadCalculated } from './data.js';
-import { NgammaF, kptandeltaF, scF, sgammaF, spF, Rd_subgradeF, Rd_platformF, 
-        q1dAF, q2dAF, q1dBF, q2dBF, q1dCF, q2dCF, 
-        DNoGeogridF, DWithGeogridF } from './calculations.js';
-import { validateCu, validateNOGeorgridThickness,
-        validateWITHGeorgridThickness
-        } from './validation.js';
+import { validateCu, } from './validation.js';
 import { addInputListeners, runCalculations, hideFrom} from './events_helper.js'
+import { state } from './events_helper.js';
 
 // events.js (or state.js)
-export const state = {
-    alertNoGeoDismissed: false,
-    alertWithGeoDismissed: false
-};
-
 
 // Sets up all event listeners to monitor user input and update the page dynamically
 export function initEventListeners() {
