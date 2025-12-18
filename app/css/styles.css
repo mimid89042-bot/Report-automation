@@ -326,13 +326,19 @@ span, label,p {
     font-size: 14pt;
 }
 
-.userParagraphInput {
-    width:90%; 
-    min-height:40px; 
-    font-size: 14px
+#userParagraphInput {
+    width: 90vw;          /* 90% of viewport width */
+    max-width: 100%;     /* optional maximum */
+    min-height: 40px;
+    font-size: 14px;
+    box-sizing: border-box;
 }
 
  @media print{
+
+    #userParagraphInput {
+        width: 100%;
+    }
 
     body {
         font-size: 15pt;
