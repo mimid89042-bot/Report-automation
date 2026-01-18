@@ -128,7 +128,6 @@ export function displayPlatformResistiveText(Rd1_platform, Rd2_platform, q1dB, q
 
 // Update No Geogrid Thickness and related boxes
 export function updateNoGeogridThickness() {
-    if (state.calculationsBlocked) return;
     const thicknessInput = parseFloat(document.getElementById("thickness-input-no-geogrid").value);
     const required = parseFloat(calculatedData.DlargerNoGeorgrid).toFixed(2);
     const geogridSelect = document.getElementById("geogrid-yesorno").value;
@@ -163,8 +162,8 @@ export function updateNoGeogridThickness() {
     }
 }
 
+// Update No Geogrid Thickness and related boxes
 export function updateWithGeogridThickness(){
-    if (state.calculationsBlocked) return;
     const thicknessInput = parseFloat(document.getElementById("thickness-input-with-geogrid").value);
     const required = parseFloat(calculatedData.DlargerWithGeorgrid).toFixed(2);
 

@@ -20,7 +20,6 @@ import { validateCu} from './validation.js';
 export const state = {
     alertNoGeoDismissed: false,
     alertWithGeoDismissed: false,
-    calculationsBlocked: false
 };
 
 
@@ -113,12 +112,22 @@ export function hideFrom(sectionId) {
     "point-three-alert",
     "with-geogrid-thickness-alert",
     "summary-box"
-];
-    const startIndex = sections.indexOf(sectionId);
-    if (startIndex === -1) return; // Section not found
+    ];
 
-    for (let i = startIndex + 1; i < sections.length; i++) {
-        hideElement(sections[i]);
+    // Find index of sectionId (starts from 0)
+    const startIndex = sections.indexOf(sectionId);
+    // If not found, do nothing and return
+    if (startIndex === -1) return;
+
+    // Hide all sections including that index onward
+    for (let i = startIndex; i < sections.length +1; i++) {
+        const sectionToHide = sections[i];
+        // Locate section by ID
+        const el = document.getElementById(sectionToHide);
+        // If it exists then hide it 
+        if(el) {
+            el.style.display = "none";
+        }
     }
 }
 
@@ -129,17 +138,16 @@ export function hideFrom(sectionId) {
 // RUN CALCULATIONS
 export function runCalculations(){
     if (!allRequiredInputsFilled()) {
-        state.calculationsBlocked = true;
         // Hide boxes until all inputs are present
         hideFrom("cu-alert");
         return;
     }else {
-        state.calculationsBlocked = false;
         //if all requires fields are filled load inputs 
         for (const key in inputData){
             loadInput(key);
         }
     }
+
 
     // Update thickness boxes on each calculation run
     updateNoGeogridThickness();
@@ -166,12 +174,10 @@ export function runCalculations(){
         phi_platform = inputData.phi_platform_cohesive; 
         gamma_platform = inputData.gamma_platform_cohesive; 
         if(!validateCu()){
-            state.calculationsBlocked = true;
             showElement("cu-alert");
             hideFrom("cu-alert");
             return;
         }else{
-            state.calculationsBlocked = false;
             hideElement("cu-alert");
         }
     } else if (getSoilType() == "granular"){
@@ -179,7 +185,12 @@ export function runCalculations(){
         gamma_platform = inputData.gamma_platform_granular; 
         phi_subgrade = inputData.phi_subgrade;
         gamma_subgrade = inputData.gamma_subgrade;
+
+        if (phi_platform < phi_subgrade){
         hideElement("cu-alert");
+        showClass("platform-not-stronger-alert");
+        hideFrom("platform-not-stronger-alert");
+        }
     }
 
     // For shared thickness boxes have one gamma_platform
@@ -454,3 +465,4 @@ export function runCalculations(){
     loadCalculated("DlargerWithGeorgrid", Math.max(D1largerWithGeorgrid, D2largerWithGeorgrid).toFixed(2));
 
 }
+
