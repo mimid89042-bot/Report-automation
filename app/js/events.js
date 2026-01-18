@@ -1,7 +1,7 @@
 import { showElement, hideElement,updateNoGeogridThickness, updateWithGeogridThickness
          } from './dom.js';
 import { validateCu, } from './validation.js';
-import { addInputListeners, runCalculations, hideFrom} from './events_helper.js'
+import { addInputListeners, runCalculations, hideAfter} from './events_helper.js'
 import { state } from './events_helper.js';
 
 // events.js (or state.js)
@@ -21,12 +21,12 @@ export function initEventListeners() {
             hideElement("cohesive-inputs-form");
         } else{
             //If they unselect hide everything
-            hideFrom("soil-selection-form");
+            hideAfter("soil-selection-form");
             return;
         }
         showElement("case-loading-inputs-form");
         showElement("geogrid-selection-form");
-        hideFrom("geogrid-selection-form");
+        hideAfter("geogrid-selection-form");
 
         addInputListeners();
         runCalculations();

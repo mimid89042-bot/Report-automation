@@ -2,7 +2,7 @@ const REQUIRED_INPUT_IDS = ["soilType","W", "q1k", "L1", "q2k", "L2", "geogrid-y
 ];
 const REQUIRED_INPUT_IDS_COHESIVE = ["cu", "phi_platform_cohesive", "gamma_platform_cohesive"];
 const REQUIRED_INPUT_IDS_GRANULAR  = ["phi_subgrade","gamma_subgrade",
-      "phi_platform_granular", "gamma_platform_granular"];
+      "phi_platform_granular", "gamma_platform_granular", "label-GWT"];
 const REQUIRED_GEOGRID_IDS = ["Tallowable", "n"];
 import { showElement, hideElement, showClass, hideClass, displayPlatformRequiredText, 
         displayPlatformStrongertTextCohesive, displayPlatformStrongertTextGranular,
@@ -93,7 +93,7 @@ function allRequiredInputsFilled() {
 }
 
 // Function to hide all sections from a given one
-export function hideFrom(sectionId) {
+export function hideAfter(sectionId) {
     const sections = [
     "soil-selection-form",
     "cohesive-inputs-form",
@@ -120,7 +120,7 @@ export function hideFrom(sectionId) {
     if (startIndex === -1) return;
 
     // Hide all sections including that index onward
-    for (let i = startIndex; i < sections.length +1; i++) {
+    for (let i = startIndex + 1; i < sections.length; i++) {
         const sectionToHide = sections[i];
         // Locate section by ID
         const el = document.getElementById(sectionToHide);
@@ -139,7 +139,7 @@ export function hideFrom(sectionId) {
 export function runCalculations(){
     if (!allRequiredInputsFilled()) {
         // Hide boxes until all inputs are present
-        hideFrom("cu-alert");
+        hideAfter("geogrid-selection-form");
         return;
     }else {
         //if all requires fields are filled load inputs 
@@ -175,7 +175,7 @@ export function runCalculations(){
         gamma_platform = inputData.gamma_platform_cohesive; 
         if(!validateCu()){
             showElement("cu-alert");
-            hideFrom("cu-alert");
+            hideAfter("cu-alert");
             return;
         }else{
             hideElement("cu-alert");
@@ -189,7 +189,7 @@ export function runCalculations(){
         if (phi_platform < phi_subgrade){
         hideElement("cu-alert");
         showClass("platform-not-stronger-alert");
-        hideFrom("platform-not-stronger-alert");
+        hideAfter("platform-not-stronger-alert");
         }
     }
 
@@ -297,7 +297,7 @@ export function runCalculations(){
 
     // Conditional alert or next box
     if(!platformRequired(q1dA, q2dA,Rd1_subgrade, Rd2_subgrade)){
-        hideFrom("platform-required-box");
+        hideAfter("platform-required-box");
         showElement("summary-box");
         return;
     }else{
@@ -359,7 +359,7 @@ export function runCalculations(){
 
     if(!PlatformStronger){
         showElement("platform-not-stronger-alert");
-        hideFrom("platform-not-stronger-alert");
+        hideAfter("platform-not-stronger-alert");
         return;
     }else{
         hideElement("platform-not-stronger-alert");
@@ -384,7 +384,7 @@ export function runCalculations(){
 
     if(!platformResistive(Rd1_platform,Rd2_platform,q1dB,q2dB)){
         showElement("platform-not-resistive-alert");
-        hideFrom("platform-not-resistive-alert");
+        hideAfter("platform-not-resistive-alert");
         return;
     }else{
         hideElement("platform-not-resistive-alert");
